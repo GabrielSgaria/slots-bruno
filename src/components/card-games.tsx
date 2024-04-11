@@ -49,7 +49,7 @@ export function CardGames({ linkCasa }: CardGamesProps) {
         <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2'>
             {cardsData.map(({ id, porcentagem, cor }) => (
                 <div key={id} className="flex flex-col my-2 justify-between">
-                    <a href={linkCasa} target='_blank' className='sm:hover:opacity-60'>
+                    <a href={linkCasa} target='_blank' className='sm:hover:opacity-60 h-full'>
                         <Image width={9000} height={9000} src={`/image/capa-games/${id}.webp`} alt={`Card ${id}`} className="rounded-3xl w-full h-full object-fill" />
                     </a>
                     <div className={`w-full h-5 rounded-full bg-zinc-200 relative z-10 mt-5 overflow-hidden`} >

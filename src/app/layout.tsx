@@ -25,7 +25,8 @@ export default function RootLayout({
     <html lang="pt">
       <body className={`bg-zinc-950 text-zinc-50 ${roboto.variable}`}>
         <NavBar />
-        {children}</body>
+        {children}
+      </body>
     </html>
   );
 }
