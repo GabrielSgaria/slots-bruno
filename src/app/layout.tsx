@@ -20,6 +20,7 @@ export const rubik = Rubik_Glitch(
 export const metadata: Metadata = {
   title: "FP - SINAIS SLOTS",
   description: "Sinais FP SLOTS",
+  icons: '/logoFp.png'
 };
 
 export default function RootLayout({

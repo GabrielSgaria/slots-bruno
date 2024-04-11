@@ -1,7 +1,8 @@
+'use client'
 import { CardGames } from "@/components/card-games";
 
-export default function Home() {
 
+export default function Home() {
 
   return (
     <main className="">
@@ -17,7 +18,9 @@ export default function Home() {
       <section className="py-10 h-full">
         <div className="container mx-auto">
 
-          <CardGames linkCasa='https://meusinal.vip/bruno/' />
+          <CardGames 
+            linkCasa='https://meusinal.vip/bruno/' 
+            />
 
         </div>
       </section>
