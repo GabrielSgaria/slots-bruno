@@ -24,7 +24,7 @@ export default function Home() {
 
         </div>
 
-        <div className="border-b rounded-full border-zinc-500/45 w-[600px] my-10" />
+        <div className="border-b rounded-full border-zinc-500/45 w-[300px] md:w-[400px] lg:w-[600px] my-10" />
 
       </div>
 
