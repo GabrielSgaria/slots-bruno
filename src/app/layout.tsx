@@ -13,7 +13,7 @@ const roboto = Roboto(
 export const metadata: Metadata = {
   title: "FP - SINAIS SLOTS",
   description: "Sinais FP SLOTS",
-  icons: '/logoFp.png'
+  icons: '/favicon.png'
 };
 
 export default function RootLayout({
