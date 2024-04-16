@@ -12,9 +12,11 @@ const config: Config = {
         'pulse-slow': 'pulse 3s linear infinite',
       },
       backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic":
-        "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+        'fortune-rabbit': 'url(/image/bg-sinais/bg-rabbit.jpg)',
+        'fortune-tiger': 'url(/image/bg-sinais/bg-tiger.jpg)',
+        'fortune-ox': 'url(/image/bg-sinais/bg-ox.jpg)',
+        'fortune-mouse': 'url(/image/bg-sinais/bg-mouse.jpg)',
+        'fortune-dragon': 'url(/image/bg-sinais/bg-dragon.png)'
       },
     },
   },
