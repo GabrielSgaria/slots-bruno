@@ -11,8 +11,6 @@ const backgroundMap: Record<string, string> = {
 }
 
 
-
-
 export default function PageGamesSinais({ params }: { params: { slug: string } }) {
 
 
