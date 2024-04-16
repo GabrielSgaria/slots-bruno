@@ -1,0 +1,539 @@
+{
+  "cards": [
+    {
+      "id": "92ba",
+      "data": [
+        {
+          "id": 1,
+          "porcentagem": 38,
+          "cor": "#db2777"
+        },
+        {
+          "id": 2,
+          "porcentagem": 69,
+          "cor": "#7e22ce"
+        },
+        {
+          "id": 3,
+          "porcentagem": 77,
+          "cor": "#65a30d"
+        },
+        {
+          "id": 4,
+          "porcentagem": 14,
+          "cor": "#7e22ce"
+        },
+        {
+          "id": 5,
+          "porcentagem": 24,
+          "cor": "#3f6212"
+        },
+        {
+          "id": 6,
+          "porcentagem": 40,
+          "cor": "#65a30d"
+        },
+        {
+          "id": 7,
+          "porcentagem": 72,
+          "cor": "#65a30d"
+        },
+        {
+          "id": 8,
+          "porcentagem": 70,
+          "cor": "#0d9488"
+        },
+        {
+          "id": 9,
+          "porcentagem": 62,
+          "cor": "#65a30d"
+        },
+        {
+          "id": 10,
+          "porcentagem": 4,
+          "cor": "#7e22ce"
+        },
+        {
+          "id": 11,
+          "porcentagem": 75,
+          "cor": "#db2777"
+        },
+        {
+          "id": 12,
+          "porcentagem": 96,
+          "cor": "#7e22ce"
+        },
+        {
+          "id": 13,
+          "porcentagem": 14,
+          "cor": "#0d9488"
+        },
+        {
+          "id": 14,
+          "porcentagem": 56,
+          "cor": "#db2777"
+        },
+        {
+          "id": 15,
+          "porcentagem": 36,
+          "cor": "#7e22ce"
+        },
+        {
+          "id": 16,
+          "porcentagem": 43,
+          "cor": "#7e22ce"
+        },
+        {
+          "id": 17,
+          "porcentagem": 29,
+          "cor": "#0d9488"
+        },
+        {
+          "id": 18,
+          "porcentagem": 76,
+          "cor": "#3f6212"
+        },
+        {
+          "id": 19,
+          "porcentagem": 5,
+          "cor": "#db2777"
+        },
+        {
+          "id": 20,
+          "porcentagem": 55,
+          "cor": "#7e22ce"
+        },
+        {
+          "id": 21,
+          "porcentagem": 81,
+          "cor": "#3f6212"
+        },
+        {
+          "id": 22,
+          "porcentagem": 73,
+          "cor": "#65a30d"
+        },
+        {
+          "id": 23,
+          "porcentagem": 5,
+          "cor": "#3f6212"
+        },
+        {
+          "id": 24,
+          "porcentagem": 92,
+          "cor": "#7e22ce"
+        },
+        {
+          "id": 25,
+          "porcentagem": 40,
+          "cor": "#7e22ce"
+        },
+        {
+          "id": 26,
+          "porcentagem": 62,
+          "cor": "#65a30d"
+        },
+        {
+          "id": 27,
+          "porcentagem": 7,
+          "cor": "#7e22ce"
+        },
+        {
+          "id": 28,
+          "porcentagem": 79,
+          "cor": "#3f6212"
+        },
+        {
+          "id": 29,
+          "porcentagem": 9,
+          "cor": "#db2777"
+        },
+        {
+          "id": 30,
+          "porcentagem": 76,
+          "cor": "#0d9488"
+        },
+        {
+          "id": 31,
+          "porcentagem": 5,
+          "cor": "#65a30d"
+        },
+        {
+          "id": 32,
+          "porcentagem": 90,
+          "cor": "#7e22ce"
+        },
+        {
+          "id": 33,
+          "porcentagem": 26,
+          "cor": "#db2777"
+        },
+        {
+          "id": 34,
+          "porcentagem": 23,
+          "cor": "#7e22ce"
+        },
+        {
+          "id": 35,
+          "porcentagem": 91,
+          "cor": "#3f6212"
+        },
+        {
+          "id": 36,
+          "porcentagem": 65,
+          "cor": "#65a30d"
+        },
+        {
+          "id": 37,
+          "porcentagem": 52,
+          "cor": "#0d9488"
+        },
+        {
+          "id": 38,
+          "porcentagem": 54,
+          "cor": "#7e22ce"
+        },
+        {
+          "id": 39,
+          "porcentagem": 46,
+          "cor": "#7e22ce"
+        },
+        {
+          "id": 40,
+          "porcentagem": 50,
+          "cor": "#db2777"
+        },
+        {
+          "id": 41,
+          "porcentagem": 53,
+          "cor": "#65a30d"
+        },
+        {
+          "id": 42,
+          "porcentagem": 92,
+          "cor": "#0d9488"
+        },
+        {
+          "id": 43,
+          "porcentagem": 96,
+          "cor": "#0d9488"
+        },
+        {
+          "id": 44,
+          "porcentagem": 13,
+          "cor": "#65a30d"
+        },
+        {
+          "id": 45,
+          "porcentagem": 69,
+          "cor": "#db2777"
+        },
+        {
+          "id": 46,
+          "porcentagem": 86,
+          "cor": "#0d9488"
+        },
+        {
+          "id": 47,
+          "porcentagem": 65,
+          "cor": "#0d9488"
+        },
+        {
+          "id": 48,
+          "porcentagem": 6,
+          "cor": "#3f6212"
+        },
+        {
+          "id": 49,
+          "porcentagem": 95,
+          "cor": "#65a30d"
+        },
+        {
+          "id": 50,
+          "porcentagem": 24,
+          "cor": "#65a30d"
+        },
+        {
+          "id": 51,
+          "porcentagem": 20,
+          "cor": "#3f6212"
+        },
+        {
+          "id": 52,
+          "porcentagem": 100,
+          "cor": "#65a30d"
+        },
+        {
+          "id": 53,
+          "porcentagem": 66,
+          "cor": "#65a30d"
+        },
+        {
+          "id": 54,
+          "porcentagem": 34,
+          "cor": "#3f6212"
+        },
+        {
+          "id": 55,
+          "porcentagem": 73,
+          "cor": "#7e22ce"
+        },
+        {
+          "id": 56,
+          "porcentagem": 69,
+          "cor": "#0d9488"
+        },
+        {
+          "id": 57,
+          "porcentagem": 15,
+          "cor": "#0d9488"
+        },
+        {
+          "id": 58,
+          "porcentagem": 85,
+          "cor": "#7e22ce"
+        },
+        {
+          "id": 59,
+          "porcentagem": 79,
+          "cor": "#db2777"
+        },
+        {
+          "id": 60,
+          "porcentagem": 32,
+          "cor": "#db2777"
+        },
+        {
+          "id": 61,
+          "porcentagem": 49,
+          "cor": "#db2777"
+        },
+        {
+          "id": 62,
+          "porcentagem": 13,
+          "cor": "#65a30d"
+        },
+        {
+          "id": 63,
+          "porcentagem": 73,
+          "cor": "#3f6212"
+        },
+        {
+          "id": 64,
+          "porcentagem": 76,
+          "cor": "#0d9488"
+        },
+        {
+          "id": 65,
+          "porcentagem": 78,
+          "cor": "#7e22ce"
+        },
+        {
+          "id": 66,
+          "porcentagem": 73,
+          "cor": "#3f6212"
+        },
+        {
+          "id": 67,
+          "porcentagem": 60,
+          "cor": "#3f6212"
+        },
+        {
+          "id": 68,
+          "porcentagem": 66,
+          "cor": "#65a30d"
+        },
+        {
+          "id": 69,
+          "porcentagem": 92,
+          "cor": "#65a30d"
+        },
+        {
+          "id": 70,
+          "porcentagem": 11,
+          "cor": "#65a30d"
+        },
+        {
+          "id": 71,
+          "porcentagem": 40,
+          "cor": "#0d9488"
+        },
+        {
+          "id": 72,
+          "porcentagem": 73,
+          "cor": "#65a30d"
+        },
+        {
+          "id": 73,
+          "porcentagem": 50,
+          "cor": "#3f6212"
+        },
+        {
+          "id": 74,
+          "porcentagem": 96,
+          "cor": "#7e22ce"
+        },
+        {
+          "id": 75,
+          "porcentagem": 34,
+          "cor": "#7e22ce"
+        },
+        {
+          "id": 76,
+          "porcentagem": 35,
+          "cor": "#7e22ce"
+        },
+        {
+          "id": 77,
+          "porcentagem": 79,
+          "cor": "#7e22ce"
+        },
+        {
+          "id": 78,
+          "porcentagem": 19,
+          "cor": "#65a30d"
+        },
+        {
+          "id": 79,
+          "porcentagem": 5,
+          "cor": "#65a30d"
+        },
+        {
+          "id": 80,
+          "porcentagem": 34,
+          "cor": "#65a30d"
+        },
+        {
+          "id": 81,
+          "porcentagem": 33,
+          "cor": "#0d9488"
+        },
+        {
+          "id": 82,
+          "porcentagem": 9,
+          "cor": "#db2777"
+        },
+        {
+          "id": 83,
+          "porcentagem": 95,
+          "cor": "#3f6212"
+        },
+        {
+          "id": 84,
+          "porcentagem": 62,
+          "cor": "#65a30d"
+        },
+        {
+          "id": 85,
+          "porcentagem": 57,
+          "cor": "#7e22ce"
+        },
+        {
+          "id": 86,
+          "porcentagem": 61,
+          "cor": "#65a30d"
+        },
+        {
+          "id": 87,
+          "porcentagem": 91,
+          "cor": "#65a30d"
+        },
+        {
+          "id": 88,
+          "porcentagem": 38,
+          "cor": "#7e22ce"
+        },
+        {
+          "id": 89,
+          "porcentagem": 88,
+          "cor": "#db2777"
+        },
+        {
+          "id": 90,
+          "porcentagem": 12,
+          "cor": "#db2777"
+        },
+        {
+          "id": 91,
+          "porcentagem": 72,
+          "cor": "#0d9488"
+        },
+        {
+          "id": 92,
+          "porcentagem": 98,
+          "cor": "#65a30d"
+        },
+        {
+          "id": 93,
+          "porcentagem": 42,
+          "cor": "#db2777"
+        },
+        {
+          "id": 94,
+          "porcentagem": 20,
+          "cor": "#db2777"
+        },
+        {
+          "id": 95,
+          "porcentagem": 56,
+          "cor": "#65a30d"
+        },
+        {
+          "id": 96,
+          "porcentagem": 91,
+          "cor": "#7e22ce"
+        },
+        {
+          "id": 97,
+          "porcentagem": 63,
+          "cor": "#7e22ce"
+        },
+        {
+          "id": 98,
+          "porcentagem": 5,
+          "cor": "#7e22ce"
+        },
+        {
+          "id": 99,
+          "porcentagem": 47,
+          "cor": "#7e22ce"
+        },
+        {
+          "id": 100,
+          "porcentagem": 93,
+          "cor": "#0d9488"
+        },
+        {
+          "id": 101,
+          "porcentagem": 19,
+          "cor": "#65a30d"
+        },
+        {
+          "id": 102,
+          "porcentagem": 40,
+          "cor": "#7e22ce"
+        },
+        {
+          "id": 103,
+          "porcentagem": 5,
+          "cor": "#3f6212"
+        },
+        {
+          "id": 104,
+          "porcentagem": 34,
+          "cor": "#7e22ce"
+        },
+        {
+          "id": 105,
+          "porcentagem": 18,
+          "cor": "#65a30d"
+        },
+        {
+          "id": 106,
+          "porcentagem": 34,
+          "cor": "#7e22ce"
+        }
+      ]
+    }
+  ]
+}

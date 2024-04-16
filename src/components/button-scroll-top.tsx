@@ -1,3 +1,4 @@
+'use client'
 import { TriangleUpIcon } from '@radix-ui/react-icons';
 import { useEffect, useState } from 'react';
 

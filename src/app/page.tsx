@@ -1,4 +1,3 @@
-'use client'
 import { CardGames } from "@/components/card-games";
 import Image from "next/image";
 import logoFP from '../../public/favicon.png'
