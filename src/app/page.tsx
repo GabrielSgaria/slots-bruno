@@ -27,7 +27,7 @@ export default function Home() {
 
       </div>
 
-      <section className="">
+      <section>
         <div className="container mx-auto">
 
           <CardGames

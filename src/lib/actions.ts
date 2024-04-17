@@ -8,7 +8,6 @@ interface CardData {
     data: {
         id: number;
         porcentagem: number;
-        cor: string;
     }[]
 }
 
@@ -18,8 +17,7 @@ export async function createCards() {
         const cards: CardData = { data: [] };
         for (let i = 1; i <= 106; i++) {
             const porcentagem = getRandomPorcentagem();
-            const cor = getRandomColor();
-            cards.data.push({ id: i, porcentagem, cor });
+            cards.data.push({ id: i, porcentagem });
         }
         await api.post('/cards', cards);
         return { success: true }
