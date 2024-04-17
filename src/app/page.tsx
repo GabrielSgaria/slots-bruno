@@ -2,7 +2,7 @@ import { CardGames } from "@/components/card-games";
 import Image from "next/image";
 import logoFP from '../../public/favicon.png'
 import { ButtonScrollTop } from "@/components/button-scroll-top";
-
+import { linkBruno } from "@/lib/utils";
 
 export default function Home() {
 
@@ -31,7 +31,7 @@ export default function Home() {
         <div className="container mx-auto">
 
           <CardGames
-            linkCasa='https://vinhopg.com/?id=72851548&currency=BRL&type=2'  //LINK DAS CASAS
+            linkCasa={linkBruno}  //LINK DAS CASAS
           />
 
         </div>

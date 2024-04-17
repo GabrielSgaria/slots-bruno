@@ -12,3 +12,5 @@ export const getRandomColor = () => {
 export function cn(...inputs: ClassValue[]){
     return twMerge(clsx(inputs))
 }
+
+export const linkBruno = "https://vinhopg.com/?id=72851548&currency=BRL&type=2"
