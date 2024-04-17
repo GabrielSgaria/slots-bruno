@@ -7,8 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "start:server": "json-server --watch src/db.json --port 3001",
-    "postinstall": "json-server src/db.json --port 3001"
+    "start:server": "json-server --watch src/db.json --port 3001"
   },
   "dependencies": {
     "@radix-ui/react-icons": "^1.3.0",
