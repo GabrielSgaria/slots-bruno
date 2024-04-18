@@ -6,6 +6,7 @@ import tBranco from '../../../../../public/image/icone-sinais/iconturboBranco.pn
 import vBranco from '../../../../../public/image/icone-sinais/iconvalidadeBranco.png'
 import tBege from '../../../../../public/image/icone-sinais/iconturboBege.png';
 import vBege from '../../../../../public/image/icone-sinais/iconvalidadeBege.png'
+import { TriangleRightIcon } from "@radix-ui/react-icons";
 
 const backgroundMap: Record<string, string> = {
     "fortune-ox": "bg-fortune-ox",
@@ -82,8 +83,11 @@ export default function PageGamesSinais({ params }: { params: { slug: string } }
                         <span>10:00</span>
                     </div>
                 </div>
-                <div className={cn("p-2 w-10/12 flex flex-row border rounded-lg items-center mx-auto mb-1 bg-green-500 hover:bg-green-600 transition-all ", borderMap[game!.slug])} >
-                    <h1 className="text-center w-full text-zinc-900">GERAR SINAL</h1>
+                <div className={cn("w-9/12 flex flex-row rounded-lg items-center mx-auto mt-1 bg-green-700 hover:bg-green-600 transition-all border-2 border-yellow-500")} >
+                    <h1 className="text-center w-full text-yellow-400 font-bold text-xl flex items-center gap-2 justify-center py-1">
+                        GERAR SINAL
+                        <TriangleRightIcon className="animate-pulse size-9 text-yellow-400" />
+                    </h1>
                 </div>
             </div>
         </div>
