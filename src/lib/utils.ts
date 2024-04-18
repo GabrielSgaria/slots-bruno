@@ -13,4 +13,16 @@ export function cn(...inputs: ClassValue[]){
     return twMerge(clsx(inputs))
 }
 
+export function generateRandomNumber(): number {
+    return Math.floor(Math.random() * (16 - 3 + 1)) + 3;
+}
+
+export function calculateEndTime(): string {
+    const currentTime = new Date();
+    currentTime.setMinutes(currentTime.getMinutes() + 5);
+    const hours = currentTime.getHours().toString().padStart(2, '0');
+    const minutes = currentTime.getMinutes().toString().padStart(2, '0');
+    return `${hours}:${minutes}`;
+}
+
 export const linkBruno = "https://vinhopg.com/?id=72851548&currency=BRL&type=2"
