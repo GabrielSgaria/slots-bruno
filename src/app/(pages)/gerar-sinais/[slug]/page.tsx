@@ -7,7 +7,7 @@ import tBranco from '../../../../../public/image/icone-sinais/iconturboBranco.pn
 import vBranco from '../../../../../public/image/icone-sinais/iconvalidadeBranco.png'
 import tBege from '../../../../../public/image/icone-sinais/iconturboBege.png';
 import vBege from '../../../../../public/image/icone-sinais/iconvalidadeBege.png'
-import { GearIcon, TriangleRightIcon } from "@radix-ui/react-icons";
+import { DotFilledIcon, GearIcon, TriangleRightIcon } from "@radix-ui/react-icons";
 import { useState } from "react";
 import { generateRandomNumber, calculateEndTime } from "@/lib/utils";
 
@@ -129,12 +129,14 @@ export default function PageGamesSinais({ params }: { params: { slug: string } }
                 >
                     <h1 className="text-center w-full text-yellow-400 font-bold text-lg flex items-center gap-2 justify-center py-1">
                         {buttonDisabled ? (
-                            <p className="text-zinc-50 flex gap-2 items-center">
+                            <p className="text-zinc-50 flex gap-2 items-center text-lg">
                                 {message}
                                 <GearIcon className="animate-spin size-5 text-zinc-50" />
                             </p>
                         ) : (
-                            "GERAR SINAL"
+                        <p className="text-zinc-50 flex gap-4 items-center">
+                            GERAR SINAL<DotFilledIcon className="animate-ping size-8 text-yellow-500" />
+                        </p>
                         )}
                     </h1>
                 </button>
