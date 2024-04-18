@@ -8,6 +8,14 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      colors: {
+        'fortune-rabbit-color': '#9d2525',
+        'fortune-tiger-color': '#9d2525',
+        'fortune-ox-color': '#ffff',
+        'fortune-mouse-color': '#ffff',
+        'fortune-dragon-color': '#9d2525'
+
+      },
       animation: {
         'pulse-slow': 'pulse 3s linear infinite',
       },
@@ -16,7 +24,7 @@ const config: Config = {
         'fortune-tiger': 'url(/image/bg-sinais/bg-tiger.jpg)',
         'fortune-ox': 'url(/image/bg-sinais/bg-ox.jpg)',
         'fortune-mouse': 'url(/image/bg-sinais/bg-mouse.jpg)',
-        'fortune-dragon': 'url(/image/bg-sinais/bg-dragon.png)'
+        'fortune-dragon': 'url(/image/bg-sinais/bg-dragon.webp)'
       },
     },
   },
