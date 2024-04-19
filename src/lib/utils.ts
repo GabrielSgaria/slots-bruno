@@ -8,6 +8,14 @@ export const getRandomColor = () => {
     return colors[Math.floor(Math.random() * colors.length)];
 };
 
+
+export const getRandomClass = () => {
+    const colors = ['verde-escuro', 'rosa'];
+    return colors[Math.floor(Math.random() * colors.length)];
+};
+
+
+
 export function cn(...inputs: ClassValue[]){
     return twMerge(clsx(inputs))
 }

@@ -1,6 +1,6 @@
 'use client'
 import Image from 'next/image';
-import { getRandomColor } from '@/lib/utils';
+import { cn, getRandomClass } from '@/lib/utils';
 import { useState, useEffect } from 'react';
 
 interface CardGamesProps {
@@ -10,10 +10,10 @@ interface CardGamesProps {
 }
 export function CardGames({ linkCasa, id, porcentagem }: CardGamesProps) {
 
-    const [currentColor, setCurrentColor] = useState<string>("transparent");
+    const [currentColor, setCurrentColor] = useState<string>("red");
 
     useEffect(() => {
-        const color = getRandomColor();
+        const color = getRandomClass();
         setCurrentColor(color);
     }, []);
 
@@ -24,13 +24,12 @@ export function CardGames({ linkCasa, id, porcentagem }: CardGamesProps) {
             </a>
             <div className={`w-full h-5 rounded-full bg-zinc-200 relative z-10 mt-5 overflow-hidden`} >
                 <p className='font-bold text-center text-sm z-20 absolute w-full top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-zinc-950'>{porcentagem}%</p>
-                <div className={`h-full imagebg transition-all duration-100 ease-out`} style={{
-                width: porcentagem && currentColor !== "transparent" ? `${porcentagem}%` : 0,
-                background: currentColor,
-                backgroundImage: `linear-gradient(90deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent)`,
-                backgroundSize: `200% 100%`,
-                transition: `background-position-x 1s ease`,
-                animation: `progress-bar-stripes 4s linear infinite`,
+                <div className={cn(`h-full transition-all duration-100 ease-out`, currentColor)} style={{
+                    width: porcentagem,
+                    backgroundImage: `linear-gradient(90deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent)`,
+                    backgroundSize: `200% 100%`,
+                    transition: `background-position-x 1s ease`,
+                    animation: `progress-bar-stripes 4s linear infinite`,
                 }} />
             </div>
         </div>

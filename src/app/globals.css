@@ -10,11 +10,38 @@
     font-family: var(--rubik)
   }
 
-  @keyframes progress-bar-stripes {
-    from {
-      background-position-x: 100%;
-    }
-    to {
-      background-position-x: 0;
-    }
+.imagebg {
+  background-position-x: 100%;
+  background-image: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.15) 25%,
+    transparent 25%,
+    transparent 50%,
+    rgba(255, 255, 255, 0.15) 50%,
+    rgba(255, 255, 255, 0.15) 75%,
+    transparent 75%,
+    transparent
+  );
+  background-size: 200% 100%;
+  transition: background-position-x 1s ease;
+  animation: progress-bar-stripes 4s linear infinite;
+  position: absolute;
+}
+
+.verde-escuro {
+  background: #3f6212;
+}
+.rosa {
+  background: #db2777;
+}
+
+@keyframes progress-bar-stripes {
+  from {
+    background-position-x: 100%;
   }
+  to {
+    background-position-x: 0;
+  }
+}
+
+  
