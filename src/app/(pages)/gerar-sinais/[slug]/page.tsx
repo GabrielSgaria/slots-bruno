@@ -80,7 +80,6 @@ export default function PageGamesSinais({ params }: { params: { slug: string } }
                             height={900}
                             src={iconEntrada}
                             alt="Icon Entrada"
-
                         />
                     </div>
                     <div className={cn("flex ml-5 text-xl sm:text-2xl font-bold gap-4 uppercase py-3 sm:py-6", textMap[game!.slug])}>

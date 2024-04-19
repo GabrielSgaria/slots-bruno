@@ -13,7 +13,7 @@ export function NavBar() {
                         <Link href="/gerar-sinais" className="hover:font-bold w-[200px] py-2 text-center border border-zinc-700 hover:bg-zinc-700 rounded-md transition-all duration-200 text-base sm:text-xl">
                             GERAR SINAIS
                         </Link>
-                        <Link href={linkBruno} target='_blank' className="hover:font-bold w-[200px] py-2 text-center border border-zinc-700 hover:bg-zinc-700 rounded-md transition-all duration-200 text-base sm:text-xl">
+                        <Link href={linkBruno} target='_blank' className="font-bold w-[200px] py-2 text-center border bg-green-700 text-yellow-400/90 border-zinc-700 hover:bg-zinc-700 rounded-md transition-all duration-200 text-base sm:text-xl">
                             JOGUE AGORA
                         </Link>
                     </div>
