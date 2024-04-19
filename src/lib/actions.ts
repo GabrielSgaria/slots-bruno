@@ -14,7 +14,7 @@ interface CardData {
 
 export async function updateCards() {
     try {
-        for (let i = 1; i <= 106; i++) {
+        for (let i = 1; i <= 108; i++) {
             const porcentagem = getRandomPorcentagem();
             await prisma.card.update({
                 where: {
@@ -36,7 +36,7 @@ export async function updateCards() {
 export async function createCards() {
     try {
         const cards: CardData = { data: [] };
-        for (let i = 1; i <= 106; i++) {
+        for (let i = 1; i <= 108; i++) {
             const porcentagem = getRandomPorcentagem();
             // cards.data.push({ id: i, porcentagem });
             await prisma.card.create({
