@@ -3,15 +3,11 @@ import { twMerge } from 'tailwind-merge';
 
 export const getRandomPorcentagem = () => Math.floor(Math.random() * 100) + 1;
 
-// export const getRandomColor = () => {
-//     const colors = ['#3f6212', '#65a30d', '#0d9488', '#7e22ce', '#db2777'];
-//     return colors[Math.floor(Math.random() * colors.length)];
-// };
-
 export const getRandomColor = () => {
-    const randomColor = `#${Math.floor(Math.random() * 16777215).toString(16)}?v=${new Date().getTime()}`; // Adiciona um timestamp como parâmetro de consulta
-    return randomColor;
+    const colors = ['#3f6212', '#65a30d', '#0d9488', '#7e22ce', '#db2777'];
+    return colors[Math.floor(Math.random() * colors.length)];
 };
+
 
 export function cn(...inputs: ClassValue[]){
     return twMerge(clsx(inputs))
