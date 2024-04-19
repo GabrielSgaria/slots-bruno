@@ -2,10 +2,12 @@ import { CardGames } from "@/components/card-games";
 import Image from "next/image";
 import logoFP from '../../public/favicon.png'
 import { ButtonScrollTop } from "@/components/button-scroll-top";
+import { getCards } from "@/lib/actions";
 import { linkBruno } from "@/lib/utils";
 
-export default function Home() {
 
+export default async function Home() {
+  const cards = await getCards();
   return (
     <main>
       <ButtonScrollTop />
@@ -30,9 +32,13 @@ export default function Home() {
       <section>
         <div className="container mx-auto">
 
-          <CardGames
-            linkCasa={linkBruno}
-          />
+          <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2'>
+            {cards?.data.map(({ id, porcentagem }) => (
+              <CardGames key={id} id={id} porcentagem={porcentagem} linkCasa={linkBruno} />
+
+            ))}
+
+          </div>
 
         </div>
       </section>
