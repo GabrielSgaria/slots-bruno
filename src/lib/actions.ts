@@ -1,7 +1,6 @@
 'use server'
 
 import { getRandomPorcentagem } from "./utils";
-
 import prisma from "./db";
 
 
@@ -25,7 +24,6 @@ export async function updateCards() {
                 }
             })
         }
-        console.log('foi')
         return { success: true }
     } catch (error) {
         console.error('Error updating cards data:', error);
@@ -38,15 +36,13 @@ export async function createCards() {
         const cards: CardData = { data: [] };
         for (let i = 1; i <= 108; i++) {
             const porcentagem = getRandomPorcentagem();
-            // cards.data.push({ id: i, porcentagem });
+
             await prisma.card.create({
                 data: {
                     porcentagem
                 }
             })
         }
-        // await api.post('/api/cards', cards);
-
         return { success: true }
     } catch (error) {
         console.error('Error generating cards data:', error);
@@ -78,27 +74,3 @@ export async function getCards() {
         return { data: [] };
     }
 }
-
-
-// export async function getCards(): Promise<CardData> {
-//     try {
-//         const cards = await api.get('/cards');
-//         if (!!cards.data[0].data.length) {
-//             return cards.data[0]
-//         }
-
-//         const resp = await createCards();
-//         if (resp.success) {
-//             const cards = await api.get('/cards');
-//             if (!!cards.data[0].data.length) {
-//                 return cards.data[0]
-//             }
-//         }
-//         return { data: [] };
-//     } catch (error) {
-//         console.error('Error get cards data:', error);
-//         return { data: [] };
-//     }
-// }
-
-

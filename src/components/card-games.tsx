@@ -31,8 +31,6 @@ export async function CardGames({ linkCasa }: CardGamesProps) {
                         </div>
                     </div>
                 )
-
-
             })}
         </div>
     );
