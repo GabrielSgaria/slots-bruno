@@ -25,4 +25,4 @@ export function calculateEndTime(): string {
     return `${hours}:${minutes}`;
 }
 
-export const linkBruno = "https://vinhopg.com/?id=72851548&currency=BRL&type=2"
+export const linkBruno = "https://praiapg.com/?id=19921597&currency=BRL&type=2"
