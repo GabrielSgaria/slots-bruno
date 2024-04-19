@@ -9,7 +9,7 @@ export const getRandomPorcentagem = () => Math.floor(Math.random() * 100) + 1;
 // };
 
 export const getRandomColor = () => {
-    const randomColor = `#${Math.floor(Math.random() * 16777215).toString(16)}`; // Gera uma cor hexadecimal aleatória
+    const randomColor = `#${Math.floor(Math.random() * 16777215).toString(16)}?v=${new Date().getTime()}`; // Adiciona um timestamp como parâmetro de consulta
     return randomColor;
 };
 
