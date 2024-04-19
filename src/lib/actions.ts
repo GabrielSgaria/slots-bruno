@@ -55,13 +55,21 @@ export async function createCards() {
 
 export async function getCards() {
     try {
-        const cards = await prisma.card.findMany()
+        const cards = await prisma.card.findMany({
+            orderBy: {
+                id: "asc"
+            }
+        })
         if (!!cards.length) {
             return { data: cards }
         }
         const newCards = await createCards()
         if (newCards.success) {
-            const cards = await prisma.card.findMany()
+            const cards = await prisma.card.findMany({
+                orderBy: {
+                    id: "asc"
+                }
+            })
             return { data: cards }
         }
     } catch (error) {

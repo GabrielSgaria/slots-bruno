@@ -56,7 +56,6 @@ export default function PageGamesSinais({ params }: { params: { slug: string } }
 
             let remainingSeconds = 59;
 
-
             const countdownInterval = setInterval(() => {
                 remainingSeconds -= 1;
                 setButtonDisabled(true);
