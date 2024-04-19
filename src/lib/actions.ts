@@ -25,6 +25,7 @@ export async function updateCards() {
                 }
             })
         }
+        console.log('foi')
         return { success: true }
     } catch (error) {
         console.error('Error updating cards data:', error);
