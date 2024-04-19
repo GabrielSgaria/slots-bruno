@@ -34,6 +34,77 @@
 .rosa {
   background: #db2777;
 }
+.verde2 {
+  background: #65a30d;
+}
+.azul {
+  background: #0d9488;
+}
+.roxo {
+  background: #7e22ce;
+}
+.amarelo-escuro {
+  background: #b8860b;
+}
+
+.laranja-claro {
+  background: #ffa500;
+}
+
+.azul-marinho {
+  background: #000080;
+}
+
+.cinza-claro {
+  background: #d3d3d3;
+}
+
+.rosa-claro {
+  background: #ffc0cb;
+}
+
+.roxo-escuro {
+  background: #4b0082;
+}
+
+.verde-lima {
+  background: #00ff00;
+}
+
+.azul-ciano {
+  background: #00ffff;
+}
+
+.amarelo-verde {
+  background: #9acd32;
+}
+
+.laranja-vermelho {
+  background: #ff4500;
+}
+
+.azul-celeste {
+  background: #87ceeb;
+}
+
+.rosa-forte {
+  background: #ff69b4;
+}
+
+.roxo-claro {
+  background: #9370db;
+}
+
+.amarelo-ouro {
+  background: #ffd700;
+}
+
+.vermelho-marrom {
+  background: #8b4513;
+}
+
+
+
 
 @keyframes progress-bar-stripes {
   from {

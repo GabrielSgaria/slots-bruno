@@ -1,4 +1,4 @@
-import {type ClassValue, clsx} from 'clsx' 
+import { type ClassValue, clsx } from 'clsx'
 import { twMerge } from 'tailwind-merge';
 
 export const getRandomPorcentagem = () => Math.floor(Math.random() * 100) + 1;
@@ -10,13 +10,34 @@ export const getRandomColor = () => {
 
 
 export const getRandomClass = () => {
-    const colors = ['verde-escuro', 'rosa'];
+    const colors = [
+        'verde-escuro',
+        'rosa',
+        'verde2',
+        'azul',
+        'roxo',
+        'amarelo-escuro',
+        'laranja-claro',
+        'azul-marinho',
+        'cinza-claro',
+        'rosa-claro',
+        'roxo-escuro',
+        'verde-lima',
+        'azul-ciano',
+        'amarelo-verde',
+        'laranja-vermelho',
+        'azul-celeste',
+        'rosa-forte',
+        'roxo-claro',
+        'amarelo-ouro',
+        'vermelho-marrom'
+    ];
     return colors[Math.floor(Math.random() * colors.length)];
 };
 
 
 
-export function cn(...inputs: ClassValue[]){
+export function cn(...inputs: ClassValue[]) {
     return twMerge(clsx(inputs))
 }
 
