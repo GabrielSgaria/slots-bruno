@@ -17,8 +17,8 @@ export default function Home() {
             <Image width={9000} height={9000} src={logoFP} alt="Logo Oficial FP" />
           </div>
 
-          <h1 className="text-center text-xl sm:text-2xl">
-            FP PORCENTAGEM DE PAGAMENTO
+          <h1 className="text-center text-xl sm:text-2xl font-bold">
+            PORCENTAGEM GRUPO FP OFICIAL
           </h1>
 
         </div>
@@ -31,7 +31,7 @@ export default function Home() {
         <div className="container mx-auto">
 
           <CardGames
-            linkCasa={linkBruno}  //LINK DAS CASAS
+            linkCasa={linkBruno}
           />
 
         </div>

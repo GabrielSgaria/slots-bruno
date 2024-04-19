@@ -1,5 +1,8 @@
 import axios from "axios";
 
 export const api = axios.create({
-    baseURL: 'https://server-slots.vercel.app'
+
+    baseURL: 'http://localhost:3001'
+
 })
+// baseURL: 'https://server-slots.vercel.app'

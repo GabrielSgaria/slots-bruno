@@ -45,7 +45,7 @@ export default function PageGamesSinais({ params }: { params: { slug: string } }
 
     const handleGenerateSignal = () => {
         setButtonDisabled(true);
-        setMessage("IA LENDO O CASINO");
+        setMessage("IA LENDO O CASSINO");
 
         setTimeout(() => {
             setButtonDisabled(true);
@@ -71,14 +71,11 @@ export default function PageGamesSinais({ params }: { params: { slug: string } }
         }, 5000);
     };
 
-
-
-
     return (
         <div className={cn("w-full h-[640px] mt-[73px] bg-center bg-contain bg-no-repeat flex items-center justify-center", backgroundMap[game!.slug])}>
-            <div className="w-[395px] h-[435px] mt-[152px] flex flex-col justify-between px-3 py-1">
+            <div className="w-[340px] h-[370px] sm:w-[395px] sm:h-[435px] mt-[120px] sm:mt-[152px] flex flex-col justify-between px-3 py-1">
                 <div className={cn("p-2 w-full flex flex-row border rounded-lg items-center", borderMap[game!.slug])}>
-                    <div className="w-14 items-start ">
+                    <div className="w-12 sm:w-14 items-start">
                         <Image
                             width={900}
                             height={900}
@@ -87,7 +84,7 @@ export default function PageGamesSinais({ params }: { params: { slug: string } }
 
                         />
                     </div>
-                    <div className={cn("flex ml-5 text-2xl font-bold gap-4 uppercase py-6", textMap[game!.slug])}>
+                    <div className={cn("flex ml-5 text-xl sm:text-2xl font-bold gap-4 uppercase py-3 sm:py-6", textMap[game!.slug])}>
                         <h1 className="">NORMAL:</h1>
                         <span>{normalValue}</span>
                     </div>
@@ -102,7 +99,7 @@ export default function PageGamesSinais({ params }: { params: { slug: string } }
                             className=""
                         />
                     </div>
-                    <div className={cn("flex ml-5 text-2xl font-bold gap-4 uppercase py-6", textMap[game!.slug])}>
+                    <div className={cn("flex ml-5 text-xl sm:text-2xl font-bold gap-4 uppercase py-3 sm:py-6", textMap[game!.slug])}>
                         <h1 className="">TURBO:</h1>
                         <span>{turboValue}</span>
                     </div>
@@ -117,7 +114,7 @@ export default function PageGamesSinais({ params }: { params: { slug: string } }
 
                         />
                     </div>
-                    <div className={cn("flex ml-5 text-2xl font-bold gap-4 uppercase py-6", textMap[game!.slug])}>
+                    <div className={cn("flex ml-5 text-xl sm:text-2xl font-bold gap-4 uppercase py-3 sm:py-6", textMap[game!.slug])}>
                         <h1 className="">JOGUE ATÉ:</h1>
                         <span>{endTime}</span>
                     </div>

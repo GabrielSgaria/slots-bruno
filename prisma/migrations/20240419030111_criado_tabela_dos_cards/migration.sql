@@ -1,0 +1,5 @@
+-- CreateTable
+CREATE TABLE "Card" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "porcentagem" INTEGER NOT NULL
+);
