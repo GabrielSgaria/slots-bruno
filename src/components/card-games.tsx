@@ -11,7 +11,7 @@ export async function CardGames({ linkCasa }: CardGamesProps) {
 
     return (
         <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2'>
-            {cards.data.map(({ id, porcentagem }) => {
+            {cards?.data.map(({ id, porcentagem }) => {
                 const corRandom = getRandomColor();
                 return (
                     <div key={id} className="flex flex-col my-2 justify-between">
