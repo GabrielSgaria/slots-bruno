@@ -1,7 +1,7 @@
 'use server'
 
 import { getRandomPorcentagem } from "./utils";
-import { api } from "./api";
+
 import prisma from "./db";
 
 
