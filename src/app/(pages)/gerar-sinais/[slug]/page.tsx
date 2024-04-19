@@ -129,9 +129,9 @@ export default function PageGamesSinais({ params }: { params: { slug: string } }
                                 <GearIcon className="animate-spin size-5 text-zinc-50" />
                             </p>
                         ) : (
-                        <p className="text-zinc-50 flex gap-4 items-center">
-                            GERAR SINAL<DotFilledIcon className="animate-ping size-8 text-yellow-500" />
-                        </p>
+                            <p className="text-zinc-50 flex gap-4 items-center">
+                                GERAR SINAL<DotFilledIcon className="animate-ping size-8 text-yellow-500" />
+                            </p>
                         )}
                     </h1>
                 </button>
