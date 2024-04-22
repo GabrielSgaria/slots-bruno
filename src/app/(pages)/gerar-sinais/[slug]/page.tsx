@@ -118,7 +118,7 @@ export default function PageGamesSinais({ params }: { params: { slug: string } }
                     </div>
                 </div>
                 <button
-                    className={cn("w-9/12 h-11 flex flex-row rounded-lg items-center mx-auto mt-1 bg-green-700 hover:bg-green-600 transition-all border-2 border-yellow-500")}
+                    className={cn("w-11/12 h-11 flex flex-row rounded-lg items-center mx-auto mt-1 bg-green-700 hover:bg-green-600 transition-all border-2 border-yellow-500")}
                     onClick={handleGenerateSignal}
                     disabled={buttonDisabled}
                 >
