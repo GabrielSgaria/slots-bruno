@@ -4,7 +4,7 @@ import { cn, getRandomClass } from '@/lib/utils';
 import { useState, useEffect } from 'react';
 
 interface CardGamesProps {
-    linkCasa: string;
+    linkCasa?: string | null;
     id: number;
     porcentagem: number;
 }
@@ -17,6 +17,10 @@ export function CardGames({ linkCasa, id, porcentagem }: CardGamesProps) {
         setCurrentColor(color);
     }, []);
 
+    if (!linkCasa) {
+        return <p>Link não encontrado</p>;
+    }
+    
     return (
         <div key={id} className="flex flex-col my-2 justify-between">
             <a href={linkCasa} target='_blank' className='sm:hover:opacity-60 h-full'>
@@ -33,6 +37,5 @@ export function CardGames({ linkCasa, id, porcentagem }: CardGamesProps) {
                 }} />
             </div>
         </div>
-
     );
 }

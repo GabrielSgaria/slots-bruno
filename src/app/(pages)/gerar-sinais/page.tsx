@@ -3,8 +3,6 @@ import logoFP from '../../../../public/favicon.png'
 import { gamesSinais } from "@/lib/constants";
 
 export default function GerarSinais() {
-
-
     return (
         <div className="h-screen w-full">
             <div className="container mx-auto flex justify-center pt-28 flex-col items-center">
@@ -21,14 +19,13 @@ export default function GerarSinais() {
 
             <div className="grid grid-cols-2 px-4 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-3 lg:px-64 gap-6 container mx-auto ">
                 {gamesSinais.map(({ image, slug }) => (
-                    <div key={ slug }>
+                    <div key={slug}>
                         <a href={`/gerar-sinais/${slug}`} className="w-full sm:max-h-[140px]">
                             <Image width={9000} height={9000} src={image} alt={slug} className="rounded-3xl w-full h-full object-fill" />
                         </a>
                     </div>
                 ))}
             </div>
-
         </div>
     )
 }

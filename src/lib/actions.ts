@@ -1,8 +1,6 @@
 'use server'
-
 import { getRandomPorcentagem } from "./utils";
 import prisma from "./db";
-
 
 interface CardData {
     data: {
@@ -74,3 +72,42 @@ export async function getCards() {
         return { data: [] };
     }
 }
+
+const hashUnico = process.env.HASH_LINK as string;
+
+export const handleSubmit = async (e: FormData) => {
+    const link = e.get('link');
+    const hash = e.get('hash');
+    console.log({ link, hash })
+
+    if (link && hash === hashUnico) {
+        await prisma.settings.upsert({
+            where: { casa: 'bruno_fp' },
+            update: { link: link as string },
+            create: {
+                link: link as string,
+                casa: 'bruno_fp'
+            },
+        })
+        console.log('Novo link:', link);
+        console.log('Link atualizado com sucesso:', link);
+        return { message: { sucess: 'Link atualizado' } }
+    } else {
+        console.log('Hash de validação incorreta');
+        console.log(hashUnico)
+        return { message: { error: 'Hash inválida' } }
+    }
+};
+
+export async function getLinkCasa() {
+    try {
+        const newLink = await prisma.settings.findUnique({
+            where: { casa: 'bruno_fp' },
+        });
+        return { data: newLink?.link};
+    } catch (error) {
+        console.error('Error getLinkCasa:', error);
+        return { data: null };
+    }
+}
+

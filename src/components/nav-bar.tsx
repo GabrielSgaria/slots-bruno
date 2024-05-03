@@ -1,7 +1,12 @@
+import { getLinkCasa } from "@/lib/actions";
 import Link from "next/link";
-import { linkBruno } from "@/lib/utils";
 
-export function NavBar() {
+export async function NavBar() {
+    const novoLink = await getLinkCasa();
+
+    if (!novoLink) {
+        return <p>Link não encontrado</p>;
+    }
     return (
         <div>
             <nav className="shadow-sm bg-zinc-900 border-b border-zinc-500/20 fixed top-0 w-full z-50">
@@ -13,9 +18,15 @@ export function NavBar() {
                         <Link href="/gerar-sinais" className="hover:font-bold w-[200px] py-2 text-center border border-zinc-700 hover:bg-zinc-700 rounded-md transition-all duration-200 text-base sm:text-xl">
                             GERAR SINAIS
                         </Link>
-                        <Link href={linkBruno} target='_blank' className="font-bold w-[200px] py-2 text-center border bg-green-700 text-yellow-400/90 border-zinc-700 hover:bg-zinc-700 rounded-md transition-all duration-200 text-base sm:text-xl">
-                            JOGUE AGORA
-                        </Link>
+                        {novoLink.data ? (
+                            <Link href={novoLink?.data} target='_blank' className="font-bold w-[200px] py-2 text-center border bg-green-700 text-yellow-400/90 border-zinc-700 hover:bg-zinc-700 rounded-md transition-all duration-200 text-base sm:text-xl">
+                                JOGUE AGORA
+                            </Link>
+                        ) :
+                            <Link href='/' target='_blank' className="font-bold w-[200px] py-2 text-center border bg-green-700 text-yellow-400/90 border-zinc-700 hover:bg-zinc-700 rounded-md transition-all duration-200 text-base sm:text-xl">
+                                LINK NÃO ENCONTRADO
+                            </Link>
+                        }
                     </div>
                 </div>
             </nav>

@@ -1,5 +1,6 @@
 import { type ClassValue, clsx } from 'clsx'
 import { twMerge } from 'tailwind-merge';
+import { getLinkCasa } from './actions';
 
 export const getRandomPorcentagem = () => Math.floor(Math.random() * 100) + 1;
 
@@ -35,8 +36,6 @@ export const getRandomClass = () => {
     return colors[Math.floor(Math.random() * colors.length)];
 };
 
-
-
 export function cn(...inputs: ClassValue[]) {
     return twMerge(clsx(inputs))
 }
@@ -53,4 +52,4 @@ export function calculateEndTime(): string {
     return `${hours}:${minutes}`;
 }
 
-export const linkBruno = "https://surfistapg.com/?id=359398832&currency=BRL&type=2"
+

@@ -7,7 +7,7 @@ import tBranco from '../../../../../public/image/icone-sinais/iconturboBranco.pn
 import vBranco from '../../../../../public/image/icone-sinais/iconvalidadeBranco.png'
 import tBege from '../../../../../public/image/icone-sinais/iconturboBege.png';
 import vBege from '../../../../../public/image/icone-sinais/iconvalidadeBege.png'
-import { DotFilledIcon, GearIcon, TriangleRightIcon } from "@radix-ui/react-icons";
+import { DotFilledIcon, GearIcon } from "@radix-ui/react-icons";
 import { useState } from "react";
 import { generateRandomNumber, calculateEndTime } from "@/lib/utils";
 
@@ -33,10 +33,8 @@ const textMap: Record<string, string> = {
     'fortune-dragon': 'text-fortune-dragon-color'
 }
 
-
 export default function PageGamesSinais({ params }: { params: { slug: string } }) {
     const game = gamesSinais.find(signal => signal.slug === params.slug);
-
     const [buttonDisabled, setButtonDisabled] = useState(false);
     const [message, setMessage] = useState("");
     const [normalValue, setNormalValue] = useState("--");
