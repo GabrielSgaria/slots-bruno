@@ -67,7 +67,7 @@ export default function PageGamesSinais({ params }: { params: { slug: string } }
             }, 1000);
         }, 5000);
     };
-
+    
     return (
         <div className={cn("w-full h-[640px] mt-[73px] bg-center bg-contain bg-no-repeat flex items-center justify-center", backgroundMap[game!.slug])}>
             <div className="w-[340px] h-[430px] sm:w-[395px] sm:h-[435px] mt-[145px] sm:mt-[152px] flex flex-col justify-between px-3 py-1">

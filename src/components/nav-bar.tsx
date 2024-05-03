@@ -3,10 +3,6 @@ import Link from "next/link";
 
 export async function NavBar() {
     const novoLink = await getLinkCasa();
-
-    if (!novoLink) {
-        return <p>Link não encontrado</p>;
-    }
     return (
         <div>
             <nav className="shadow-sm bg-zinc-900 border-b border-zinc-500/20 fixed top-0 w-full z-50">

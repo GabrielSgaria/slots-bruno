@@ -4,7 +4,6 @@ import logoFP from '../../public/favicon.png'
 import { ButtonScrollTop } from "@/components/button-scroll-top";
 import { getCards, getLinkCasa } from "@/lib/actions";
 import { DotFilledIcon } from "@radix-ui/react-icons";
-import { NavBar } from "@/components/nav-bar";
 
 
 export default async function Home() {
@@ -12,7 +11,6 @@ export default async function Home() {
   const novoLink = await getLinkCasa();
   return (
     <main>
-  
       <ButtonScrollTop />
 
       <div className="container mx-auto flex justify-center pt-28 flex-col items-center">
