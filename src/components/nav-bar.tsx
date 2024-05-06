@@ -1,6 +1,7 @@
 import { getLinkCasa } from "@/lib/actions";
 import Link from "next/link";
 
+
 export async function NavBar() {
     const novoLink = await getLinkCasa();
     return (

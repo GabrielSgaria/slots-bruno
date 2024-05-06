@@ -1,4 +1,5 @@
 'use server'
+import { revalidateTag, unstable_cache } from "next/cache";
 import { getRandomPorcentagem } from "./utils";
 import prisma from "./db";
 
@@ -75,6 +76,7 @@ export async function getCards() {
 
 const hashUnico = process.env.HASH_LINK as string;
 
+
 export const handleSubmit = async (e: FormData) => {
     const link = e.get('link');
     const hash = e.get('hash');
@@ -89,6 +91,7 @@ export const handleSubmit = async (e: FormData) => {
                 casa: 'bruno_fp'
             },
         })
+        revalidateTag(`link-casa`);
         console.log('Novo link:', link);
         console.log('Link atualizado com sucesso:', link);
         return { message: { sucess: 'Link atualizado' } }
@@ -99,15 +102,16 @@ export const handleSubmit = async (e: FormData) => {
     }
 };
 
-export async function getLinkCasa() {
+export const getLinkCasa = unstable_cache(async () => {
     try {
         const newLink = await prisma.settings.findUnique({
             where: { casa: 'bruno_fp' },
         });
-        return { data: newLink?.link};
+        return { data: newLink?.link };
     } catch (error) {
         console.error('Error getLinkCasa:', error);
         return { data: null };
     }
-}
-
+}, ['link-casa'], {
+    tags: ['link-casa']
+  })

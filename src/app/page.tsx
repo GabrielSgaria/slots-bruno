@@ -5,7 +5,6 @@ import { ButtonScrollTop } from "@/components/button-scroll-top";
 import { getCards, getLinkCasa } from "@/lib/actions";
 import { DotFilledIcon } from "@radix-ui/react-icons";
 
-
 export default async function Home() {
   const cards = await getCards();
   const novoLink = await getLinkCasa();
