@@ -16,7 +16,7 @@ export function HeaderInfos() {
                     GRUPO FP OFICIAL
                 </h1>
             </div>
-            <div className="py-3 sm:py-0 shadow-2xl shadow-black text-center justify-center items-center text-base flex flex-col space-x-[3px] mt-10 max-w-[600px] backdrop-blur-sm bg-zinc-950/20 border border-zinc-950/5 rounded-2xl px-2 sm:p-10">
+            <div className="py-3 sm:py-10 shadow-2xl shadow-black text-center justify-center items-center text-base flex flex-col space-x-[3px] mt-10 max-w-[600px] backdrop-blur-sm bg-zinc-950/20 border border-zinc-950/5 rounded-2xl px-2 sm:p-10">
                 <div className='flex gap-2 items-center justify-center'>
                     <CallBell className='md:size-6' weight="bold" />
                     <span className='font-bold sm:text-lg md:text-xl'>DICA:</span>
