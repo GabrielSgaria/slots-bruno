@@ -28,79 +28,79 @@
   position: absolute;
 }
 
-.verde-escuro {
-  background: #3f6212;
+.verde-lima {
+  background: #16a34a;
 }
-.rosa {
-  background: #db2777;
+
+.verde-escuro {
+  background: #064e3b;
 }
 .verde2 {
   background: #65a30d;
+}
+.rosa {
+  background: #db2777;
 }
 .azul {
   background: #0d9488;
 }
 .roxo {
-  background: #7e22ce;
+  background: #a21caf;
 }
 .amarelo-escuro {
-  background: #b8860b;
+  background: #ca8a04;
 }
 
 .laranja-claro {
-  background: #ffa500;
+  background: #f59e0b;
 }
 
 .azul-marinho {
-  background: #000080;
+  background: #3730a3;
 }
 
 .cinza-claro {
-  background: #d3d3d3;
+  background: #075985;
 }
 
 .rosa-claro {
-  background: #ffc0cb;
+  background: #ec4899;
 }
 
 .roxo-escuro {
-  background: #4b0082;
-}
-
-.verde-lima {
-  background: #00ff00;
+  background: #312e81;
 }
 
 .azul-ciano {
-  background: #00ffff;
+  background: #1d4ed8;
 }
 
 .amarelo-verde {
-  background: #9acd32;
+  background: #facc15;
 }
 
 .laranja-vermelho {
-  background: #ff4500;
+  background: #ea580c;
 }
 
 .azul-celeste {
-  background: #87ceeb;
+  background: #059669;
 }
 
 .rosa-forte {
-  background: #ff69b4;
+  background: #be185d;
 }
 
 .roxo-claro {
-  background: #9370db;
+  background: #d946ef;
 }
 
 .amarelo-ouro {
-  background: #ffd700;
+  background: #eab308;
 }
 
 .vermelho-marrom {
-  background: #8b4513;
+  background: #f97316;
 }
 
 

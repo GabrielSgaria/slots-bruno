@@ -9,7 +9,7 @@ export default async function Home() {
   const cards = await getCards();
   const novoLink = await getLinkCasa();
   return (
-    <main>
+    <main className="">
       <ButtonScrollTop />
 
       <div className="container mx-auto flex justify-center pt-28 flex-col items-center">

@@ -23,7 +23,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt">
-      <body className={`bg-zinc-950 text-zinc-50 ${roboto.variable}`}>
+      <body className={`bg-[url('../../public/bg-casino.png')] bg-no-repeat bg-fixed bg-cover text-zinc-50 ${roboto.variable}`}>
         <NavBar />
         {children}
       </body>
