@@ -14,9 +14,9 @@ export default async function Home() {
       <HeaderInfos />
 
       <section>
-        <div className="container mx-auto">
+        <div className="container mx-auto items-center justify-center px-3 sm:px-0 flex">
           {novoLink.data ? (
-            <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2 px-2'>
+            <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-7 gap-2 '>
               {cards?.data.map(({ id, porcentagem }) => (
                 <CardGames key={id} id={id} porcentagem={porcentagem} linkCasa={novoLink?.data} />
               ))}
