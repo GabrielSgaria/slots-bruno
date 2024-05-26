@@ -104,8 +104,6 @@
 }
 
 
-
-
 @keyframes progress-bar-stripes {
   from {
     background-position-x: 100%;
@@ -115,4 +113,19 @@
   }
 }
 
-  
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #09090b;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #166534;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}

@@ -5,6 +5,7 @@ import { DotFilledIcon } from "@radix-ui/react-icons";
 import { HeaderInfos } from "@/components/header-info";
 
 export default async function Home() {
+
   const cards = await getCards();
   const novoLink = await getLinkCasa();
   return (
