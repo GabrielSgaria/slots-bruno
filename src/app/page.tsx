@@ -6,15 +6,12 @@ import { HeaderInfos } from "@/components/header-info";
 import { Suspense } from "react";
 
 export default async function Home() {
-
   const cards = await getCards();
   const novoLink = await getLinkCasa();
   return (
     <main className="">
       <ButtonScrollTop />
-
       <HeaderInfos />
-
       <section>
         <div className="container mx-auto items-center justify-center px-3 sm:px-0 flex">
           {novoLink.data ? (

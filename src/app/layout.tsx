@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
 import "./globals.css";
 import { NavBar } from "@/components/nav-bar";
+import { Footer } from "@/components/footer";
 
 const roboto = Roboto(
   { 
@@ -26,6 +27,7 @@ export default function RootLayout({
       <body className={`bg-[url('../../public/bg-casino.png')] bg-no-repeat bg-fixed bg-cover bg-center text-zinc-50 ${roboto.variable}`}>
         <NavBar />
         {children}
+        <Footer />
       </body>
     </html>
   );
