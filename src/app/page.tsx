@@ -3,6 +3,7 @@ import { ButtonScrollTop } from "@/components/button-scroll-top";
 import { getCards, getLinkCasa } from "@/lib/actions";
 import { DotFilledIcon } from "@radix-ui/react-icons";
 import { HeaderInfos } from "@/components/header-info";
+import { Suspense } from "react";
 
 export default async function Home() {
 
@@ -18,9 +19,9 @@ export default async function Home() {
         <div className="container mx-auto items-center justify-center px-3 sm:px-0 flex">
           {novoLink.data ? (
             <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-7 gap-2 '>
-              {cards?.data.map(({ id, porcentagem }) => (
-                <CardGames key={id} id={id} porcentagem={porcentagem} linkCasa={novoLink?.data} />
-              ))}
+                {cards?.data.map(({ id, porcentagem }) => (
+                  <CardGames key={id} id={id} porcentagem={porcentagem} linkCasa={novoLink?.data} />
+                ))}
             </div>
           ) : (
             <div className="flex justify-center items-center flex-col">
