@@ -41,7 +41,7 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function generateRandomNumber(): number {
-    return Math.floor(Math.random() * (16 - 3 + 1)) + 3;
+    return Math.floor(Math.random() * (9 - 3 + 1)) + 3;
 }
 
 export function calculateEndTime(): string {
