@@ -88,7 +88,7 @@ export default function PageGamesSinais({ params }: { params: { slug: string } }
             <div className="min-h-[55px] sm:min-h-[65px] w-full" />
             <div className="flex h-[90vh] items-center justify-center p-3">
 
-                <div className={cn("max-w-[340px] max-h-[480px] sm:max-w-[400px] sm:max-h-[590px] min-h-[400px] w-full h-full flex flex-col justify-between rounded-2xl shadow-2xl shadow-black backdrop-blur-2xl border border-zinc-600 overflow-hidden bg-opacity-20", `${colorBgMap[game!.slug]}`)}>
+                <div className={cn("max-w-[340px] max-h-[490px] sm:max-w-[400px] sm:max-h-[590px] min-h-[400px] w-full h-full flex flex-col justify-between rounded-2xl shadow-2xl shadow-black backdrop-blur-2xl border border-zinc-600 overflow-hidden bg-opacity-20", `${colorBgMap[game!.slug]}`)}>
                     <div className="flex flex-col">
 
                         <div className='h-full max-h-[150px] min-h-[100px] w-full'>
@@ -111,7 +111,7 @@ export default function PageGamesSinais({ params }: { params: { slug: string } }
 
                     </div>
                     <div className="flex flex-col px-5 h-full justify-around my-2">
-                        <div className={cn("px-3 w-full flex flex-row border border-zinc-950/20 rounded-lg items-center backdrop-blur-sm bg-zinc-950/20 shadow-lg shadow-black")}>
+                        <div className={cn("px-3 py-1 w-full flex flex-row border border-zinc-950/20 rounded-lg items-center backdrop-blur-sm bg-zinc-950/20 shadow-lg shadow-black")}>
                             <div className="w-12 justify-center flex">
                                 <Image
                                     width={900}
@@ -126,7 +126,7 @@ export default function PageGamesSinais({ params }: { params: { slug: string } }
                                 <span>{normalValue}</span>
                             </div>
                         </div>
-                        <div className={cn("px-3 w-full flex flex-row border rounded-lg items-center border-zinc-950/20 backdrop-blur-sm bg-zinc-950/20 shadow-lg shadow-black", textMap[game!.slug])}>
+                        <div className={cn("py-1 px-3 w-full flex flex-row border rounded-lg items-center border-zinc-950/20 backdrop-blur-sm bg-zinc-950/20 shadow-lg shadow-black", textMap[game!.slug])}>
                             <div className="w-12  justify-center flex">
                                 <Image
                                     width={900}
@@ -142,7 +142,7 @@ export default function PageGamesSinais({ params }: { params: { slug: string } }
                                 <span>{turboValue}</span>
                             </div>
                         </div>
-                        <div className={cn("px-3 w-full flex flex-row border rounded-lg items-center border-zinc-950/20 backdrop-blur-sm bg-zinc-950/20 shadow-lg shadow-black")} >
+                        <div className={cn("px-3 py-1 w-full flex flex-row border rounded-lg items-center border-zinc-950/20 backdrop-blur-sm bg-zinc-950/20 shadow-lg shadow-black")} >
                             <div className="w-12 justify-center flex ">
                                 <Image
                                     width={900}
