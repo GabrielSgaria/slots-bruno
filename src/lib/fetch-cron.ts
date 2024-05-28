@@ -1,3 +1,5 @@
+import { toZonedTime, format } from 'date-fns-tz';
+
 const url = process.env.CRON_URL as string;
 const token = process.env.CRON_KEY as string;
 
@@ -12,15 +14,13 @@ export async function getCronJob(): Promise<CronJobResponse | undefined> {
 
         if (res.ok) {
             const resData = await res.json();
-
+            const timeZone = resData.jobDetails.schedule.timezone;
 
             if (typeof resData.jobDetails.lastExecution === 'number' && !isNaN(resData.jobDetails.lastExecution)) {
-                resData.jobDetails.lastExecution = formatarHorario(resData.jobDetails.lastExecution);
+                resData.jobDetails.lastExecution = formatarHorario(resData.jobDetails.lastExecution, timeZone);
             } else {
                 resData.jobDetails.lastExecution = 'N/A';
             }
-
-
 
             return resData;
         } else {
@@ -31,20 +31,11 @@ export async function getCronJob(): Promise<CronJobResponse | undefined> {
     }
 }
 
-function formatarHorario(timestamp: number): string {
-
-    const data = new Date(timestamp * 1000);
-
-
-    const horas = data.getHours().toString().padStart(2, '0');
-    const minutos = data.getMinutes().toString().padStart(2, '0');
-    const segundos = data.getSeconds().toString().padStart(2, '0');
-
-    const horario = `${horas}:${minutos}:${segundos}`;
-
+function formatarHorario(timestamp: number, timeZone: string): string {
+    const zonedDate = toZonedTime(new Date(timestamp * 1000), timeZone);
+    const horario = format(zonedDate, 'HH:mm:ss', { timeZone });
     return horario;
 }
-
 
 interface CronJobResponse {
     jobDetails: CronJobDetails;
