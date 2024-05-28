@@ -7,7 +7,7 @@ interface HeaderInfosProps {
     updateTime: string | number | undefined;
 }
 
-export function HeaderInfos({updateTime}: HeaderInfosProps) {
+export function HeaderInfos({ updateTime }: HeaderInfosProps) {
 
     return (
         <div className="container mx-auto flex justify-center pt-28 flex-col items-center px-3 sm:px-0 gap-10 mb-10">
@@ -20,7 +20,7 @@ export function HeaderInfos({updateTime}: HeaderInfosProps) {
                 <h1 className="text-center text-xl sm:text-2xl font-bold text-yellow-400 italic">
                     GRUPO FP OFICIAL
                 </h1>
-        
+
             </div>
             <div className="py-3 shadow-2xl shadow-black text-center justify-center items-center text-base flex flex-col space-x-[3px] max-w-[600px] backdrop-blur-sm bg-zinc-950/20 border border-zinc-950/5 rounded-2xl px-2 sm:p-10">
                 <div className='flex gap-2 items-center justify-center'>
@@ -36,9 +36,12 @@ export function HeaderInfos({updateTime}: HeaderInfosProps) {
             </div>
 
             <div className="flex flex-col items-center justify-center max-w-[600px] shadow-2xl shadow-black w-full rounded-2xl p-5 bg-gradient-to-b to-green-800 via-green-600 from-green-500">
-                <h1 className="text-base uppercase font-bold">
-                    Última atualização as {updateTime}
-                </h1>
+                {updateTime && (
+                    <h1 className="text-base uppercase font-bold">
+                        Última atualização as {updateTime}
+                    </h1>
+
+                )}
                 <p className='text-base'>Nosso site atualiza automaticamente a cada 5 minutos</p>
             </div>
         </div>

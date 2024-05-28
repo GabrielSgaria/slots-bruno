@@ -1,9 +1,7 @@
-import { revalidateTag, unstable_cache } from "next/cache";
-
 const url = process.env.CRON_URL as string;
 const token = process.env.CRON_KEY as string;
 
-export const getCronJob = unstable_cache(async () => {
+export async function getCronJob(): Promise<CronJobResponse | undefined> {
     try {
         const res = await fetch(`${url}`, {
             method: "GET",
@@ -13,7 +11,6 @@ export const getCronJob = unstable_cache(async () => {
         });
 
         if (res.ok) {
-            revalidateTag(`link-casa`);
             const resData = await res.json();
 
 
@@ -24,7 +21,7 @@ export const getCronJob = unstable_cache(async () => {
             }
 
 
-            revalidateTag(`link-casa`);
+
             return resData;
         } else {
             console.error('Erro ao buscar cron job:', res.status, res.statusText);
@@ -32,9 +29,7 @@ export const getCronJob = unstable_cache(async () => {
     } catch (err) {
         console.error(`Erro catch ao buscar o job:`, err);
     }
-}, ['link-casa'], {
-    tags: ['link-casa']
-})
+}
 
 function formatarHorario(timestamp: number): string {
 
