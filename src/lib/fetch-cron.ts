@@ -1,9 +1,10 @@
 import { toZonedTime, format } from 'date-fns-tz';
+import { revalidateTag, unstable_cache } from 'next/cache';
 
 const url = process.env.CRON_URL as string;
 const token = process.env.CRON_KEY as string;
 
-export async function getCronJob(): Promise<CronJobResponse | undefined> {
+export const getCronJob = unstable_cache(async () => {
     try {
         const res = await fetch(`${url}`, {
             method: "GET",
@@ -13,7 +14,7 @@ export async function getCronJob(): Promise<CronJobResponse | undefined> {
         });
 
         if (res.ok) {
-            const resData = await res.json();
+            const resData: CronJobResponse = await res.json();
             const timeZone = resData.jobDetails.schedule.timezone;
 
             if (typeof resData.jobDetails.lastExecution === 'number' && !isNaN(resData.jobDetails.lastExecution)) {
@@ -22,6 +23,7 @@ export async function getCronJob(): Promise<CronJobResponse | undefined> {
                 resData.jobDetails.lastExecution = 'N/A';
             }
 
+            revalidateTag(`timeCron`);
             return resData;
         } else {
             console.error('Erro ao buscar cron job:', res.status, res.statusText);
@@ -29,7 +31,9 @@ export async function getCronJob(): Promise<CronJobResponse | undefined> {
     } catch (err) {
         console.error(`Erro catch ao buscar o job:`, err);
     }
-}
+}, ['timeCron'], {
+    tags: ['timeCron']
+});
 
 function formatarHorario(timestamp: number, timeZone: string): string {
     const zonedDate = toZonedTime(new Date(timestamp * 1000), timeZone);

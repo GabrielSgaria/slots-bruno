@@ -86,9 +86,9 @@ export function CardGames({ linkCasa, id, porcentagem, minima, padrao, maxima }:
                     </div>
                 </div>
             </div>
-            <Link href="/gerar-sinais" className="mb-2 mx-2 hover:underline border border-zinc-50/15 text-center justify-center bg-zinc-50/10 hover:bg-zinc-50/20 items-center flex font-bold rounded-md transition-all text-base sm:text-base">
+            <a href={linkCasa} target='_blank' className="mb-2 mx-2 hover:underline border border-zinc-50/15 text-center justify-center bg-zinc-50/10 hover:bg-zinc-50/20 items-center flex font-bold rounded-md transition-all text-base sm:text-base">
                 <p className="text-zinc-50">JOGUE AGORA</p>
-            </Link>
+            </a>
             <div className="w-full h-full backdrop-blur-md pt-2 pb-4 px-2 mt-2 flex flex-col items-start justify-start">
                 <p className="text-start text-xs flex gap-1 items-center justify-start">
                     <MoneyWavy />{`Mínima R$0,50 a R$2,00`}
