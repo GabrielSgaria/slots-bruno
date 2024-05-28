@@ -1,4 +1,4 @@
-'use server'
+'use server';
 import { revalidateTag, unstable_cache } from "next/cache";
 import { getRandomPorcentagem } from "./utils";
 import prisma from "./db";
@@ -7,6 +7,9 @@ interface CardData {
     data: {
         id: number;
         porcentagem: number;
+        minima: number;
+        padrao: number;
+        maxima: number;
     }[]
 }
 
@@ -14,12 +17,18 @@ export async function updateCards() {
     try {
         for (let i = 1; i <= 108; i++) {
             const porcentagem = getRandomPorcentagem();
+            const minima = getRandomPorcentagem();
+            const padrao = getRandomPorcentagem();
+            const maxima = getRandomPorcentagem();
             await prisma.card.update({
                 where: {
                     id: i
                 },
                 data: {
-                    porcentagem
+                    porcentagem,
+                    minima,
+                    padrao,
+                    maxima
                 }
             })
         }
@@ -32,13 +41,18 @@ export async function updateCards() {
 
 export async function createCards() {
     try {
-        const cards: CardData = { data: [] };
         for (let i = 1; i <= 108; i++) {
             const porcentagem = getRandomPorcentagem();
+            const minima = getRandomPorcentagem();
+            const padrao = getRandomPorcentagem();
+            const maxima = getRandomPorcentagem();
 
             await prisma.card.create({
                 data: {
-                    porcentagem
+                    porcentagem,
+                    minima,
+                    padrao,
+                    maxima
                 }
             })
         }
@@ -75,7 +89,6 @@ export async function getCards() {
 }
 
 const hashUnico = process.env.HASH_LINK as string;
-
 
 export const handleSubmit = async (e: FormData) => {
     const link = e.get('link');
@@ -114,4 +127,4 @@ export const getLinkCasa = unstable_cache(async () => {
     }
 }, ['link-casa'], {
     tags: ['link-casa']
-  })
+})

@@ -3,20 +3,26 @@ import Image from 'next/image';
 import { cn, getRandomClass } from '@/lib/utils';
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { CashRegister, Coin, MoneyWavy } from '@phosphor-icons/react';
+import { MoneyWavy } from '@phosphor-icons/react';
 
 interface CardGamesProps {
     linkCasa?: string | null;
     id: number;
     porcentagem: number;
+    minima: number;
+    padrao: number;
+    maxima: number;
 }
-export function CardGames({ linkCasa, id, porcentagem }: CardGamesProps) {
+export function CardGames({ linkCasa, id, porcentagem, minima, padrao, maxima }: CardGamesProps) {
 
-    const [currentColor, setCurrentColor] = useState<string>("red");
+    const [colorMinima, setColorMinima] = useState<string>("red");
+    const [colorPadrao, setColorPadrao] = useState<string>("red");
+    const [colorMaxima, setColorMaxima] = useState<string>("red");
 
     useEffect(() => {
-        const color = getRandomClass();
-        setCurrentColor(color);
+        setColorMinima(getRandomClass());
+        setColorPadrao(getRandomClass());
+        setColorMaxima(getRandomClass());
     }, []);
 
     if (!linkCasa) {
@@ -38,9 +44,9 @@ export function CardGames({ linkCasa, id, porcentagem }: CardGamesProps) {
                     </p>
 
                     <div className={`w-full h-3 rounded-full bg-zinc-50 relative z-10 overflow-hidden`} >
-                        <p className='font-bold text-center text-xs z-20 absolute w-full top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-zinc-950'>{porcentagem}%</p>
-                        <div className={cn(`h-full `, currentColor)} style={{
-                            width: `${porcentagem}%`,
+                        <p className='font-bold text-center text-xs z-20 absolute w-full top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-zinc-950'>{minima}%</p>
+                        <div className={cn(`h-full `, colorMinima)} style={{
+                            width: `${minima}%`,
                             backgroundImage: `linear-gradient(120deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent)`,
                             backgroundSize: `200% 100%`,
                             transition: `background-position-x 1s ease`,
@@ -54,9 +60,9 @@ export function CardGames({ linkCasa, id, porcentagem }: CardGamesProps) {
                         Aposta Padrão:
                     </p>
                     <div className={`w-full h-3 rounded-full bg-zinc-50 relative z-10 overflow-hidden`} >
-                        <p className='font-bold text-center text-xs z-20 absolute w-full top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-zinc-950'>{porcentagem}%</p>
-                        <div className={cn(`h-full `, currentColor)} style={{
-                            width: `${porcentagem}%`,
+                        <p className='font-bold text-center text-xs z-20 absolute w-full top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-zinc-950'>{padrao}%</p>
+                        <div className={cn(`h-full `, colorPadrao)} style={{
+                            width: `${padrao}%`,
                             backgroundImage: `linear-gradient(120deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent)`,
                             backgroundSize: `200% 100%`,
                             transition: `background-position-x 1s ease`,
@@ -69,9 +75,9 @@ export function CardGames({ linkCasa, id, porcentagem }: CardGamesProps) {
                         Aposta Máxima:
                     </p>
                     <div className={`w-full h-3 rounded-full bg-zinc-50 relative z-10 overflow-hidden`} >
-                        <p className='font-bold text-center text-xs z-20 absolute w-full top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-zinc-950'>{porcentagem}%</p>
-                        <div className={cn(`h-full `, currentColor)} style={{
-                            width: `${porcentagem}%`,
+                        <p className='font-bold text-center text-xs z-20 absolute w-full top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-zinc-950'>{maxima}%</p>
+                        <div className={cn(`h-full `, colorMaxima)} style={{
+                            width: `${maxima}%`,
                             backgroundImage: `linear-gradient(120deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent)`,
                             backgroundSize: `200% 100%`,
                             transition: `background-position-x 1s ease`,
@@ -80,17 +86,17 @@ export function CardGames({ linkCasa, id, porcentagem }: CardGamesProps) {
                     </div>
                 </div>
             </div>
-                <Link href="/gerar-sinais" className="mb-2 hover:underline border border-zinc-50/15 text-center justify-center hover:bg-zinc-50/15 items-center flex font-bold rounded-md transition-all duration-200 text-base sm:text-base">
-                    <p className="text-zinc-50">JOGUE AGORA</p>
-                </Link>
-            <div className="w-full h-full backdrop-blur-md py-2 px-4 mt-2 flex flex-col items-start justify-start">
-                <p className="text-start text-xs flex gap-2 items-center justify-start">
+            <Link href="/gerar-sinais" className="mb-2 mx-2 hover:underline border border-zinc-50/15 text-center justify-center bg-zinc-50/10 hover:bg-zinc-50/20 items-center flex font-bold rounded-md transition-all text-base sm:text-base">
+                <p className="text-zinc-50">JOGUE AGORA</p>
+            </Link>
+            <div className="w-full h-full backdrop-blur-md pt-2 pb-4 px-2 mt-2 flex flex-col items-start justify-start">
+                <p className="text-start text-xs flex gap-1 items-center justify-start">
                     <MoneyWavy />{`Mínima R$0,50 a R$2,00`}
                 </p>
-                <p className="text-start text-xs  flex gap-2 items-center justify-start">
+                <p className="text-start text-xs flex gap-1 items-center justify-start">
                     <MoneyWavy />{`Padrão R$2,40 a R$10,00`}
                 </p>
-                <p className="text-start text-xs  flex gap-2 items-center justify-start">
+                <p className="text-start text-xs flex gap-1 items-center justify-start">
                     <MoneyWavy /> {`Máxima acima de R$10,00`}
                 </p>
             </div>

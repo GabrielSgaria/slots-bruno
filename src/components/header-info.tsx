@@ -3,11 +3,14 @@ import Image from 'next/image'
 import logoFP from '../../public/favicon.png'
 import { CallBell } from "@phosphor-icons/react"
 
+interface HeaderInfosProps {
+    updateTime: string | number | undefined;
+}
 
-export function HeaderInfos() {
+export function HeaderInfos({updateTime}: HeaderInfosProps) {
 
     return (
-        <div className="container mx-auto flex justify-center pt-28 flex-col items-center px-3 sm:px-0">
+        <div className="container mx-auto flex justify-center pt-28 flex-col items-center px-3 sm:px-0 gap-10 mb-10">
             <div className="flex flex-col justify-center items-center gap-2 backdrop-blur-sm bg-green-700/75 shadow-2xl shadow-black rounded-2xl py-5 px-10">
 
                 <div className="w-20">
@@ -17,8 +20,9 @@ export function HeaderInfos() {
                 <h1 className="text-center text-xl sm:text-2xl font-bold text-yellow-400 italic">
                     GRUPO FP OFICIAL
                 </h1>
+        
             </div>
-            <div className="py-3 sm:py-10 shadow-2xl shadow-black text-center justify-center items-center text-base flex flex-col space-x-[3px] mt-10 max-w-[600px] backdrop-blur-sm bg-zinc-950/20 border border-zinc-950/5 rounded-2xl px-2 sm:p-10">
+            <div className="py-3 shadow-2xl shadow-black text-center justify-center items-center text-base flex flex-col space-x-[3px] max-w-[600px] backdrop-blur-sm bg-zinc-950/20 border border-zinc-950/5 rounded-2xl px-2 sm:p-10">
                 <div className='flex gap-2 items-center justify-center'>
                     <CallBell className='md:size-6' weight="bold" />
                     <span className='font-bold sm:text-lg md:text-xl'>DICA:</span>
@@ -30,8 +34,13 @@ export function HeaderInfos() {
 
                 </p>
             </div>
-            <div className="border-b rounded-full border-zinc-500/45 w-[300px] md:w-[400px] lg:w-[600px] my-10" />
 
+            <div className="flex flex-col items-center justify-center max-w-[600px] shadow-2xl shadow-black w-full rounded-2xl p-5 bg-gradient-to-b to-green-800 via-green-600 from-green-500">
+                <h1 className="text-base uppercase font-bold">
+                    Última atualização as {updateTime}
+                </h1>
+                <p className='text-base'>Nosso site atualiza automaticamente a cada 5 minutos</p>
+            </div>
         </div>
     )
 }

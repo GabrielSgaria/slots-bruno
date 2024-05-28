@@ -5,8 +5,8 @@ import Link from "next/link";
 
 export default function GerarSinais() {
     return (
-        <div className="h-screen w-full">
-            <div className="container mx-auto flex justify-center pt-28 flex-col items-center px-3">
+        <div>
+            <div className="container mx-auto flex justify-center pt-28 flex-col items-center px-3 mb-10">
                 <div className="flex flex-col justify-center items-center gap-2 backdrop-blur-sm bg-green-700/75 shadow-2xl shadow-black rounded-2xl py-5 px-10">
 
                     <div className="w-20">
@@ -17,7 +17,6 @@ export default function GerarSinais() {
                         Gere um sinal para cada jogo
                     </h1>
                 </div>
-                <div className="border-b rounded-full border-zinc-500/45 w-[300px] md:w-[400px] lg:w-[600px] my-10" />
             </div>
 
             <div className="grid grid-cols-2 px-2  sm:grid-cols-3 sm:px-10 md:grid-cols-3 lg:grid-cols-5 lg: gap-2 container mx-auto justify-items-center">
