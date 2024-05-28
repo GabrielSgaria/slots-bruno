@@ -42,7 +42,7 @@ export function HeaderInfos({ updateTime }: HeaderInfosProps) {
                     </h1>
 
                 )}
-                <p className='text-base'>Nosso site atualiza automaticamente a cada 5 minutos</p>
+                <p className='text-xs sm:text-base'>Nosso site atualiza automaticamente a cada 5 minutos</p>
             </div>
         </div>
     )

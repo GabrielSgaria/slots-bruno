@@ -9,7 +9,7 @@ export default async function Home() {
   const cards = await getCards();
   const novoLink = await getLinkCasa();
   const horario = await getCronJob()
-  console.log(horario)
+
   return (
     <main className="">
       <ButtonScrollTop />
