@@ -13,7 +13,7 @@ export const getCronJob = unstable_cache(async () => {
         });
 
         if (res.ok) {
-            revalidateTag(`timeCron`);
+            revalidateTag(`link-casa`);
             const resData = await res.json();
 
 
@@ -24,7 +24,7 @@ export const getCronJob = unstable_cache(async () => {
             }
 
 
-            revalidateTag(`timeCron`);
+            revalidateTag(`link-casa`);
             return resData;
         } else {
             console.error('Erro ao buscar cron job:', res.status, res.statusText);
@@ -32,8 +32,8 @@ export const getCronJob = unstable_cache(async () => {
     } catch (err) {
         console.error(`Erro catch ao buscar o job:`, err);
     }
-}, ['timeCron'], {
-    tags: ['timeCron']
+}, ['link-casa'], {
+    tags: ['link-casa']
 })
 
 function formatarHorario(timestamp: number): string {

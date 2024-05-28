@@ -11,7 +11,6 @@ export default async function Home() {
   const novoLink = await getLinkCasa();
   const horario = await getCronJob()
   console.log(horario)
-  revalidateTag(`timeCron`);
   return (
     <main className="">
       <ButtonScrollTop />
