@@ -4,12 +4,14 @@ import { getCards, getLinkCasa } from "@/lib/actions";
 import { DotFilledIcon } from "@radix-ui/react-icons";
 import { HeaderInfos } from "@/components/header-info";
 import { getCronJob } from "@/lib/fetch-cron";
+import { revalidateTag } from "next/cache";
 
 export default async function Home() {
   const cards = await getCards();
   const novoLink = await getLinkCasa();
   const horario = await getCronJob()
   console.log(horario)
+  revalidateTag(`timeCron`);
   return (
     <main className="">
       <ButtonScrollTop />
