@@ -4,6 +4,7 @@ import "./globals.css";
 import { NavBar } from "@/components/nav-bar";
 import { Footer } from "@/components/footer";
 
+
 const roboto = Roboto(
   { 
     subsets: ["latin"], 
@@ -24,7 +25,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt">
-      <body className={`bg-[url('https://sa-east-1.graphassets.com/clwqdkiy400yu07ls56ql92po/clwqg0s0p03gw07lznkhkldwt')] bg-fixed bg-cover bg-center-top text-zinc-50 ${roboto.variable}`}>
+      <body className={`bg-[url('../../public/bg-casino-mobile.png')] md:bg-[url('https://sa-east-1.graphassets.com/clwqdkiy400yu07ls56ql92po/clwqg0s0p03gw07lznkhkldwt')] bg-fixed bg-contain md:bg-cover bg-center-top text-zinc-50 ${roboto.variable}`}>
         <NavBar />
         {children}
         <Footer />
