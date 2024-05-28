@@ -24,7 +24,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt">
-      <body className={`bg-[url('https://sa-east-1.graphassets.com/clwqdkiy400yu07ls56ql92po/clwqg0s0p03gw07lznkhkldwt')] bg-fixed bg-cover bg-center text-zinc-50 ${roboto.variable}`}>
+      <body className={`bg-[url('https://sa-east-1.graphassets.com/clwqdkiy400yu07ls56ql92po/clwqg0s0p03gw07lznkhkldwt')] bg-fixed bg-cover bg-center-top text-zinc-50 ${roboto.variable}`}>
         <NavBar />
         {children}
         <Footer />
