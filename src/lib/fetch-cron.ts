@@ -10,9 +10,6 @@ export const getCronJob = unstable_cache(async () => {
             method: "GET",
             headers: {
                 Authorization: `Bearer ${token}`,
-            },
-            next: {
-                tags:['timeCron']
             }
         });
 
@@ -26,6 +23,7 @@ export const getCronJob = unstable_cache(async () => {
                 resData.jobDetails.lastExecution = 'N/A';
             }
             
+            // Revalidar a tag após receber os dados e processá-los
             revalidateTag(`timeCron`);
             return resData;
         } else {
