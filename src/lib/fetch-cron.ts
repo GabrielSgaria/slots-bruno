@@ -10,10 +10,6 @@ export async function getCronJob(): Promise<CronJobResponse | undefined> {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
-            next: {
-                tags: ['timeCron'],
-                revalidate: 10,
-            },
             cache: 'no-cache'
         });
         
