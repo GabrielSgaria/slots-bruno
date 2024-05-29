@@ -94,7 +94,7 @@ export function CardGames({ linkCasa, id, porcentagem, minima, padrao, maxima }:
                     <MoneyWavy />{`Mínima R$0,50 a R$2,40`}
                 </p>
                 <p className="text-start text-xs flex gap-1 items-center justify-start">
-                    <MoneyWavy />{`Padrão R$2,40 a R$10,00`}
+                    <MoneyWavy />{`Padrão R$2,50 a R$10,00`}
                 </p>
                 <p className="text-start text-xs flex gap-1 items-center justify-start">
                     <MoneyWavy /> {`Máxima acima de R$10,00`}
