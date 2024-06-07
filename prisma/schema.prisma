@@ -13,6 +13,7 @@ model Card {
   minima Int
   padrao Int
   maxima Int
+  updatedAt  DateTime @updatedAt @default(now())
 }
 
 model Settings {

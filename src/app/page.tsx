@@ -3,18 +3,27 @@ import { ButtonScrollTop } from "@/components/button-scroll-top";
 import { getCards, getLinkCasa } from "@/lib/actions";
 import { DotFilledIcon } from "@radix-ui/react-icons";
 import { HeaderInfos } from "@/components/header-info";
-import { getCronJob } from "@/lib/fetch-cron";
 import { revalidateTag } from "next/cache";
+import {format, toZonedTime } from "date-fns-tz";
+
 
 export default async function Home() {
   const cards = await getCards();
   const novoLink = await getLinkCasa();
-  const horario = await getCronJob()
+  let horario = cards?.data[0].updatedAt || ''
+
+  const date = new Date(horario);
+
+  
+  const timeZone = 'America/Sao_Paulo'
+  const zonedDate = toZonedTime(date, timeZone)
+  const formattedDate = format(zonedDate, 'HH:mm', {timeZone})
+  
   revalidateTag('timeCron')
   return (
     <main className="">
       <ButtonScrollTop />
-      <HeaderInfos updateTime={horario?.jobDetails.lastExecution} />
+      <HeaderInfos updateTime={formattedDate} />
       <section>
         <div className="container mx-auto items-center justify-center px-3 sm:px-0 flex">
           {novoLink.data ? (
