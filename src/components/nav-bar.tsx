@@ -5,7 +5,7 @@ import Link from "next/link";
 export async function NavBar() {
     const novoLink = await getLinkCasa();
     return (
-        <div>
+     
             <nav className="shadow-sm shadow-black bg-transparent/95 border-b border-zinc-500/20 fixed top-0 w-full z-50">
                 <div className="container mx-auto flex flex-col items-center justify-center gap-5 py-3 px-2">
                     <div className="flex flex-row gap-2 sm:gap-10 text-lg w-full justify-center items-center">
@@ -29,6 +29,6 @@ export async function NavBar() {
                     </div>
                 </div>
             </nav>
-        </div>
+  
     )
 }
