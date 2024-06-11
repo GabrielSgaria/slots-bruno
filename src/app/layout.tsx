@@ -61,7 +61,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt">
-      <body className={`bg-[url('../../public/bg-casino-mobile.png')] md:bg-[url('https://sa-east-1.graphassets.com/clwqdkiy400yu07ls56ql92po/clwqg0s0p03gw07lznkhkldwt')] bg-fixed bg-contain md:bg-cover bg-center-top text-zinc-50 ${roboto.variable}`}>
+      <body className={`bg-[url('https://app-sa-east-1.hygraph.com/3a1e79a870394463bafc366d8422c376/master/graphiql')] md:bg-[url('https://sa-east-1.graphassets.com/clwqdkiy400yu07ls56ql92po/clxagqhjp029t08lu2ssvqv67')] bg-fixed bg-contain md:bg-cover bg-center-top text-zinc-50 ${roboto.variable}`}>
         <NavBar />
         {children}
         <Footer />
