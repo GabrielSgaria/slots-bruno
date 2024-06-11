@@ -61,7 +61,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt">
-      <body className={`bg-[url('../../public/bg-casino-mobile.png')] md:bg-[url('https://sa-east-1.graphassets.com/clwqdkiy400yu07ls56ql92po/clwqg0s0p03gw07lznkhkldwt')] bg-fixed bg-contain md:bg-cover bg-center-top text-zinc-50 ${roboto.variable}`}>
+      <body className={`bg-image bg-fixed bg-contain md:bg-cover bg-center-top text-zinc-50 ${roboto.variable}`}>
         <NavBar />
         {children}
         <Footer />
