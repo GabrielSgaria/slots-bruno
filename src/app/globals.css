@@ -128,3 +128,30 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
+
+
+
+
+  .bg-image {
+    background-image: url('https://sa-east-1.graphassets.com/clwqdkiy400yu07ls56ql92po/clxagfyaj024e07m1ensmpjvz');
+    background-size: contain;
+    background-attachment: fixed;
+    background-position: center top;
+  }
+  
+  @media (min-width: 768px) {
+    .bg-image {
+      background-image: url('https://sa-east-1.graphassets.com/clwqdkiy400yu07ls56ql92po/clxagqhjp029t08lu2ssvqv67');
+      background-size: cover;
+    }
+  }
+  
+  .bg-image.loaded {
+    background-image: url('https://sa-east-1.graphassets.com/clwqdkiy400yu07ls56ql92po/clxagfyaj024e07m1ensmpjvz');
+  }
+  
+  @media (min-width: 768px) {
+    .bg-image.loaded {
+      background-image: url('https://sa-east-1.graphassets.com/clwqdkiy400yu07ls56ql92po/clxagqhjp029t08lu2ssvqv67');
+    }
+  }
