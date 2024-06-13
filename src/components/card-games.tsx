@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { MoneyWavy } from '@phosphor-icons/react';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
+import { allImageCards } from '@/lib/images-cards';
 
 interface CardGamesProps {
     linkCasa?: string | null;
@@ -36,7 +37,7 @@ export function CardGames({ linkCasa, id, porcentagem, minima, padrao, maxima }:
                 <LazyLoadImage
                     width={800}
                     height={1067}
-                    src={imageUrl}
+                    src={allImageCards[id]}
                     alt={`Card ${id}`}
                     className="w-full h-full object-fill min-h-[180px] max-h-[180px] bg-zinc-950"
                     loading="lazy"
