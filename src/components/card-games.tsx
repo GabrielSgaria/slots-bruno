@@ -38,9 +38,11 @@ export function CardGames({ linkCasa, id, porcentagem, minima, padrao, maxima }:
                     height={1067}
                     src={imageUrl}
                     alt={`Card ${id}`}
-                    className="w-full h-full object-fill min-h-[239px] max-h-[240px] bg-zinc-950"
+                    className="w-full h-full object-fill min-h-[180px] max-h-[180px] bg-zinc-950"
+                    loading="lazy"
                 />
             </a>
+            
             <div className='w-full h-full backdrop-blur-md py-2 px-4 flex flex-col items-start justify-start'>
                 <p className='w-full text-xs justify-center text-center'>Distribuição: {porcentagem}%</p>
             </div>
