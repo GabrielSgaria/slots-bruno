@@ -42,6 +42,7 @@ export function CardGames({ linkCasa, id, porcentagem, minima, padrao, maxima }:
                     loading="lazy"
                 />
             </a>
+            
             <div className='w-full h-full backdrop-blur-md py-2 px-4 flex flex-col items-start justify-start'>
                 <p className='w-full text-xs justify-center text-center'>Distribuição: {porcentagem}%</p>
             </div>
