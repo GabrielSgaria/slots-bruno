@@ -4,6 +4,7 @@ import { cn, getRandomClass } from '@/lib/utils';
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { MoneyWavy } from '@phosphor-icons/react';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 interface CardGamesProps {
     linkCasa?: string | null;
@@ -28,11 +29,17 @@ export function CardGames({ linkCasa, id, porcentagem, minima, padrao, maxima }:
     if (!linkCasa) {
         return <p>Link não encontrado</p>;
     }
-
+    const imageUrl = `/image/capa-games/${id}.webp`;
     return (
         <div key={id} className="flex flex-col my-4 justify-between backdrop-blur-md bg-zinc-950/20 border border-zinc-950/5 shadow-xl shadow-black px-0 pb-0 rounded-3xl max-w-[200px] overflow-hidden">
             <a href={linkCasa} target='_blank' className='sm:hover:opacity-60 h-full'>
-                <Image width={9000} height={9000} src={`/image/capa-games/${id}.webp`} alt={`Card ${id}`} className="rounded-t-2xl w-full h-full min-h-[131px] max-h-[131px] object-fill" />
+                <LazyLoadImage
+                    width={800}
+                    height={1067}
+                    src={imageUrl}
+                    alt={`Card ${id}`}
+                    className="w-full h-full object-fill min-h-[239px] max-h-[240px] bg-zinc-950"
+                />
             </a>
             <div className='w-full h-full backdrop-blur-md py-2 px-4 flex flex-col items-start justify-start'>
                 <p className='w-full text-xs justify-center text-center'>Distribuição: {porcentagem}%</p>
