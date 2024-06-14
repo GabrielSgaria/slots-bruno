@@ -3,6 +3,7 @@ import { Roboto } from "next/font/google";
 import "./globals.css";
 import { NavBar } from "@/components/nav-bar";
 import { Footer } from "@/components/footer";
+import { Analytics } from "@vercel/analytics/react"
 
 
 
@@ -62,6 +63,7 @@ export default function RootLayout({
   return (
     <html lang="pt">
       <body className={`bg-image bg-fixed bg-contain md:bg-cover bg-center-top text-zinc-50 ${roboto.variable}`}>
+      <Analytics />
         <NavBar />
         {children}
         <Footer />
