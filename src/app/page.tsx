@@ -5,6 +5,7 @@ import { HeaderInfos } from "@/components/header-info";
 import { revalidateTag } from "next/cache";
 import {format, toZonedTime } from "date-fns-tz";
 import { CardData, SectionCards } from "@/components/section-cards";
+import { Analytics } from "@vercel/analytics/next";
 
 
 export default async function Home() {
@@ -18,6 +19,7 @@ export default async function Home() {
   revalidateTag('timeCron')
   return (
     <main>
+      <Analytics />
       <ButtonScrollTop />
       <HeaderInfos updateTime={formattedDate} />
       <SectionCards cards={cards?.data as CardData[]} linkCasa={novoLink?.data}/>
