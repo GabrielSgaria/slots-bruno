@@ -31,7 +31,7 @@ export function CardGames({ linkCasa, id, porcentagem, minima, padrao, maxima, n
     }
 
     return (
-        <div key={id} className="flex flex-col my-4 justify-between backdrop-blur-md bg-zinc-950/20 border border-zinc-950/5 shadow-xl shadow-black px-0 pb-0 rounded-3xl max-w-[175px] min-w-[170px] overflow-hidden">
+        <div key={id} className="flex flex-col my-4 justify-between backdrop-blur-md bg-zinc-950/20 border border-zinc-950/5 shadow-xl shadow-black px-0 pb-0 rounded-3xl max-w-[200px] min-w-[170px] overflow-hidden">
             <a href={linkCasa} target='_blank' className='sm:hover:opacity-60 h-full'>
                 <Image
                     width={198}
