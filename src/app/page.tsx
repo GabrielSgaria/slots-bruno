@@ -15,14 +15,10 @@ export default async function Home() {
   const imageBanner = propsSettings.data?.bannerImage
 
   let horario = cards?.data[0].updatedAt || ''
-
   const date = new Date(horario);
-
-  date.setTime(date.getTime() + 5 * 60 * 1000);
-
   const timeZone = 'America/Sao_Paulo'
   const zonedDate = toZonedTime(date, timeZone)
-  const formattedDate = format(zonedDate, 'HH:mm', { timeZone })
+  const formattedDate = format(zonedDate, 'HH:mm', {timeZone})
 
   revalidateTag('timeCron')
   return (
