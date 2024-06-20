@@ -82,22 +82,27 @@ export async function createCards() {
     }
 }
 
-export const getCardsPG = unstable_cache(async () => {
+export async function getCardsPG() {
     try {
         const cards = await prisma.card.findMany({
-            where: {categoriaJogo: 'PG'},
-            orderBy: { id: "asc" }
+            where: { categoriaJogo: 'PG' },
+            orderBy: {
+                id: "asc"
+            }
         });
 
-        if (cards.length) {
+
+        if (!!cards.length) {
             return { data: cards };
         }
 
         const newCards = await createCards();
         if (newCards.success) {
             const cards = await prisma.card.findMany({
-                where: {categoriaJogo: 'PG'},
-                orderBy: { id: "asc" }
+                where: { categoriaJogo: 'PG' },
+                orderBy: {
+                    id: "asc"
+                }
             });
             return { data: cards };
         }
@@ -105,15 +110,12 @@ export const getCardsPG = unstable_cache(async () => {
         console.error('Error generating getCards data:', error);
         return { data: [] };
     }
-}, ['cards'], {
-    revalidate: oneDayInSeconds,
-    tags: ['cards']
-});
+}
 
 export const getCardsPP = unstable_cache(async () => {
     try {
         const cards = await prisma.card.findMany({
-            where: {categoriaJogo: 'PP'},
+            where: { categoriaJogo: 'PP' },
             orderBy: { id: "asc" }
         });
 
@@ -124,7 +126,7 @@ export const getCardsPP = unstable_cache(async () => {
         const newCards = await createCards();
         if (newCards.success) {
             const cards = await prisma.card.findMany({
-                where: {categoriaJogo: 'PP'},
+                where: { categoriaJogo: 'PP' },
                 orderBy: { id: "asc" }
             });
             return { data: cards };
