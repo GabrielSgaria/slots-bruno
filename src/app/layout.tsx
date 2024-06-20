@@ -30,8 +30,8 @@ export const metadata: Metadata = {
     images: [
       {
         url: '../../public/favicon.png',
-        width: 800,
-        height: 600,
+        width: 500,
+        height: 500,
       }
     ],
   },

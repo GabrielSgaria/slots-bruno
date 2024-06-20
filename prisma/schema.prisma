@@ -8,17 +8,21 @@ datasource db {
 }
 
 model Card {
-  id Int @id @default(autoincrement())
+  id          Int      @id @default(autoincrement())
+  nomeJogo    String
+  categoriaJogo   String
   porcentagem Int
-  minima Int
-  padrao Int
-  maxima Int
-  updatedAt  DateTime @updatedAt @default(now())
+  minima      Int
+  padrao      Int
+  maxima      Int
+  updatedAt   DateTime @default(now()) @updatedAt
 }
 
 model Settings {
- id Int @id @default(autoincrement())
- casa String @unique
- link String
- @@index([casa])
+  id          Int     @id @default(autoincrement())
+  casa        String  @unique
+  link        String
+  bannerImage String?
+
+  @@index([casa])
 }

@@ -12,9 +12,10 @@ interface CardGamesProps {
     minima: number;
     padrao: number;
     maxima: number;
+    nomeJogo: string;
 }
 
-export function CardGames({ linkCasa, id, porcentagem, minima, padrao, maxima }: CardGamesProps) {
+export function CardGames({ linkCasa, id, porcentagem, minima, padrao, maxima, nomeJogo }: CardGamesProps) {
     const [colorMinima, setColorMinima] = useState<string>('');
     const [colorPadrao, setColorPadrao] = useState<string>('');
     const [colorMaxima, setColorMaxima] = useState<string>('');
@@ -30,7 +31,7 @@ export function CardGames({ linkCasa, id, porcentagem, minima, padrao, maxima }:
     }
 
     return (
-        <div key={id} className="flex flex-col my-4 justify-between backdrop-blur-md bg-zinc-950/20 border border-zinc-950/5 shadow-xl shadow-black px-0 pb-0 rounded-3xl max-w-[200px] overflow-hidden">
+        <div key={id} className="flex flex-col my-4 justify-between backdrop-blur-md bg-zinc-950/20 border border-zinc-950/5 shadow-xl shadow-black px-0 pb-0 rounded-3xl max-w-[175px] min-w-[170px] overflow-hidden">
             <a href={linkCasa} target='_blank' className='sm:hover:opacity-60 h-full'>
                 <Image
                     width={198}
@@ -74,7 +75,7 @@ export function CardGames({ linkCasa, id, porcentagem, minima, padrao, maxima }:
             <a href={linkCasa} target='_blank' className="mb-2 mx-2 hover:underline border border-zinc-50/15 text-center justify-center bg-zinc-50/10 hover:bg-zinc-50/20 items-center flex font-bold rounded-md transition-all text-base sm:text-base">
                 <p className="text-zinc-50">JOGUE AGORA</p>
             </a>
-            <div className="w-full h-full backdrop-blur-md pt-2 pb-4 px-2 mt-2 flex flex-col items-start justify-start">
+            <div className="w-full h-full backdrop-blur-md pt-2 pb-4 px-2 mt-2 flex flex-col items-start justify-start text-nowrap">
                 {[
                     { label: 'Mínima R$0,50 a R$2,40' },
                     { label: 'Padrão R$2,50 a R$10,00' },

@@ -1,10 +1,10 @@
 'use client'
 import { handleSubmit } from "@/lib/actions";
-import { SymbolIcon } from "@radix-ui/react-icons";
+import { CheckIcon, DotFilledIcon, SymbolIcon } from "@radix-ui/react-icons";
 import { useState, useTransition } from "react";
 
 type MessageForm = {
-    sucess?: string,
+    success?: string,
     error?: string
 }
 
@@ -31,15 +31,38 @@ export function FormAdm({ linkAtual }: { linkAtual: string }) {
                 placeholder="Digite a hash de validação..."
                 className="border border-zinc-300 rounded-2xl px-3 text-zinc-950 w-full h-20 shadow-md text-xs md:text-base"
             />
+            <div className="flex items-center justify-center w-full text-zinc-950 ">
+
+                <span className="sr-only">Escolha o arquivo</span>
+                <input
+                    type="file"
+                    name="image"
+                    accept="image/*"
+                    className="block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0
+                    file:text-sm file:font-semibold file:bg-violet-50 file:text-black-400 hover:file:bg-green-100 "
+                />
+
+            </div>
             <button
                 type="submit"
-                className={`mt-10 bg-green-400 hover:bg-green-600 transition-all rounded-2xl text-zinc-950 h-20 px-3 w-full shadow-md text-center flex items-center justify-center font ${isPending ? 'cursor-not-allowed' : ''}`}
+                className={`bg-green-600 hover:shadow-xl transition-all rounded-2xl text-zinc-50 h-14 px-3 w-full shadow-md text-center flex items-center justify-center font-bold ${isPending ? 'cursor-not-allowed' : ''}`}
                 disabled={isPending}
             >
-                {isPending ? <SymbolIcon className="size-6 animate-spin" /> : 'ALTERAR LINK'}
+                {isPending ? <SymbolIcon className="size-4 animate-spin" /> : 'ALTERAR LINK'}
             </button>
-            {messageForm.sucess && <p className="text-zinc-800 text-2xl uppercase font-bold">{messageForm.sucess}</p>}
-            {messageForm.error && <p className="text-red-600 text-2xl uppercase font-bold">{messageForm.error}</p>}
+            {messageForm.success &&
+                <div className="flex items-center justify-center gap-2">
+                    <p className="text-green-600 text-xl uppercase font-bold">{messageForm.success}</p>
+                    <CheckIcon className="text-slate-50 bg-green-600 rounded-xl size-6 font-bold text-start animate-pulse" />
+                </div>
+            }
+
+            {messageForm.error &&
+                <div className="flex">
+                    <p className="text-red-600 text-xl uppercase font-bold">{messageForm.error}</p>
+                    <DotFilledIcon className="animate-ping text-red-600 size-6 font-bold text-start" />
+                </div>
+            }
         </form>
     );
 }
