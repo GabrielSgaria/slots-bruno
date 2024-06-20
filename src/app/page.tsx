@@ -13,10 +13,6 @@ export default async function Home() {
   const propsSettings = await getLinkCasa();
   const novoLink = propsSettings.data?.link
   const imageBanner = propsSettings.data?.bannerImage
-  console.log('cards:', cards);
-  console.log('cards?.data:', cards?.data);
-  console.log('cards?.data[0]:', cards?.data[0]);
-  console.log('cards?.data[0]?.updatedAt:', cards?.data[0]?.updatedAt);
 
   let horario = cards?.data[0].updatedAt || ''
   const date = new Date(horario);
