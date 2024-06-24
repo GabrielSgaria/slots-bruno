@@ -17,7 +17,8 @@ interface CardData {
     }[]
 }
 
-const oneDayInSeconds = 24 * 60 * 60;
+const fiveMinutesInSeconds = 300;
+const oneDayInSeconds = 86400;
 
 export async function updateCards() {
     try {
@@ -82,13 +83,12 @@ export async function createCards() {
     }
 }
 
-export async function getCardsPG() {
+
+export const getCardsPG = unstable_cache(async () => {
     try {
         const cards = await prisma.card.findMany({
             where: { categoriaJogo: 'PG' },
-            orderBy: {
-                id: "asc"
-            }
+            orderBy: { id: "asc" }
         });
 
 
@@ -110,7 +110,11 @@ export async function getCardsPG() {
         console.error('Error generating getCards data:', error);
         return { data: [] };
     }
-}
+}, ['cards-pg'], {
+    revalidate: fiveMinutesInSeconds,
+    tags: ['cards-pg']
+});
+
 
 export const getCardsPP = unstable_cache(async () => {
     try {
@@ -135,9 +139,9 @@ export const getCardsPP = unstable_cache(async () => {
         console.error('Error generating getCards data:', error);
         return { data: [] };
     }
-}, ['cards'], {
-    revalidate: oneDayInSeconds,
-    tags: ['cards']
+}, ['cards-pp'], {
+    revalidate: fiveMinutesInSeconds,
+    tags: ['cards-pp']
 });
 
 
