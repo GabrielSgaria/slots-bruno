@@ -31,15 +31,17 @@ export function ContentPp({ updateTime }: ContentPpProps) {
                         </p>
                     </div> */}
 
-                    <div className='w-[350px] rounded-2xl overflow-hidden'>
-                        <Image
-                            src='https://sa-east-1.graphassets.com/clxhh2irf0i1g0ekkf9ad5xah/clxm8ktkm0a3807lw9qdzjbcr'
-                            width={1980}
-                            height={1080}
-                            quality={70}
-                            alt='PP Games'
-                            className='object-cover w-full'
-                        />
+                    <div className='flex flex-col justify-center items-center gap-2 backdrop-blur-sm bg-green-700/75 shadow-2xl shadow-black rounded-2xl py-5 px-10'>
+                        <div className='w-26'>
+                            <Image
+                                src='https://sa-east-1.graphassets.com/clxhh2irf0i1g0ekkf9ad5xah/cly7msmbs063607kabe7ayoud'
+                                width={1980}
+                                height={1080}
+                                quality={70}
+                                alt='PP Games'
+                                className='object-cover w-full'
+                            />
+                        </div>
                     </div>
                 </div>
 
