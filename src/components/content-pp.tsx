@@ -39,7 +39,7 @@ export function ContentPp({ updateTime }: ContentPpProps) {
                                 height={1080}
                                 quality={70}
                                 alt='PP Games'
-                                className='object-cover w-full'
+
                             />
                         </div>
                     </div>
