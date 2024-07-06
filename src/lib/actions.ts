@@ -17,7 +17,7 @@ interface CardData {
     }[]
 }
 
-const fiveMinutesInSeconds = 200;
+const fiveMinutesInSeconds = 300;
 const oneDayInSeconds = 86400;
 
 export async function updateCards() {
@@ -44,9 +44,7 @@ export async function updateCards() {
                 }
             });
         }
-        revalidateTag('cards-pg');
-        revalidateTag('cards-pp');
-        revalidateTag('cards-pg');
+        revalidateTag('cards');
         return { success: true };
     } catch (error) {
         console.error('Error updating cards data:', error);
@@ -88,7 +86,6 @@ export async function createCards() {
 
 export const getCardsPG = unstable_cache(async () => {
     try {
-        
         const cards = await prisma.card.findMany({
             where: { categoriaJogo: 'PG' },
             orderBy: { id: "asc" }
@@ -107,7 +104,6 @@ export const getCardsPG = unstable_cache(async () => {
                     id: "asc"
                 }
             });
-            revalidateTag('timeCron')
             return { data: cards };
         }
     } catch (error) {

@@ -6,7 +6,8 @@ import { NextResponse } from "next/server";
 export async function GET() {
     try {
         const updateCard = await updateCards();
-        revalidateTag('timeCron')
+        revalidateTag('cards-pg')
+        revalidateTag('cards-pp')
         return NextResponse.json(updateCard);
     } catch (error) {
         console.error(error);
