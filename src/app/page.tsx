@@ -7,7 +7,6 @@ import { format, toZonedTime } from "date-fns-tz";
 import { CardData, SectionCards } from "@/components/section-cards-pg";
 import { Analytics } from "@vercel/analytics/next";
 
-
 export default async function Home() {
   const cards = await getCardsPG();
   const propsSettings = await getLinkCasa();
