@@ -1,8 +1,8 @@
 export const allImageCards: { [key: number]: string } = {
-    1: `https://sa-east-1.graphassets.com/clxhh2irf0i1g0ekkf9ad5xah/clxmm993j0il007lqe1cqypj4`,
-    2: `https://sa-east-1.graphassets.com/clxhh2irf0i1g0ekkf9ad5xah/clxmm992p0ioc07lt4qp0fqpl`,
-    3: `https://sa-east-1.graphassets.com/clxhh2irf0i1g0ekkf9ad5xah/clxmm99340im107lw723jej29`,
-    4: `https://sa-east-1.graphassets.com/clxhh2irf0i1g0ekkf9ad5xah/clxmm993e0im507lw3rs3bki3`,
+    1: `https://sa-east-1.graphassets.com/clxhh2irf0i1g0ekkf9ad5xah/clyaet4z90i9f07kjdga1udzq`,
+    2: `https://sa-east-1.graphassets.com/clxhh2irf0i1g0ekkf9ad5xah/clyaeu0og0i9h07m0zyn57vaw`,
+    3: `https://sa-east-1.graphassets.com/clxhh2irf0i1g0ekkf9ad5xah/clyaeu0t80iah07m0zxcy1kk1`,
+    4: `https://sa-east-1.graphassets.com/clxhh2irf0i1g0ekkf9ad5xah/clyaevdq50ifu07m03qybkwe7`,
     5: `https://sa-east-1.graphassets.com/clxhh2irf0i1g0ekkf9ad5xah/clxmmigrl0in907lqdynqgtkf`,
     6: `https://sa-east-1.graphassets.com/clxhh2irf0i1g0ekkf9ad5xah/clxmm99hl0iol07ltpuoqvcpq`,
     7: `/image/capa-games/7.webp`,

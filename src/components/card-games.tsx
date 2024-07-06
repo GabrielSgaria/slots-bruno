@@ -40,7 +40,7 @@ export function CardGames({ linkCasa, id, porcentagem, minima, padrao, maxima, n
                     alt={`Card ${id}`}
                     className="w-full h-full object-fill min-h-[180px] max-h-[180px]  bg-zinc-950"
                     loading="lazy"
-                    quality={60}
+                    quality={100}
                     placeholder="blur"
                     blurDataURL={allImageCards[id]}
                 />
