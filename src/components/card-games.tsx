@@ -13,16 +13,17 @@ interface CardGamesProps {
     padrao: number;
     maxima: number;
     nomeJogo: string;
+    categoriaJogo: string
 }
 
-export function CardGames({ linkCasa, id, porcentagem, minima, padrao, maxima, nomeJogo }: CardGamesProps) {
+export function CardGames({ linkCasa, id, porcentagem, minima, padrao, maxima, nomeJogo, categoriaJogo }: CardGamesProps) {
     const getColor = (value: number) => {
         if (value >= 70) return 'bg-green-500';
         if (value >= 40) return 'bg-yellow-500';
         else return 'bg-red-600';
     }
 
-    const isHot = nomeJogo.toLowerCase().startsWith('fortune') && (minima > 90 || padrao > 90 || maxima > 90);
+    const isHot = nomeJogo.toLowerCase().startsWith('fortune') && (minima > 90 || padrao > 90 || maxima > 90) && categoriaJogo === "PG";
 
     if (!linkCasa) {
         return <p>Link não encontrado</p>;
