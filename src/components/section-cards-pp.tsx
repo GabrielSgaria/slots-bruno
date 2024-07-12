@@ -62,7 +62,7 @@ export function SectionCardsPP({ cards, linkCasa }: SectionCardsPpProps) {
             <div className="container mx-auto items-center justify-center px-3 sm:px-0 flex flex-col">
                 {linkCasa ?  (
                     <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 gap-3 '>
-                        {visibleCards.map(({ id, nomeJogo, porcentagem, minima, padrao, maxima }) => (
+                        {visibleCards.map(({ id, nomeJogo, porcentagem, minima, padrao, maxima, categoriaJogo }) => (
                             <CardGames
                                 key={id}
                                 id={id}
@@ -72,6 +72,7 @@ export function SectionCardsPP({ cards, linkCasa }: SectionCardsPpProps) {
                                 padrao={padrao}
                                 maxima={maxima}
                                 nomeJogo={nomeJogo}
+                                categoriaJogo={categoriaJogo}
                             />
                         ))}
                     </div>
