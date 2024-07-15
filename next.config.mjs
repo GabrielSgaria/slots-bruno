@@ -23,11 +23,11 @@ const nextConfig = {
     },
     images: {
         remotePatterns: [
-            {
-                protocol: 'https',
-                hostname: 'www.grupofpsinais.com.br',
-                pathname: '/**',
-            },
+        //     {
+        //         protocol: 'https',
+        //         hostname: 'www.grupofpsinais.com.br',
+        //         pathname: '/**',
+        //     },
 
             {
                 protocol: 'https',

@@ -13,19 +13,19 @@ export default async function Home() {
   const novoLink = propsSettings.data?.link
   const imageBanner = propsSettings.data?.bannerImage
 
-  let horario = cards?.data[0].updatedAt || ''
-  const date = new Date(horario);
+  // let horario = cards?.data[0].updatedAt || ''
+  // const date = new Date(horario);
   
-  const timeZone = 'America/Sao_Paulo'
-  const zonedDate = toZonedTime(date, timeZone)
-  const formattedDate = format(zonedDate, 'HH:mm', { timeZone })
+  // const timeZone = 'America/Sao_Paulo'
+  // const zonedDate = toZonedTime(date, timeZone)
+  // const formattedDate = format(zonedDate, 'HH:mm', { timeZone })
 
  
   return (
     <main>
       <Analytics />
       <ButtonScrollTop />
-      <ContentPg updateTime={formattedDate} imageBanner={imageBanner} />
+      {/* <ContentPg updateTime={formattedDate} imageBanner={imageBanner} /> */}
       <SectionCards cards={cards?.data as CardData[]} linkCasa={novoLink} />
     </main>
   );
