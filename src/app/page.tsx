@@ -25,7 +25,7 @@ export default async function Home() {
     <main>
       <Analytics />
       <ButtonScrollTop />
-      {/* <ContentPg updateTime={formattedDate} imageBanner={imageBanner} /> */}
+      <ContentPg updateTime={formattedDate} imageBanner={imageBanner} />
       <SectionCards cards={cards?.data as CardData[]} linkCasa={novoLink} />
     </main>
   );
