@@ -129,3 +129,29 @@
   background: #555;
 }
 
+
+
+/* Estilo padrão para telas pequenas */
+body {
+  background-image: url('/bg-casino-mobile.png');
+  background-image: image-set(
+    url('https://sa-east-1.graphassets.com/clxhh2irf0i1g0ekkf9ad5xah/clysrgj5v0mb707lwgmsuqcnb') type('image/jpeg') 1x,
+    url('/bg-casino-mobile.png') type('image/jpeg') 2x
+  );
+  background-attachment: fixed;
+  background-size: contain;
+  background-position: center top;
+  color: #f5f5f5;
+}
+
+/* Media query para telas maiores */
+@media (min-width: 768px) {
+  body {
+    background-image: url('/bg-casino.png');
+    background-image: image-set(
+      url('https://sa-east-1.graphassets.com/clxhh2irf0i1g0ekkf9ad5xah/clysrd81q0m7n07ke2cm02l8z') type('image/jpeg') 1x,
+      url('/bg-casino.png') type('image/jpeg') 2x
+    );
+    background-size: cover;
+  }
+}
