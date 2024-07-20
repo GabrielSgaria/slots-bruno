@@ -49,7 +49,7 @@ export const metadata: Metadata = {
   keywords: [
     "slots online", "roleta de cassino", "apostas de slots", "ganhos de slots", "rodadas grátis", "bônus de cassino", "cassino online",
     "estratégia de slots", "pagamentos de slots", "slots", "jogos de cassino", "símbolos scatter", "símbolos wild", "jogos de bônus", "slots 3D",
-    "torneios de slots", "cassino móvel", "experiência de jogador", "slots com jackpot", "apostas altas", "jogos de alta volatilidade", 
+    "torneios de slots", "cassino móvel", "experiência de jogador", "slots com jackpot", "apostas altas", "jogos de alta volatilidade",
     "taxa de retorno ao jogador (RTP)", "cassinos com slots", "slots com múltiplas linhas", "slots progressivos", "giros automáticos",
     "slots com multiplicadores", "tabela de pagamentos", "slots com rodadas bônus", "apostas", "tigrinho", "fortune tiger", "fortune", "tiger", "fortune rabbit", "fortune mouse",
     "fortune dragon", "fortune ox",
@@ -65,9 +65,9 @@ export default function RootLayout({
   return (
     <html lang="pt">
       <body className={`bg-image-mobile md:bg-image-desktop bg-fixed bg-contain md:bg-cover bg-center-top text-zinc-50 ${roboto.variable}`}>
-      <Analytics />
-      <GoogleAnalytics gaId="G-9E7Z61LW2J"/>
-      <GoogleTagManager gtmId="G-9E7Z61LW2J"/>
+        <Analytics />
+        <GoogleAnalytics gaId="G-9E7Z61LW2J" />
+        <GoogleTagManager gtmId="G-9E7Z61LW2J" />
         <NavBar />
         {children}
         <Footer />
