@@ -135,7 +135,7 @@
 body {
   background-image: url('/bg-casino-mobile.png');
   background-image: image-set(
-    url('https://sa-east-1.graphassets.com/clxhh2irf0i1g0ekkf9ad5xah/clysrgj5v0mb707lwgmsuqcnb') type('image/jpeg') 1x,
+    url('https://sa-east-1.graphassets.com/clyx5iqnp022v07kq1ynafygb/clyxopmuq0efr07lszjpns3bz') type('image/jpeg') 1x,
     url('/bg-casino-mobile.png') type('image/jpeg') 2x
   );
   background-attachment: fixed;
@@ -149,7 +149,7 @@ body {
   body {
     background-image: url('/bg-casino.png');
     background-image: image-set(
-      url('https://sa-east-1.graphassets.com/clxhh2irf0i1g0ekkf9ad5xah/clysrd81q0m7n07ke2cm02l8z') type('image/jpeg') 1x,
+      url('https://sa-east-1.graphassets.com/clyx5iqnp022v07kq1ynafygb/clyxopmuu0e2c07luf1rs329p') type('image/jpeg') 1x,
       url('/bg-casino.png') type('image/jpeg') 2x
     );
     background-size: cover;
