@@ -20,8 +20,8 @@ const config: Config = {
         'pulse-slow': 'pulse 3s linear infinite',
       },
       backgroundImage: {
-        'image-desktop': 'url(https://sa-east-1.graphassets.com/clxhh2irf0i1g0ekkf9ad5xah/clysrd81q0m7n07ke2cm02l8z)',
-        'image-mobile': 'url(https://sa-east-1.graphassets.com/clxhh2irf0i1g0ekkf9ad5xah/clysrgj5v0mb707lwgmsuqcnb)',
+        'image-desktop': 'url(../../public/bg-casino.png)',
+        'image-mobile': 'url(../../public/bg-casino-mobile.png)',
         'fortune-rabbit': 'url(/image/bg-sinais/bg-rabbit.jpg)',
         'fortune-tiger': '/image/bg-sinais/bg-tiger.jpg',
         'fortune-ox': 'url(/image/bg-sinais/bg-ox.jpg)',

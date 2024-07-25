@@ -64,7 +64,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pt_br">
+    <html lang="pt">
       <head>
 
         <script dangerouslySetInnerHTML={{
