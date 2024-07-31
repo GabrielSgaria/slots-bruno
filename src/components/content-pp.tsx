@@ -1,7 +1,8 @@
 'use client'
 import Image from 'next/image'
-import logoFP from '../../public/favicon.png'
+import logoPp from '../../public/pp.webp'
 import { CallBell } from "@phosphor-icons/react"
+
 
 
 interface ContentPpProps {
@@ -17,7 +18,7 @@ export function ContentPp({ updateTime }: ContentPpProps) {
 
                     <div className="w-72">
                             <Image
-                                src='https://sa-east-1.graphassets.com/clxhh2irf0i1g0ekkf9ad5xah/cly7msmbs063607kabe7ayoud'
+                                src={logoPp}
                                 width={1980}
                                 height={1080}
                                 quality={70}
