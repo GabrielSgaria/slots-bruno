@@ -1,5 +1,5 @@
 export const allImageCards: { [key: number]: string } = {
-    1: `https://sa-east-1.graphassets.com/clxhh2irf0i1g0ekkf9ad5xah/clyaet4z90i9f07kjdga1udzq`,
+    1: `/image/capa-games/`,
     2: `https://sa-east-1.graphassets.com/clxhh2irf0i1g0ekkf9ad5xah/clyaeu0og0i9h07m0zyn57vaw`,
     3: `https://sa-east-1.graphassets.com/clxhh2irf0i1g0ekkf9ad5xah/clyaeu0t80iah07m0zxcy1kk1`,
     4: `https://sa-east-1.graphassets.com/clxhh2irf0i1g0ekkf9ad5xah/clyaevdq50ifu07m03qybkwe7`,
