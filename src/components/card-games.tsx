@@ -41,13 +41,13 @@ export function CardGames({ linkCasa, id, porcentagem, minima, padrao, maxima, n
                 <Image
                     width={270}
                     height={270}
-                    src={`/image/capa-games/${id}.webp`}
+                    src={allImageCards[id]}
                     alt={`Card ${id}`}
                     className="w-full h-full object-fill min-h-[150px] max-h-[150px] bg-zinc-950"
                     loading="lazy"
                     quality={100}
-                    placeholder="blur"
-                    blurDataURL={allImageCards[id]}
+                    // placeholder="blur"
+                    // blurDataURL={allImageCards[id]}
                 />
             </a>
             <div className='w-full max-h-[32px] h-full backdrop-blur-md py-2 px-4 flex flex-col items-start justify-start'>
