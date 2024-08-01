@@ -30,7 +30,7 @@ export function CardGames({ linkCasa, id, porcentagem, minima, padrao, maxima, n
     }
 
     return (
-        <div key={id} className="flex flex-col my-4 justify-between backdrop-blur-md bg-zinc-950/20 border border-zinc-950/5 shadow-xl shadow-black px-0 pb-0 rounded-3xl max-w-[200px] min-w-[197px] overflow-hidden">
+        <div key={id} className="flex flex-col my-4 justify-between backdrop-blur-md bg-zinc-950/20 border border-zinc-950/5 shadow-xl shadow-black px-0 pb-0 rounded-xl max-w-[215px] sm:max-w-[175px] w-full sm:min-w-[157px] overflow-hidden">
             {isHot && (
                 <div className="absolute top-1 right-1 z-20 w-[70px] h-7 rounded-md flex items-center justify-center bg-red-600 animate-pulse">
                     <p className='text-zinc-50 text-md font-bold'>HOT</p>
@@ -39,12 +39,13 @@ export function CardGames({ linkCasa, id, porcentagem, minima, padrao, maxima, n
             )}
             <a href={linkCasa} target='_blank' className='sm:hover:opacity-60 h-full'>
                 <Image
-                    width={270}
-                    height={270}
+                    width={370}
+                    height={370}
                     src={allImageCards[id]}
                     alt={`Card ${id}`}
-                    className="w-full h-full object-fill min-h-[150px] max-h-[150px] bg-zinc-950"
-                    loading="lazy"
+                    className="object-cover min-h-[140px] max-h-[150px] bg-zinc-950"
+                    // loading="lazy"
+                    priority={true}
                     quality={100}
                     // placeholder="blur"
                     // blurDataURL={allImageCards[id]}
