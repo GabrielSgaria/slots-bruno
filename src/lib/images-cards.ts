@@ -1,6 +1,6 @@
 export const allImageCards: { [key: number]: string } = {
-    2: `/image/capa-games-pp/2.webp`,
     1: `/image/capa-games/1.webp`,
+2: `/image/capa-games/2.webp`,
 3: `/image/capa-games/3.webp`,
 4: `/image/capa-games/4.webp`,
 5: `/image/capa-games/5.webp`,
