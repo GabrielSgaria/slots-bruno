@@ -51,8 +51,7 @@ export function CardGames({ linkCasa, id, porcentagem, minima, padrao, maxima, n
                 />
             </a>
             <div className='w-full max-h-[32px] h-full backdrop-blur-md py-2 px-4 flex flex-col items-start justify-start'>
-                <p className='w-full text-xs justify-center text-center'>{nomeJogo}</p>
-                
+                <p className='w-full text-xs justify-center text-center'>Distribuição {porcentagem}%</p>
             </div>
             <div className='px-2 h-full w-full flex flex-col gap-1 my-5'>
                 {[
