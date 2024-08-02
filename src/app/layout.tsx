@@ -86,7 +86,7 @@ export default function RootLayout({
             src="https://www.facebook.com/tr?id=842834544656086&ev=PageView&noscript=1" />
         </noscript>
       </head>
-      <body className={`bg-image-mobile md:bg-image-desktop  bg-fixed bg-contain md:bg-cover text-zinc-50 ${roboto.variable}`}>
+      <body className={`bg-image-desktop bg-no-repeat bg-fixed bg-left text-zinc-50 w-full h-full overflow-x-hidden scroll-smooth ${roboto.variable}`}>
         <Analytics />
         <GoogleAnalytics gaId="G-9E7Z61LW2J" />
         <GoogleTagManager gtmId="G-9E7Z61LW2J" />
