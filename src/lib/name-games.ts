@@ -1,4 +1,4 @@
-export const nameCards: { [key: number]: {nome: string; categoria: string} } = {
+export const nameCards: { [key: number]: { nome: string; categoria: string } } = {
     1: { nome: 'Fortune Rabbit', categoria: 'PG' },
     2: { nome: 'Fortune Tiger', categoria: 'PG' },
     3: { nome: 'Fortune Ox', categoria: 'PG' },
@@ -138,4 +138,5 @@ export const nameCards: { [key: number]: {nome: string; categoria: string} } = {
     136: { nome: 'Piggy Bank Bills', categoria: 'PP' },
     137: { nome: 'Treasure Wild', categoria: 'PP' },
     138: { nome: 'Starlight Princess', categoria: 'PP' },
+    139: { nome: 'Zombie Outbreak', categoria: 'PG' },
 };

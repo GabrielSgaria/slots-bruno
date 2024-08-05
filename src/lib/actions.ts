@@ -22,7 +22,7 @@ const oneDayInSeconds = 86400;
 
 export async function updateCards() {
     try {
-        for (let i = 1; i <= 138; i++) {
+        for (let i = 1; i <= 139; i++) {
             const gameData = nameCards[i];
             if (!gameData) continue;
 
@@ -32,17 +32,36 @@ export async function updateCards() {
             const padrao = getRandomPorcentagem();
             const maxima = getRandomPorcentagem();
 
-            await prisma.card.update({
-                where: { id: i },
-                data: {
-                    nomeJogo: nome,
-                    categoriaJogo: categoria,
-                    porcentagem,
-                    minima,
-                    padrao,
-                    maxima
-                }
-            });
+            // Verifica se o card já existe
+            const existingCard = await prisma.card.findUnique({ where: { id: i } });
+
+            if (existingCard) {
+                // Atualiza o card existente
+                await prisma.card.update({
+                    where: { id: i },
+                    data: {
+                        nomeJogo: nome,
+                        categoriaJogo: categoria,
+                        porcentagem,
+                        minima,
+                        padrao,
+                        maxima
+                    }
+                });
+            } else {
+                // Cria um novo card se não existir
+                await prisma.card.create({
+                    data: {
+                        id: i,
+                        nomeJogo: nome,
+                        categoriaJogo: categoria,
+                        porcentagem,
+                        minima,
+                        padrao,
+                        maxima
+                    }
+                });
+            }
         }
         revalidateTag('cards');
         return { success: true };
@@ -54,7 +73,7 @@ export async function updateCards() {
 
 export async function createCards() {
     try {
-        for (let i = 1; i <= 138; i++) {
+        for (let i = 1; i <= 139; i++) {
             const gameData = nameCards[i];
             if (!gameData) continue;
 

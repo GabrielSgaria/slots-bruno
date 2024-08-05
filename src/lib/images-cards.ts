@@ -139,5 +139,7 @@ export const allImageCards: { [key: number]: string } = {
     137: `/image/capa-games-pp/30.webp`,
     138: `/image/capa-games-pp/31.webp`,
 
+    //New Game PG
+    139: `/image/capa-games/139.webp`,
 
 };
