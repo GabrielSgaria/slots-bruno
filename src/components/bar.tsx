@@ -7,6 +7,7 @@ interface BarProps {
   id: number;
 }
 
+
 export function Bar({ porcent, id }: BarProps) {
   const [color, setColor] = useState<string>("");
 
