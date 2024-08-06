@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useMemo, useCallback } from "react";
 import { DotFilledIcon } from "@radix-ui/react-icons";
 import { CardGames } from "./card-games";
 import { SearchFilter } from "./filter-cards";
@@ -28,34 +28,44 @@ export function SectionCardsPP({ cards, linkCasa }: SectionCardsPpProps) {
     const [visibleCards, setVisibleCards] = useState<CardData[]>([]);
     const loadMoreRef = useRef<HTMLDivElement | null>(null);
 
+
     useEffect(() => {
         setFilteredCards(cards || []);
     }, [cards]);
 
+   
     useEffect(() => {
         setVisibleCards(filteredCards.slice(0, cardsPerPage));
     }, [filteredCards, cardsPerPage]);
 
-    useEffect(() => {
-        if (!loadMoreRef.current) return;
+ 
+    const handleLoadMore = useCallback(() => {
+        if (loadMoreRef.current) {
+            const observer = new IntersectionObserver(
+                (entries) => {
+                    if (entries[0].isIntersecting && !loading && visibleCards.length < filteredCards.length) {
+                        setLoading(true);
+                        setTimeout(() => {
+                            setCardsPerPage((prev) => prev + 8);
+                            setLoading(false);
+                        }, 500);
+                    }
+                },
+                { threshold: 1 }
+            );
 
-        const observer = new IntersectionObserver(
-            (entries) => {
-                if (entries[0].isIntersecting && !loading && visibleCards.length < filteredCards.length) {
-                    setLoading(true);
-                    setTimeout(() => {
-                        setCardsPerPage((prev) => prev + 8);
-                        setLoading(false);
-                    }, 500);
-                }
-            },
-            { threshold: 1 }
-        );
+            observer.observe(loadMoreRef.current);
 
-        observer.observe(loadMoreRef.current);
-
-        return () => observer.disconnect();
+            return () => observer.disconnect();
+        }
     }, [loading, visibleCards.length, filteredCards.length]);
+
+
+    useEffect(() => {
+        handleLoadMore();
+    }, [handleLoadMore]);
+
+    const memoizedVisibleCards = useMemo(() => visibleCards, [visibleCards]);
 
     return (
         <section className="flex flex-col mx-auto items-center justify-center px-2">
@@ -63,7 +73,7 @@ export function SectionCardsPP({ cards, linkCasa }: SectionCardsPpProps) {
 
             {linkCasa ? (
                 <div className='grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-8 2xl:grid-cols-9 gap-2'>
-                    {visibleCards.map(({ id, nomeJogo, porcentagem, minima, padrao, maxima, categoriaJogo, colorBgGame }) => (
+                    {memoizedVisibleCards.map(({ id, nomeJogo, porcentagem, minima, padrao, maxima, categoriaJogo, colorBgGame }) => (
                         <CardGames
                             key={id}
                             id={id}
@@ -88,7 +98,6 @@ export function SectionCardsPP({ cards, linkCasa }: SectionCardsPpProps) {
             )}
             <div ref={loadMoreRef} className="h-10 flex items-center justify-center mt-4">
                 {loading && visibleCards.length < filteredCards.length && <p className="text-zinc-50">Carregando...</p>}
-
             </div>
         </section>
     );
