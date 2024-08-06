@@ -4,6 +4,7 @@ import { cn } from '@/lib/utils';
 import { Fire, MoneyWavy } from '@phosphor-icons/react';
 import { allImageCards } from '@/lib/images-cards';
 import Link from 'next/link';
+import { nameCards } from '@/lib/name-games';
 
 
 
@@ -34,7 +35,7 @@ export function CardGames({ linkCasa, id, porcentagem, minima, padrao, maxima, n
 
     return (
 
-        <div key={id} className='game rounded-xl flex flex-col my-4 justify-between shadow-xl shadow-black max-w-[215px] sm:max-w-[175px] w-full sm:min-w-[157px] overflow-hidden relative' style={{ backgroundColor: 'rgb(13, 28, 124)' }}>
+        <div key={id} className='game rounded-xl flex flex-col my-4 justify-between shadow-xl shadow-black max-w-[215px] sm:max-w-[175px] w-full sm:min-w-[157px] overflow-hidden relative' style={{ backgroundColor: `${nameCards[id].colorBgGame}` }}>
             {isHot && (
                 <div className="absolute top-[2px] right-[2px] z-20 w-[60px] h-6 rounded-md flex items-center justify-center bg-green-600 animate-pulse">
                     <p className='text-zinc-50 text-base font-medium'>HOT</p>

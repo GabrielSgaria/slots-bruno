@@ -31,7 +31,7 @@ export const allImageCards: AllImageCards = {
     21: { image: `/image/games-pg/21.webp`, icon: `/image/games-pg-icon/21.webp` },
     22: { image: `/image/games-pg/22.webp`, icon: `/image/games-pg-icon/22.webp` },
     23: { image: `/image/games-pg/23.webp`, icon: `/image/games-pg-icon/23.webp` },
-    24: { image: `/image/games-pg/24.webp`, icon: `/image/games-pg-icon/24.webp` },
+    24: { image: `/image/games-pg/024.webp`, icon: `/image/games-pg-icon/024.webp` },
     25: { image: `/image/games-pg/25.webp`, icon: `/image/games-pg-icon/25.webp` },
     26: { image: `/image/games-pg/26.webp`, icon: `/image/games-pg-icon/26.webp` },
     27: { image: `/image/games-pg/27.webp`, icon: `/image/games-pg-icon/27.webp` },

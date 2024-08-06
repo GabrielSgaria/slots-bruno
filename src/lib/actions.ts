@@ -5,17 +5,6 @@ import prisma from "./db";
 import { nameCards } from "./name-games";
 import { Buffer } from 'buffer';
 
-interface CardData {
-    data: {
-        id: number;
-        nomeJogo: string;
-        categoriaJogo: string;
-        porcentagem: number;
-        minima: number;
-        padrao: number;
-        maxima: number;
-    }[]
-}
 
 const fiveMinutesInSeconds = 300;
 const oneDayInSeconds = 86400;
@@ -32,17 +21,35 @@ export async function updateCards() {
             const padrao = getRandomPorcentagem();
             const maxima = getRandomPorcentagem();
 
-            await prisma.card.update({
-                where: { id: i },
-                data: {
-                    nomeJogo: nome,
-                    categoriaJogo: categoria,
-                    porcentagem,
-                    minima,
-                    padrao,
-                    maxima
-                }
-            });
+            const existingCard = await prisma.card.findUnique({ where: { id: i } });
+
+            if (existingCard) {
+        
+                await prisma.card.update({
+                    where: { id: i },
+                    data: {
+                        nomeJogo: nome,
+                        categoriaJogo: categoria,
+                        porcentagem,
+                        minima,
+                        padrao,
+                        maxima,
+                        
+                    }
+                });
+            } else {
+                await prisma.card.create({
+                    data: {
+                        id: i,
+                        nomeJogo: nome,
+                        categoriaJogo: categoria,
+                        porcentagem,
+                        minima,
+                        padrao,
+                        maxima
+                    }
+                });
+            }
         }
         revalidateTag('cards');
         return { success: true };
@@ -51,6 +58,7 @@ export async function updateCards() {
         return { success: false };
     }
 }
+
 
 export async function createCards() {
     try {
