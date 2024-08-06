@@ -28,14 +28,10 @@ export async function updateCards() {
                 await prisma.card.update({
                     where: { id: i },
                     data: {
-                        nomeJogo: nome,
-                        categoriaJogo: categoria,
                         porcentagem,
                         minima,
                         padrao,
                         maxima,
-                        colorBgGame: colorBgGame
-                        
                     }
                 });
             } else {
@@ -215,30 +211,3 @@ export const getLinkCasa = unstable_cache(async () => {
     revalidate: oneDayInSeconds,
     tags: ['link-casa']
 });
-
-
-// export const getPgGames = async () => {
-//     try {
-//         const pgGames = await prisma.card.findMany({
-//             where: {
-//                 categoriaJogo: 'PG'
-//             }
-//         });
-//     }
-//     catch (err) {
-//         console.error(`Error get PG games`, err)
-//     }
-// }
-
-// export const getPpGames = async () => {
-//     try {
-//         const ppGames = await prisma.card.findMany({
-//             where: {
-//                 categoriaJogo: 'PP'
-//             }
-//         });
-//     }
-//     catch (err) {
-//         console.error(`Error get PP games`, err)
-//     }
-// }
