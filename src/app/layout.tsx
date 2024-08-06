@@ -63,7 +63,7 @@ export default function RootLayout({
   return (
     <html lang="pt">
 
-      <body className={`bg-image-mobile bg-cover sm:bg-image-desktop bg-no-repeat sm:bg-left-top sm:bg-auto bg-fixed text-zinc-50 w-full h-full overflow-x-hidden scroll-smooth ${roboto.variable}`}>
+      <body className={`bg-image-mobile md:bg-image-desktop bg-fixed bg-contain md:bg-cover bg-center-top text-zinc-50 ${roboto.variable}`}>
 
         <Analytics />
         <GoogleAnalytics gaId="G-9E7Z61LW2J" />
