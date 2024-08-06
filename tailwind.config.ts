@@ -22,7 +22,7 @@ const config: Config = {
       backgroundImage: {
         'custom-mask': 'linear-gradient(to bottom, transparent 0%, transparent 60%, #000 94%, #000 100%)',
         'image-desktop': 'url(../../public/bg-casino.png)',
-        // 'image-mobile': 'url(../../public/bg-casino-mobile.png)',
+        'image-mobile': 'url(../../public/bg-casino-mobile.png)',
         'fortune-rabbit': 'url(/image/bg-sinais/bg-rabbit.jpg)',
         'fortune-tiger': '/image/bg-sinais/bg-tiger.jpg',
         'fortune-ox': 'url(/image/bg-sinais/bg-ox.jpg)',
