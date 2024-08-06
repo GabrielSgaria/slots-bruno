@@ -12,6 +12,7 @@ export interface CardData {
     minima: number;
     padrao: number;
     maxima: number;
+    colorBgGame: string,
     updatedAt: Date;
 }
 
@@ -62,7 +63,7 @@ export function SectionCards({ cards, linkCasa }: SectionCardsPgProps) {
 
             {linkCasa ? (
                 <div className='grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-8 2xl:grid-cols-9 gap-2'>
-                    {visibleCards.map(({ id, nomeJogo, porcentagem, minima, padrao, maxima, categoriaJogo }) => (
+                    {visibleCards.map(({ id, nomeJogo, porcentagem, minima, padrao, maxima, categoriaJogo, colorBgGame }) => (
                         <CardGames
                             key={id}
                             id={id}
@@ -73,6 +74,7 @@ export function SectionCards({ cards, linkCasa }: SectionCardsPgProps) {
                             maxima={maxima}
                             nomeJogo={nomeJogo}
                             categoriaJogo={categoriaJogo}
+                            colorBgGame={colorBgGame}
                         />
                     ))}
                 </div>

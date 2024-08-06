@@ -1,13 +1,9 @@
-'use client';
 import Image from 'next/image';
 import { cn } from '@/lib/utils';
-import { Fire, MoneyWavy } from '@phosphor-icons/react';
+import { Fire } from '@phosphor-icons/react';
 import { allImageCards } from '@/lib/images-cards';
 import Link from 'next/link';
-import { nameCards } from '@/lib/name-games';
-
-
-
+import { ImageCard } from './card-components/image';
 
 interface CardGamesProps {
     linkCasa?: string | null;
@@ -17,10 +13,11 @@ interface CardGamesProps {
     padrao: number;
     maxima: number;
     nomeJogo: string;
-    categoriaJogo: string
+    categoriaJogo: string;
+    colorBgGame: string;
 }
 
-export function CardGames({ linkCasa, id, porcentagem, minima, padrao, maxima, nomeJogo, categoriaJogo }: CardGamesProps) {
+export function CardGames({ linkCasa, id, porcentagem, minima, padrao, maxima, nomeJogo, categoriaJogo, colorBgGame }: CardGamesProps) {
     const getColor = (value: number) => {
         if (value >= 70) return 'bg-green-500';
         if (value >= 40) return 'bg-yellow-500';
@@ -28,7 +25,9 @@ export function CardGames({ linkCasa, id, porcentagem, minima, padrao, maxima, n
     }
 
     const isHot = nomeJogo.toLowerCase().startsWith('fortune') && (minima > 90 || padrao > 90 || maxima > 90) && categoriaJogo === "PG";
-    const isPlayGamePg = !nomeJogo.toLowerCase().startsWith('fortune') && (minima > 90 || padrao > 90 || maxima > 90) && categoriaJogo === "PG";
+    const isPlayGame = (categoriaJogo === 'PP' ||
+        !nomeJogo.toLowerCase().startsWith('fortune') && categoriaJogo === 'PG') && (minima > 90 || padrao > 90 || maxima > 90);
+
 
     if (!linkCasa) {
         return <p>Link não encontrado</p>;
@@ -36,34 +35,20 @@ export function CardGames({ linkCasa, id, porcentagem, minima, padrao, maxima, n
 
     return (
 
-        <div key={id} className='game rounded-xl flex flex-col my-4 justify-between shadow-xl shadow-black max-w-[215px] sm:max-w-[175px] w-full sm:min-w-[157px] overflow-hidden relative' style={{ backgroundColor: `${nameCards[id].colorBgGame}` }}>
+        <div key={id} className='game rounded-xl flex flex-col my-4 justify-between shadow-xl shadow-black max-w-[215px] sm:max-w-[175px] w-full sm:min-w-[157px] overflow-hidden relative' style={{ backgroundColor: `${colorBgGame}` }}>
             {isHot && (
                 <div className="absolute top-[2px] right-[2px] z-20 w-[60px] h-6 rounded-md flex items-center justify-center bg-green-600 animate-pulse">
                     <p className='text-zinc-50 text-base font-medium'>HOT</p>
                     <Fire weight="fill" className="text-red-50 text-xl animate-pulse" />
                 </div>
             )}
-            {isPlayGamePg && (
+            {isPlayGame && (
                 <div className="absolute top-[2px] right-[2px] z-20 px-3 h-6 rounded-md flex items-center justify-center bg-green-600 animate-pulse">
-                <p className='text-zinc-50 text-base font-medium'>PLAY GAME</p>
-                <Fire weight="fill" className="text-red-50 text-xl animate-pulse" />
-            </div>
+                    <p className='text-zinc-50 text-base font-medium'>+90%</p>
+                    <Fire weight="fill" className="text-red-50 text-xl animate-pulse" />
+                </div>
             )}
-            <Link href={linkCasa} target='_blank' className='hover:opacity-75 h-full transition-all duration-300 none'>
-                <Image
-                    width={470}
-                    height={470}
-                    src={allImageCards[id].image}
-                    alt={`Card ${id}`}
-                    className="w-full h-[150px] object-cover"
-                    priority={true}
-                    quality={100}
-                />
-                <div
-                    style={{ backgroundImage: `url(${allImageCards[id].image})` }}
-                    className='custom-mask'
-                ></div>
-            </Link>
+            <ImageCard id={id} linkCasa={linkCasa} />
             <div className='gameContent relative z-20 -top-1 pt-[10px] flex flex-col min-h-[260px] justify-between'>
                 <div className='flex px-3 items-center justify-center gap-3'>
                     <Image
@@ -71,11 +56,11 @@ export function CardGames({ linkCasa, id, porcentagem, minima, padrao, maxima, n
                         height={150}
                         src={allImageCards[id].icon}
                         alt={`Card ${id}`}
-                        className="w-[55px] rounded-xl"
+                        className="w-[55px] min-w-[55px] max-w-[55px] h-[50px] min-h-[50px] max-h-[50px] rounded-xl"
                         priority={true}
                         quality={100}
                     />
-                    <span className='overflow-hidden font-[1rem]'>{nomeJogo}</span>
+                    <span className='overflow-hidden font-[1rem] leading-none'>{nomeJogo}</span>
                 </div>
                 <div className='flex flex-col text-center items-center justify-center gap-1 text-xs sm:text-[15px] h-full'>
                     <p className='w-full px-3'>Padrão: {padrao}%
@@ -109,6 +94,12 @@ export function CardGames({ linkCasa, id, porcentagem, minima, padrao, maxima, n
                         </Link>
                     </div>
 
+                ) : isPlayGame ? (
+                    <div className="w-[90%] h-full flex mx-auto pt-3 items-center justify-center">
+                        <Link href={linkCasa} target='_blank' className="rounded-xl bg-green-600 text-zinc-50 font-bold py-3 px-1 hover:bg-green-500 w-full text-center text-nowrap text-sm sm:text-sm animate-pulse">
+                            <p className="text-zinc-50">JOGUE AGORA</p>
+                        </Link>
+                    </div>
                 ) : (
                     <div className='w-full h-full px-1 py-3 '>
                         <div className='font-medium w-full h-full bg-black/20 px-2 py-2 text-xs flex flex-col justify-center items-center gap-2 rounded-xl'>
