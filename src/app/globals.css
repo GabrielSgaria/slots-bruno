@@ -2,210 +2,68 @@
 @tailwind components;
 @tailwind utilities;
 
-.roboto {
-    font-family: var(--roboto);
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+    --radius: 0.5rem;
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
   }
-.rubik {
-    font-family: var(--rubik)
-  }
 
-.imagebg {
-  background-position-x: 100%;
-  background-image: linear-gradient(
-    90deg,
-    rgba(255, 255, 255, 0.15) 25%,
-    transparent 25%,
-    transparent 50%,
-    rgba(255, 255, 255, 0.15) 50%,
-    rgba(255, 255, 255, 0.15) 75%,
-    transparent 75%,
-    transparent
-  );
-  background-size: 200% 100%;
-  transition: background-position-x 1s ease;
-  animation: progress-bar-stripes 4s linear infinite;
-  position: absolute;
-}
-
-.verde-lima {
-  background: #16a34a;
-}
-
-.verde-escuro {
-  background: #064e3b;
-}
-.verde2 {
-  background: #65a30d;
-}
-.rosa {
-  background: #db2777;
-}
-.azul {
-  background: #0d9488;
-}
-.roxo {
-  background: #a21caf;
-}
-.amarelo-escuro {
-  background: #ca8a04;
-}
-
-.laranja-claro {
-  background: #f59e0b;
-}
-
-.azul-marinho {
-  background: #3730a3;
-}
-
-.cinza-claro {
-  background: #075985;
-}
-
-.rosa-claro {
-  background: #ec4899;
-}
-
-.roxo-escuro {
-  background: #312e81;
-}
-
-.azul-ciano {
-  background: #1d4ed8;
-}
-
-.amarelo-verde {
-  background: #facc15;
-}
-
-.laranja-vermelho {
-  background: #ea580c;
-}
-
-.azul-celeste {
-  background: #059669;
-}
-
-.rosa-forte {
-  background: #be185d;
-}
-
-.roxo-claro {
-  background: #d946ef;
-}
-
-.amarelo-ouro {
-  background: #eab308;
-}
-
-.vermelho-marrom {
-  background: #f97316;
-}
-
-
-@keyframes progress-bar-stripes {
-  from {
-    background-position-x: 100%;
-  }
-  to {
-    background-position-x: 0;
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
   }
 }
 
-::-webkit-scrollbar {
-  width: 10px;
-}
-
-::-webkit-scrollbar-track {
-  background: #09090b;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #166534;
-  border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #555;
-}
-
-.custom-mask {
-  position: absolute;
-  top: 150px;
-  left: 0;
-  z-index: 1;
-  transform: rotate(180deg) scaleX(-1); 
-  mask-image: linear-gradient(linear, left top, left bottom, color-stop(0, transparent), color-stop(.6, transparent), color-stop(.94, #000), color-stop(1, #000));
-  -webkit-mask-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, transparent), color-stop(.6, transparent), color-stop(.94, #000), color-stop(1, #000));
-  display: block;
-  width: 100%;
-  height: 150px;
-  background-repeat: no-repeat !important;
-  background-position: 50% 50% !important;
-  background-size: cover !important;
-}
-
-.game {
-  box-shadow: 2px 5px 12px 7px #00000077;
-  font-weight: 700;
-  position: relative;
-}
-
-.gameContent {
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-
-}
-
-.game .loadingBar .loadingBarInner {
-  width: 100%;
-  height: 12px;
-  border-radius: 7px;
-}
-
-.apostaSugerida {
-  width: 90%;
-  height: 70%;
-  margin: 20px 0 0px 0;
-  background-color: rgba(0, 0, 0, .3);
-  text-align: center;
-  font-size: 12px;
-  border-radius: 14px;
-  display: flex;
-  flex-direction: column;
-justify-content: center;
-align-items: center;
-text-align: center;
-}
-.apostaSugerida span {
-display: flex;
-justify-content: center;
-align-items: center;
-text-align: center;
-}
-
-.isHot{
-  width: 100%;
-  height: 20%;
-  display: flex;
-    flex-direction: column;
-    text-align: center;
-    align-items: center;
-    justify-content: center;
-    padding-top: 10px;
-}
-
-
-.distribution {
-  position: absolute;
-  bottom: 97%;
-  left: 0;
-  padding: 5px 10px;
-  color: #fff;
-  background-color: rgba(0, 0, 0, .3);
-  border-top-right-radius: inherit;
-  border-top-left-radius: inherit;
-  font-size: 13px;
-  width: 100%;
-  text-align: center;
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
 }
