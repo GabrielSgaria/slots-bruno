@@ -19,7 +19,7 @@ export function ContentPg({ updateTime, imageBanner }: ContentPgProps) {
 
     return (
         <>
-            {showPopup && <PopupImage onClose={handleClosePopup} imagePopup={imageBanner} />}
+            {/* {showPopup && <PopupImage onClose={handleClosePopup} imagePopup={imageBanner} />} */}
             <div className="container mx-auto flex justify-center pt-28 flex-col items-center px-3 sm:px-0 gap-10 mb-10">
                 <div className="flex flex-col justify-center items-center gap-2 backdrop-blur-sm bg-green-700/75 shadow-2xl shadow-black rounded-2xl py-5 px-10">
 

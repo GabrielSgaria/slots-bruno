@@ -61,7 +61,7 @@ export function SectionCards({ cards, linkCasa }: SectionCardsPgProps) {
             <SearchFilter cardsProps={{ data: cards }} setFilteredCards={setFilteredCards} />
 
             {linkCasa ? (
-                <div className='grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-8 2xl:grid-cols-9 gap-3 '>
+                <div className='grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-8 2xl:grid-cols-9 gap-2'>
                     {visibleCards.map(({ id, nomeJogo, porcentagem, minima, padrao, maxima, categoriaJogo }) => (
                         <CardGames
                             key={id}

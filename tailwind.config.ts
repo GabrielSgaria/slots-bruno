@@ -20,6 +20,7 @@ const config: Config = {
         'pulse-slow': 'pulse 3s linear infinite',
       },
       backgroundImage: {
+        'custom-mask': 'linear-gradient(to bottom, transparent 0%, transparent 60%, #000 94%, #000 100%)',
         'image-desktop': 'url(../../public/bg-casino.png)',
         // 'image-mobile': 'url(../../public/bg-casino-mobile.png)',
         'fortune-rabbit': 'url(/image/bg-sinais/bg-rabbit.jpg)',
@@ -27,6 +28,12 @@ const config: Config = {
         'fortune-ox': 'url(/image/bg-sinais/bg-ox.jpg)',
         'fortune-mouse': 'url(/image/bg-sinais/bg-mouse.jpg)',
         'fortune-dragon': 'url(/image/bg-sinais/bg-dragon.png)'
+      },
+      maskImage: {
+        'custom-mask': 'linear-gradient(to bottom, transparent 0%, transparent 60%, #000 94%, #000 100%)',
+      },
+      WebkitMaskImage: {
+        'custom-mask': '-webkit-gradient(linear, left top, left bottom, color-stop(0%, transparent), color-stop(60%, transparent), color-stop(94%, #000), color-stop(100%, #000))',
       },
     },
   },

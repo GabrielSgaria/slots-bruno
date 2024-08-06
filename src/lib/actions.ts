@@ -22,7 +22,7 @@ const oneDayInSeconds = 86400;
 
 export async function updateCards() {
     try {
-        for (let i = 1; i <= 138; i++) {
+        for (let i = 1; i <= 139; i++) {
             const gameData = nameCards[i];
             if (!gameData) continue;
 
@@ -54,7 +54,7 @@ export async function updateCards() {
 
 export async function createCards() {
     try {
-        for (let i = 1; i <= 138; i++) {
+        for (let i = 1; i <= 139; i++) {
             const gameData = nameCards[i];
             if (!gameData) continue;
 
