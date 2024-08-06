@@ -28,6 +28,7 @@ export function CardGames({ linkCasa, id, porcentagem, minima, padrao, maxima, n
     }
 
     const isHot = nomeJogo.toLowerCase().startsWith('fortune') && (minima > 90 || padrao > 90 || maxima > 90) && categoriaJogo === "PG";
+    const isPlayGamePg = !nomeJogo.toLowerCase().startsWith('fortune') && (minima > 90 || padrao > 90 || maxima > 90) && categoriaJogo === "PG";
 
     if (!linkCasa) {
         return <p>Link não encontrado</p>;
@@ -41,6 +42,12 @@ export function CardGames({ linkCasa, id, porcentagem, minima, padrao, maxima, n
                     <p className='text-zinc-50 text-base font-medium'>HOT</p>
                     <Fire weight="fill" className="text-red-50 text-xl animate-pulse" />
                 </div>
+            )}
+            {isPlayGamePg && (
+                <div className="absolute top-[2px] right-[2px] z-20 px-3 h-6 rounded-md flex items-center justify-center bg-green-600 animate-pulse">
+                <p className='text-zinc-50 text-base font-medium'>PLAY GAME</p>
+                <Fire weight="fill" className="text-red-50 text-xl animate-pulse" />
+            </div>
             )}
             <Link href={linkCasa} target='_blank' className='hover:opacity-75 h-full transition-all duration-300 none'>
                 <Image
