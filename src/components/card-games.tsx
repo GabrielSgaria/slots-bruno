@@ -41,7 +41,7 @@ export function CardGames({ linkCasa, id, porcentagem, minima, padrao, maxima, n
                 <Image
                     width={270}
                     height={270}
-                    src={allImageCards[id]}
+                    src={allImageCards[id].image}
                     alt={`Card ${id}`}
                     className="w-full h-full object-fill min-h-[150px] max-h-[150px] bg-zinc-950"
                     loading="lazy"
