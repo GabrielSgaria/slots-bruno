@@ -15,7 +15,7 @@ export async function updateCards() {
             const gameData = nameCards[i];
             if (!gameData) continue;
 
-            const { nome, categoria } = gameData;
+            const { nome, categoria, colorBgGame } = gameData;
             const porcentagem = getRandomPorcentagem();
             const minima = getRandomPorcentagem();
             const padrao = getRandomPorcentagem();
@@ -34,6 +34,7 @@ export async function updateCards() {
                         minima,
                         padrao,
                         maxima,
+                        colorBgGame: colorBgGame
                         
                     }
                 });
@@ -46,7 +47,8 @@ export async function updateCards() {
                         porcentagem,
                         minima,
                         padrao,
-                        maxima
+                        maxima,
+                        colorBgGame: colorBgGame,
                     }
                 });
             }
@@ -66,7 +68,7 @@ export async function createCards() {
             const gameData = nameCards[i];
             if (!gameData) continue;
 
-            const { nome, categoria } = gameData;
+            const { nome, categoria, colorBgGame } = gameData;
             const porcentagem = getRandomPorcentagem();
             const minima = getRandomPorcentagem();
             const padrao = getRandomPorcentagem();
@@ -80,6 +82,7 @@ export async function createCards() {
                     minima,
                     padrao,
                     maxima,
+                    colorBgGame: colorBgGame
                 }
             });
         }
