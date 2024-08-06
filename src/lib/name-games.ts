@@ -1,6 +1,6 @@
 export const nameCards: { [key: number]: { nome: string; categoria: string, colorBgGame: string, } } = {
     1: { nome: 'Fortune Rabbit', categoria: 'PG', colorBgGame: 'rgb(13, 28, 124)' },
-    2: { nome: 'Fortune Tiger', categoria: 'PG', colorBgGame: 'rgb(16, 44, 34)' },
+    2: { nome: 'Fortune Tiger', categoria: 'PG', colorBgGame: 'rgb(237, 82, 68)' },
     3: { nome: 'Fortune Ox', categoria: 'PG', colorBgGame: 'rgb(122, 1, 0)' },
     4: { nome: 'Fortune Mouse', categoria: 'PG', colorBgGame: 'rgb(103, 2, 9)' },
     5: { nome: 'Fortune Dragon', categoria: 'PG', colorBgGame: 'rgb(121, 75, 164)' },

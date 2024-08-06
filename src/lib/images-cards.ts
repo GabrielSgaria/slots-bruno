@@ -122,7 +122,7 @@ export const allImageCards: AllImageCards = {
     111: { image: `/image/capa-games-pp/2.png`, icon: `/image/pp-icon/2.png` },
     112: { image: `/image/capa-games-pp/3.png`, icon: `/image/pp-icon/3.png` },
     113: { image: `/image/capa-games-pp/4.png`, icon: `/image/pp-icon/4.png` },
-    114: { image: `/image/capa-games-pp/5.png`, icon: `/image/pp-icon/5.png` },
+    114: { image: `/image/capa-games-pp/5.png`, icon: `/image/pp-icon/05.png` },
     115: { image: `/image/capa-games-pp/6.png`, icon: `/image/pp-icon/6.png` },
     116: { image: `/image/capa-games-pp/7.png`, icon: `/image/pp-icon/7.png` },
     117: { image: `/image/capa-games-pp/8.png`, icon: `/image/pp-icon/8.png` },
