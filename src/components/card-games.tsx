@@ -35,12 +35,8 @@ export function CardGames({ linkCasa, id, porcentagem, minima, padrao, maxima, n
     }
 
     return (
-<<<<<<< HEAD
 
         <div key={id} className='game rounded-xl flex flex-col my-2 justify-between shadow-xl shadow-black max-w-[215px] sm:max-w-[175px] w-full sm:min-w-[157px] overflow-hidden relative' style={{ backgroundColor: `${colorBgGame}` }}>
-=======
-        <div key={id} className='game rounded-xl flex flex-col my-4 justify-between shadow-xl shadow-black max-w-[215px] sm:max-w-[175px] w-full sm:min-w-[157px] overflow-hidden relative' style={{ backgroundColor: colorBgGame }}>
->>>>>>> 6a8cd97 (feat image giza e otimizações fast transfer)
             {isHot && (
                 <div className="absolute top-[2px] right-[2px] z-20 w-[60px] h-6 rounded-md flex items-center justify-center bg-green-600 animate-pulse">
                     <p className='text-zinc-50 text-base font-medium'>HOT</p>
