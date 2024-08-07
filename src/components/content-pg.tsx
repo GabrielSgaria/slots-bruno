@@ -30,8 +30,8 @@ export function ContentPg({ updateTime, imageBanner }: ContentPgProps) {
         <>
             {showPopup && imageBanner && <PopupImage onClose={handleClosePopup} imagePopup={imageBanner} />}
 
-            <div className="container mx-auto flex flex-col items-center px-3 sm:px-0 gap-10 mb-10 pt-28">
-                <div className="relative w-full max-w-[1200px]">
+            <div className="container mx-auto flex flex-col items-center px-3 sm:px-0 gap-10 mb-10 pt-20">
+                <div className="relative w-full max-w-[1200px] shadow-xl shadow-black rounded-lg overflow-hidden  ">
                     <Swiper
                         spaceBetween={30}
                         centeredSlides={true}
@@ -39,7 +39,7 @@ export function ContentPg({ updateTime, imageBanner }: ContentPgProps) {
                         pagination={{ clickable: true }}
                         navigation={true}
                         modules={[Autoplay, Pagination, Navigation]}
-                        className="mySwiper rounded-lg overflow-hidden shadow-xl "
+                        className="mySwiper "
                     >
                         {bannerImages.map((image, index) => (
                             <SwiperSlide key={index}>
@@ -80,7 +80,7 @@ export function ContentPg({ updateTime, imageBanner }: ContentPgProps) {
                     </p>
                 </div> */}
 
-                <div className="flex flex-col items-center justify-center max-w-[600px] w-full rounded-2xl p-5 bg-gradient-to-b to-green-800 via-green-600 from-green-500 shadow-2xl">
+                <div className="flex flex-col items-center justify-center max-w-[600px] w-full rounded-2xl p-5 bg-gradient-to-b to-green-800 via-green-600 from-green-500 shadow-xl shadow-black">
                     {updateTime && (
                         <h1 className="text-base uppercase font-bold">
                             Última atualização às {updateTime}
