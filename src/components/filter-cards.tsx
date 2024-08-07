@@ -26,13 +26,13 @@ export function SearchFilter({ cardsProps, setFilteredCards }: SearchFilterProps
     }, [searchTerm, cardsProps, setFilteredCards]);
 
     return (
-        <div className="w-[300px] flex items-center justify-center py-5">
+        <div className="w-full flex items-center justify-center py-5 max-w-[600px] ">
             <input
                 type="text"
                 placeholder="Buscar jogo..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="p-2 rounded-lg border border-gray-300 text-zinc-950 text-sm focus-visible:ring-1 focus-visible:ring-green-400 outline-none"
+                className=" text-zinc-50 placeholder:text-zinc-50/60 placeholder:italic bg-green-600/90 w-full p-2 rounded-lg  text-sm focus-visible:ring-1 focus-visible:ring-green-400 outline-none shadow-black shadow-inner"
             />
         </div>
     );
