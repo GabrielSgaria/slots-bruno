@@ -31,7 +31,7 @@ export function ContentPg({ updateTime, imageBanner }: ContentPgProps) {
             {showPopup && imageBanner && <PopupImage onClose={handleClosePopup} imagePopup={imageBanner} />}
 
             <div className="container mx-auto flex flex-col items-center px-3 sm:px-0 gap-10 mb-10 pt-28">
-                <div className="relative w-full">
+                <div className="relative w-full max-w-[1200px]">
                     <Swiper
                         spaceBetween={30}
                         centeredSlides={true}
@@ -39,18 +39,18 @@ export function ContentPg({ updateTime, imageBanner }: ContentPgProps) {
                         pagination={{ clickable: true }}
                         navigation={true}
                         modules={[Autoplay, Pagination, Navigation]}
-                        className="mySwiper rounded-lg overflow-hidden shadow-xl"
+                        className="mySwiper rounded-lg overflow-hidden shadow-xl "
                     >
                         {bannerImages.map((image, index) => (
                             <SwiperSlide key={index}>
-                                <div className="relative w-full h-[330px] hidden md:block">
+                                <div className="relative h-[330px] hidden md:flex">
                                     <Image
                                         src={image.desktop}
                                         alt={`Banner Desktop ${index + 1}`}
                                         width={1500}
                                         height={530}
                                         quality={100}
-                                        className="object-cover"
+                                        className=""
                                     />
                                 </div>
                                 <div className="relative w-full h-[256px] md:hidden">
