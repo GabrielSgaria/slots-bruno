@@ -1,16 +1,25 @@
 'use client'
-import Image from 'next/image'
-import logoFP from '../../public/favicon.png'
-import { CallBell } from "@phosphor-icons/react"
+import Image from 'next/image';
+import logoFP from '../../public/favicon.png';
+import { CallBell } from "@phosphor-icons/react";
 import { useState, useCallback } from 'react';
 import { PopupImage } from './popup';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+import 'swiper/css/pagination';
+import 'swiper/css/navigation';
+import { Autoplay, Pagination, Navigation } from 'swiper/modules';
+import { bannerImages } from '@/lib/bannerImages';
 
-interface ContentPgProps {
+
+export interface ContentPgProps {
     updateTime: string | number | undefined;
-    imageBanner: string | null | undefined
+    // bannerImages: string[]; // Referência para os banners do carrossel
+    imageBanner: string | null | undefined; // Referência para o popup
 }
 
 export function ContentPg({ updateTime, imageBanner }: ContentPgProps) {
+
     const [showPopup, setShowPopup] = useState(true);
 
     const handleClosePopup = useCallback(() => {
@@ -20,24 +29,46 @@ export function ContentPg({ updateTime, imageBanner }: ContentPgProps) {
     return (
         <>
             {showPopup && imageBanner && <PopupImage onClose={handleClosePopup} imagePopup={imageBanner} />}
+
             <div className="container mx-auto flex flex-col items-center px-3 sm:px-0 gap-10 mb-10 pt-28">
-                <div className="flex flex-col items-center gap-2 backdrop-blur-sm bg-green-700/75 shadow-2xl rounded-2xl py-5 px-10">
-
-                    <div className="w-20">
-                        <Image
-                            width={150} 
-                            height={150} 
-                            src={logoFP}
-                            alt="Logo Oficial FP"
-                            priority
-                        />
-                    </div>
-
-                    <h1 className="text-center text-xl sm:text-2xl font-bold text-yellow-400 italic">
-                        GRUPO FP OFICIAL
-                    </h1>
+                <div className="relative w-full">
+                    <Swiper
+                        spaceBetween={30}
+                        centeredSlides={true}
+                        autoplay={{ delay: 3500, disableOnInteraction: false }}
+                        pagination={{ clickable: true }}
+                        navigation={true}
+                        modules={[Autoplay, Pagination, Navigation]}
+                        className="mySwiper rounded-lg overflow-hidden shadow-xl"
+                    >
+                        {bannerImages.map((image, index) => (
+                            <SwiperSlide key={index}>
+                                <div className="relative w-full h-[330px] hidden md:block">
+                                    <Image
+                                        src={image.desktop}
+                                        alt={`Banner Desktop ${index + 1}`}
+                                        width={1500}
+                                        height={530}
+                                        quality={100}
+                                        className="object-cover"
+                                    />
+                                </div>
+                                <div className="relative w-full h-[256px] md:hidden">
+                                    <Image
+                                        src={image.mobile}
+                                        alt={`Banner Mobile ${index + 1}`}
+                                        width={1350}
+                                        height={1350}
+                                        quality={100}
+                                        className="object-cover"
+                                    />
+                                </div>
+                            </SwiperSlide>
+                        ))}
+                    </Swiper>
                 </div>
-                <div className="py-3 shadow-2xl text-center text-base flex flex-col space-x-[3px] max-w-[600px] backdrop-blur-sm bg-zinc-950/20 border border-zinc-950/5 rounded-2xl px-2 sm:p-10">
+
+                {/* <div className="py-3 shadow-2xl text-center text-base flex flex-col space-x-[3px] max-w-[600px] backdrop-blur-sm bg-zinc-950/20 border border-zinc-950/5 rounded-2xl px-2 sm:p-10">
                     <div className='flex gap-2 items-center justify-center'>
                         <CallBell className='md:size-6' weight="bold" />
                         <span className='font-bold sm:text-lg md:text-xl'>DICA:</span>
@@ -47,7 +78,7 @@ export function ContentPg({ updateTime, imageBanner }: ContentPgProps) {
                         Isso pode aumentar suas chances de ganhar.
                         Não se esqueça de clicar no menu superior para acessar a página de gerar sinais e aproveitar as melhores oportunidades!
                     </p>
-                </div>
+                </div> */}
 
                 <div className="flex flex-col items-center justify-center max-w-[600px] w-full rounded-2xl p-5 bg-gradient-to-b to-green-800 via-green-600 from-green-500 shadow-2xl">
                     {updateTime && (
@@ -59,5 +90,5 @@ export function ContentPg({ updateTime, imageBanner }: ContentPgProps) {
                 </div>
             </div>
         </>
-    )
+    );
 }
