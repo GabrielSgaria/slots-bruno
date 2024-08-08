@@ -60,7 +60,7 @@ export function CardGames({ linkCasa, id, porcentagem, minima, padrao, maxima, n
                         priority
                         quality={100}
                     />
-                    <span className='overflow-hidden font-[1rem] leading-none'>{nomeJogo}</span>
+                    <span className=' font-[12px] leading-none'>{nomeJogo}</span>
                 </div>
                 <div className='flex flex-col text-center items-center justify-center gap-1 text-xs sm:text-[15px] h-full'>
                     <p className='w-full px-3'>Padrão: {padrao}%
