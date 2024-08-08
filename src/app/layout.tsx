@@ -5,6 +5,7 @@ import { NavBar } from "@/components/nav-bar";
 import { Footer } from "@/components/footer";
 import { Analytics } from "@vercel/analytics/next";
 import { GoogleAnalytics, GoogleTagManager } from "@next/third-parties/google";
+import { ButtonScrollTop } from "@/components/button-scroll-top";
 
 
 const roboto = Roboto(
@@ -64,8 +65,8 @@ export default function RootLayout({
     <html lang="pt">
 
       <body className={`bg-image-mobile md:bg-image-desktop bg-fixed bg-contain md:bg-cover bg-center-top text-zinc-50 ${roboto.variable}`}>
+          <ButtonScrollTop />
         <div className="bg-zinc-950/20 backdrop-blur-sm">
-
           <Analytics />
           <GoogleAnalytics gaId="G-9E7Z61LW2J" />
           <GoogleTagManager gtmId="G-9E7Z61LW2J" />
