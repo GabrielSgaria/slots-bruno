@@ -51,4 +51,3 @@ export function calculateEndTime(): string {
     const minutes = currentTime.getMinutes().toString().padStart(2, '0');
     return `${hours}:${minutes}`;
 }
-

@@ -4,7 +4,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url      = env("DATABASE_URL_DEV")
 }
 
 model Card {
@@ -15,6 +15,7 @@ model Card {
   minima      Int
   padrao      Int
   maxima      Int
+  colorBgGame String
   updatedAt   DateTime @default(now()) @updatedAt
 }
 

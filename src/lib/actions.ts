@@ -5,17 +5,6 @@ import prisma from "./db";
 import { nameCards } from "./name-games";
 import { Buffer } from 'buffer';
 
-interface CardData {
-    data: {
-        id: number;
-        nomeJogo: string;
-        categoriaJogo: string;
-        porcentagem: number;
-        minima: number;
-        padrao: number;
-        maxima: number;
-    }[]
-}
 
 const fiveMinutesInSeconds = 300;
 const oneDayInSeconds = 86400;
@@ -26,30 +15,26 @@ export async function updateCards() {
             const gameData = nameCards[i];
             if (!gameData) continue;
 
-            const { nome, categoria } = gameData;
+            const { nome, categoria, colorBgGame } = gameData;
             const porcentagem = getRandomPorcentagem();
             const minima = getRandomPorcentagem();
             const padrao = getRandomPorcentagem();
             const maxima = getRandomPorcentagem();
 
-            // Verifica se o card já existe
             const existingCard = await prisma.card.findUnique({ where: { id: i } });
 
             if (existingCard) {
-                // Atualiza o card existente
+        
                 await prisma.card.update({
                     where: { id: i },
                     data: {
-                        nomeJogo: nome,
-                        categoriaJogo: categoria,
                         porcentagem,
                         minima,
                         padrao,
-                        maxima
+                        maxima,
                     }
                 });
             } else {
-                // Cria um novo card se não existir
                 await prisma.card.create({
                     data: {
                         id: i,
@@ -58,7 +43,8 @@ export async function updateCards() {
                         porcentagem,
                         minima,
                         padrao,
-                        maxima
+                        maxima,
+                        colorBgGame: colorBgGame,
                     }
                 });
             }
@@ -71,13 +57,14 @@ export async function updateCards() {
     }
 }
 
+
 export async function createCards() {
     try {
         for (let i = 1; i <= 139; i++) {
             const gameData = nameCards[i];
             if (!gameData) continue;
 
-            const { nome, categoria } = gameData;
+            const { nome, categoria, colorBgGame } = gameData;
             const porcentagem = getRandomPorcentagem();
             const minima = getRandomPorcentagem();
             const padrao = getRandomPorcentagem();
@@ -91,6 +78,7 @@ export async function createCards() {
                     minima,
                     padrao,
                     maxima,
+                    colorBgGame: colorBgGame
                 }
             });
         }
@@ -223,30 +211,3 @@ export const getLinkCasa = unstable_cache(async () => {
     revalidate: oneDayInSeconds,
     tags: ['link-casa']
 });
-
-
-// export const getPgGames = async () => {
-//     try {
-//         const pgGames = await prisma.card.findMany({
-//             where: {
-//                 categoriaJogo: 'PG'
-//             }
-//         });
-//     }
-//     catch (err) {
-//         console.error(`Error get PG games`, err)
-//     }
-// }
-
-// export const getPpGames = async () => {
-//     try {
-//         const ppGames = await prisma.card.findMany({
-//             where: {
-//                 categoriaJogo: 'PP'
-//             }
-//         });
-//     }
-//     catch (err) {
-//         console.error(`Error get PP games`, err)
-//     }
-// }
