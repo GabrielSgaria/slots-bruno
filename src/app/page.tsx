@@ -23,7 +23,7 @@ export default async function Home() {
   return (
     <main>
       <Analytics />
-      <ButtonScrollTop />
+  
       <ContentPg updateTime={formattedDate} imageBanner={imageBanner} />
       <SectionCards cards={cards?.data as CardData[]} linkCasa={novoLink} />
     </main>
