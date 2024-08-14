@@ -31,13 +31,11 @@ export function ContentPg({ updateTime: initialUpdateTime, imageBanner }: Conten
             const [hours, minutes, seconds] = updateTime.split(':').map(Number);
             const lastUpdate = new Date(now);
 
-            // Ajusta a hora, minutos e segundos do último update
+
             lastUpdate.setHours(hours, minutes, seconds, 0);
 
-            // Calcula o próximo horário de atualização adicionando 5 minutos
             const nextUpdate = new Date(lastUpdate.getTime() + 5 * 60 * 1000);
 
-            // Garante que a transição de dias seja tratada corretamente
             if (nextUpdate.getDate() !== lastUpdate.getDate()) {
                 nextUpdate.setDate(lastUpdate.getDate() + 1);
             }
@@ -120,6 +118,7 @@ export function ContentPg({ updateTime: initialUpdateTime, imageBanner }: Conten
                                         width={1500}
                                         height={530}
                                         quality={100}
+                                        priority
                                     />
                                 </div>
                                 <div className="relative w-full h-[256px] md:hidden">
@@ -130,6 +129,7 @@ export function ContentPg({ updateTime: initialUpdateTime, imageBanner }: Conten
                                         height={1350}
                                         quality={100}
                                         className="object-cover"
+                                        priority
                                     />
                                 </div>
                             </SwiperSlide>
