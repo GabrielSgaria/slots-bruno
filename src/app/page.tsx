@@ -3,7 +3,6 @@ import { getCardsPG, getLinkCasa } from "@/lib/actions";
 import { ContentPg } from "@/components/content-pg";
 import { format, toZonedTime } from "date-fns-tz";
 import { CardData, SectionCards } from "@/components/section-cards-pg";
-import { Analytics } from "@vercel/analytics/next";
 
 export default async function Home() {
   const cards = await getCardsPG();
@@ -20,7 +19,6 @@ export default async function Home() {
 
   return (
     <main>
-      <Analytics />
       <ContentPg updateTime={formattedDate} imageBanner={imageBanner} />
       <SectionCards cards={cards?.data as CardData[]} linkCasa={novoLink} />
     </main>

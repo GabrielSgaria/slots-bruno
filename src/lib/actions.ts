@@ -50,6 +50,8 @@ export async function updateCards() {
             }
         }
         revalidateTag('cards');
+        revalidateTag('cards-pg')
+        revalidateTag('cards-pp')
         return { success: true };
     } catch (error) {
         console.error('Error updating cards data:', error);
