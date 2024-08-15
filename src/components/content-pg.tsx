@@ -25,14 +25,17 @@ export function ContentPg({ updateTime: initialUpdateTime, imageBanner }: Conten
     const router = useRouter();
 
     useEffect(() => {
-        // Marcar que o componente está sendo renderizado no cliente
         setIsClient(true);
 
         if (isClient) {
             const storedPopupShown = localStorage.getItem('popupShown');
             const storedImageBanner = localStorage.getItem('lastImageBanner');
+            const storedTimestamp = localStorage.getItem('popupTimestamp');
+            const currentTime = Date.now();
 
-            if (storedPopupShown !== 'true' || storedImageBanner !== imageBanner) {
+            const isTimestampValid = storedTimestamp && currentTime - parseInt(storedTimestamp, 10) < 3600000; // 1 hour
+
+            if (!isTimestampValid || storedPopupShown !== 'true' || storedImageBanner !== imageBanner) {
                 setShowPopup(true);
             }
         }
@@ -42,6 +45,7 @@ export function ContentPg({ updateTime: initialUpdateTime, imageBanner }: Conten
         setShowPopup(false);
         localStorage.setItem('popupShown', 'true');
         localStorage.setItem('lastImageBanner', imageBanner || '');
+        localStorage.setItem('popupTimestamp', Date.now().toString());
     }, [imageBanner]);
 
     const calculateTimeLeft = useCallback(() => {
@@ -112,7 +116,7 @@ export function ContentPg({ updateTime: initialUpdateTime, imageBanner }: Conten
         const minutes = Math.floor((ms / (1000 * 60)) % 60);
         return `${minutes > 0 ? `${minutes}m ` : ''}${seconds}s`;
     };
-
+    
     return (
         <>
             {showPopup && imageBanner && <PopupImage onClose={handleClosePopup} imagePopup={imageBanner} />}
