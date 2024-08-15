@@ -2,8 +2,8 @@ import Image from "next/image";
 import logoFP from '../../../../public/favicon.png'
 import { gamesSinais } from "@/lib/constants";
 import Link from "next/link";
-import { allImageCards } from "@/lib/images-cards";
-import { cn } from "@/lib/utils";
+import { DotFilledIcon } from "@radix-ui/react-icons";
+
 
 export default function GerarSinais() {
     return (
@@ -21,10 +21,11 @@ export default function GerarSinais() {
                 </div>
             </div>
 
-            <div className="grid grid-cols-2 px-2  sm:grid-cols-3 sm:px-10 md:grid-cols-3 lg:grid-cols-5 lg: gap-2 container mx-auto justify-items-center">
+            <div className="grid grid-cols-2 px-2 sm:grid-cols-3 sm:px-10 md:grid-cols-3 lg:grid-cols-5 lg: gap-2 container mx-auto justify-items-center" >
 
-                {gamesSinais.map(({ image, slug }) => (
-                    <div key={slug} className="game rounded-xl flex flex-col my-1 justify-between shadow-xl shadow-black max-w-[215px] sm:max-w-[240px] w-full sm:min-w-[157px] overflow-hidden relative">
+                {gamesSinais.map(({ image, slug, colorBG }) => (
+
+                    <div key={slug} className="game rounded-xl flex flex-col my-1 justify-between shadow-xl shadow-black max-w-[215px] sm:max-w-[240px] w-full sm:min-w-[157px] overflow-hidden relative" style={{ backgroundColor: colorBG }}>
                         <Link href={`/gerar-sinais/${slug}`} target='_blank' className='hover:opacity-75 h-full transition-all duration-300 none'>
                             <Image
                                 width={470}
@@ -40,11 +41,24 @@ export default function GerarSinais() {
                                 className='custom-mask'
                             ></div>
                         </Link>
-                        <div className='gameContent relative z-20 -top-1 pt-[10px] flex flex-col min-h-[100px] justify-between'>
-                            <div className='flex px-3 items-center justify-center gap-3'>
-                                <span className=' font-[12px] leading-none uppercase'>{slug}</span>
+                        <div className='gameContent relative z-20 -top-1 flex flex-col min-h-[120px] justify-between backdrop-blur-sm '>
+                            <div className='flex px-3 items-center justify-center gap-3 backdrop-blur-md bg-zinc-950/10 h-[32px]'>
+                                <span className=' text-sm leading-none uppercase py-1'>{slug}</span>
+                            </div>
+                            <div className="flex flex-col text-center items-center justify-center gap-1 text-xs sm:text-[15px] h-full py-1">
+                                <div className='w-full h-full px-3 flex items-center justify-center '>
+                                    <Link
+                                        href={`/gerar-sinais/${slug}`}
+                                        className="rounded-xl text-zinc-50 font-bold py-3 px-1 w-full text-center text-nowrap text-sm sm:text-sm backdrop-blur-md bg-zinc-50/10 border border-zinc-50/50 flex items-center justify-center gap-2" >
+                                        GERAR SINAL <DotFilledIcon className="animate-ping text-green-300"/>
+                                    </Link>
+                                </div>
                             </div>
                         </div>
+                        <div className="w-full h-full backdrop-blur-md py-2 bg-zinc-950/10">
+                            <p className="text-center text-xs px-2 ">Os sinais do fortune-tiger são validos apenas para nossas casas!</p>
+                        </div>
+
                     </div>
 
                 ))}
