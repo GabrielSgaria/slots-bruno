@@ -86,8 +86,8 @@ export default function PageGamesSinais({ params }: { params: { slug: string } }
                     <div className="flex flex-col">
                         <div className='h-full max-h-[150px] min-h-[100px] w-full'>
                             <Image
-                                width={9000}
-                                height={9000}
+                                width={450}
+                                height={200}
                                 quality={100}
                                 priority={true}
                                 src={imageMap[game.slug]}
