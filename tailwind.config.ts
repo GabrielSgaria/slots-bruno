@@ -9,11 +9,11 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        'fortune-rabbit-color': '#312e81',
-        'fortune-tiger-color': '#dc2626',
-        'fortune-ox-color': '#dc2626',
-        'fortune-mouse-color': '#f59e0b',
-        'fortune-dragon-color': '#312e81'
+        'fortune-rabbit-color': 'rgb(13, 28, 124)',
+        'fortune-tiger-color': 'rgb(173, 3, 10)',
+        'fortune-ox-color': 'rgb(122, 1, 0)',
+        'fortune-mouse-color': 'rgb(103, 2, 9)',
+        'fortune-dragon-color': 'rgb(121, 75, 164)'
 
       },
       animation: {
