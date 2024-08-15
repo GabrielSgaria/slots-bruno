@@ -17,11 +17,26 @@ export interface ContentPgProps {
 }
 
 export function ContentPg({ updateTime: initialUpdateTime, imageBanner }: ContentPgProps) {
-    const [showPopup, setShowPopup] = useState(true);
+    const [showPopup, setShowPopup] = useState<boolean>(false);
+    const [isClient, setIsClient] = useState<boolean>(false);
     const [timeLeft, setTimeLeft] = useState<number>(0);
     const [isUpdating, setIsUpdating] = useState<boolean>(false);
     const [updateTime, setUpdateTime] = useState<string | number | undefined>(initialUpdateTime);
     const router = useRouter();
+
+    useEffect(() => {
+        // Marcar que o componente está sendo renderizado no cliente
+        setIsClient(true);
+
+        if (isClient) {
+            const storedPopupShown = localStorage.getItem('popupShown');
+            const storedImageBanner = localStorage.getItem('lastImageBanner');
+
+            if (storedPopupShown !== 'true' || storedImageBanner !== imageBanner) {
+                setShowPopup(true);
+            }
+        }
+    }, [imageBanner, isClient]);
 
     const handleClosePopup = useCallback(() => {
         setShowPopup(false);
@@ -29,22 +44,12 @@ export function ContentPg({ updateTime: initialUpdateTime, imageBanner }: Conten
         localStorage.setItem('lastImageBanner', imageBanner || '');
     }, [imageBanner]);
 
-    useEffect(() => {
-        const popupShown = localStorage.getItem('popupShown');
-        const lastImageBanner = localStorage.getItem('lastImageBanner');
-
-        if (popupShown && lastImageBanner === imageBanner) {
-            setShowPopup(false);
-        } else {
-            setShowPopup(true);
-        }
-    }, [imageBanner]);
-
     const calculateTimeLeft = useCallback(() => {
         if (typeof updateTime === 'string') {
             const now = new Date();
             const [hours, minutes, seconds] = updateTime.split(':').map(Number);
             const lastUpdate = new Date(now);
+
             lastUpdate.setHours(hours, minutes, seconds, 0);
 
             const nextUpdate = new Date(lastUpdate.getTime() + 5 * 60 * 1000);
