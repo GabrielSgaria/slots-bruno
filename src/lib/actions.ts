@@ -1,6 +1,6 @@
 'use server';
 import { revalidateTag, unstable_cache } from "next/cache";
-import { getRandomPorcentagem } from "./utils";
+import { getPorcentagemAjustada, getRandomPorcentagem } from "./utils";
 import prisma from "./db";
 import { nameCards } from "./name-games";
 import { Buffer } from 'buffer';
@@ -16,10 +16,14 @@ export async function updateCards() {
             if (!gameData) continue;
 
             const { nome, categoria, colorBgGame } = gameData;
-            const porcentagem = getRandomPorcentagem();
             const minima = getRandomPorcentagem();
             const padrao = getRandomPorcentagem();
             const maxima = getRandomPorcentagem();
+
+
+            const maiorValor = Math.max(minima, padrao, maxima);
+            
+            const porcentagem = getPorcentagemAjustada(maiorValor);
 
             const existingCard = await prisma.card.findUnique({ where: { id: i } });
 
@@ -50,6 +54,8 @@ export async function updateCards() {
             }
         }
         revalidateTag('cards');
+        revalidateTag('cards-pg')
+        revalidateTag('cards-pp')
         return { success: true };
     } catch (error) {
         console.error('Error updating cards data:', error);
@@ -65,10 +71,13 @@ export async function createCards() {
             if (!gameData) continue;
 
             const { nome, categoria, colorBgGame } = gameData;
-            const porcentagem = getRandomPorcentagem();
             const minima = getRandomPorcentagem();
             const padrao = getRandomPorcentagem();
             const maxima = getRandomPorcentagem();
+
+            const maiorValor = Math.max(minima, padrao, maxima);
+            
+            const porcentagem = getPorcentagemAjustada(maiorValor);
 
             await prisma.card.create({
                 data: {

@@ -63,21 +63,21 @@ export function CardGames({ linkCasa, id, porcentagem, minima, padrao, maxima, n
                     <span className=' font-[12px] leading-none'>{nomeJogo}</span>
                 </div>
                 <div className='flex flex-col text-center items-center justify-center gap-1 text-xs sm:text-[15px] h-full'>
-                    <p className='w-full px-3'>Padrão: {padrao}%
+                    <div className='w-full px-3'>Padrão: {padrao}%
                         <div className={cn('loadingBar w-full h-3 bg-gray-300 rounded-xl')}>
                             <div className={cn(`loadingBarInner ${getColor(padrao)}`)} style={{ width: `${padrao}%` }}></div>
                         </div>
-                    </p>
-                    <p className='w-full px-3'>Mínima: {minima}%
+                    </div>
+                    <div className='w-full px-3'>Mínima: {minima}%
                         <div className={cn('loadingBar w-full h-3 bg-gray-300 rounded-xl')}>
                             <div className={cn(`loadingBarInner ${getColor(minima)}`)} style={{ width: `${minima}%` }}></div>
                         </div>
-                    </p>
-                    <p className='w-full px-3'>Máxima: {maxima}%
+                    </div>
+                    <div className='w-full px-3'>Máxima: {maxima}%
                         <div className={cn('loadingBar w-full h-3 bg-gray-300 rounded-xl')}>
                             <div className={cn(`loadingBarInner ${getColor(maxima)}`)} style={{ width: `${maxima}%` }}></div>
                         </div>
-                    </p>
+                    </div>
                 </div>
                 <span className='distribution'>Distribuição: {porcentagem}%</span>
 
