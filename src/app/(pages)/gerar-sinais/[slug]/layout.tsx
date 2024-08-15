@@ -3,6 +3,8 @@ export const metadata = {
     description: "Gerador de Sinais Slots - Grupo FP"
 }
 
+export const runtime = 'edge';
+
 export default function GeradorSlugLayout({
     children
 }:{children: React.ReactNode}) {

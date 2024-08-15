@@ -1,6 +1,8 @@
 import Image from "next/image";
 import logoFp from '../../../../../public/favicon.png'
 
+export const runtime = 'edge';
+
 export default function Loading() {
     return (
         <div className="h-screen w-full flex items-center justify-center bg-green-950">
