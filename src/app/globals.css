@@ -242,3 +242,13 @@ text-align: center;
 .swiper-pagination-bullet-active{
   background-color: #22c55e !important
 }
+
+
+.image-placeholder {
+  filter: blur(20px);
+  transition: filter 0.3s ease-in-out;
+}
+
+.image-loaded {
+  filter: blur(0);
+}

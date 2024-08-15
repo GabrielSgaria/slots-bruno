@@ -25,15 +25,26 @@ export function ContentPg({ updateTime: initialUpdateTime, imageBanner }: Conten
 
     const handleClosePopup = useCallback(() => {
         setShowPopup(false);
-    }, []);
+        localStorage.setItem('popupShown', 'true');
+        localStorage.setItem('lastImageBanner', imageBanner || '');
+    }, [imageBanner]);
+
+    useEffect(() => {
+        const popupShown = localStorage.getItem('popupShown');
+        const lastImageBanner = localStorage.getItem('lastImageBanner');
+
+        if (popupShown && lastImageBanner === imageBanner) {
+            setShowPopup(false);
+        } else {
+            setShowPopup(true);
+        }
+    }, [imageBanner]);
 
     const calculateTimeLeft = useCallback(() => {
         if (typeof updateTime === 'string') {
             const now = new Date();
             const [hours, minutes, seconds] = updateTime.split(':').map(Number);
             const lastUpdate = new Date(now);
-
-
             lastUpdate.setHours(hours, minutes, seconds, 0);
 
             const nextUpdate = new Date(lastUpdate.getTime() + 5 * 60 * 1000);
@@ -68,7 +79,7 @@ export function ContentPg({ updateTime: initialUpdateTime, imageBanner }: Conten
             console.error('Erro ao atualizar os dados:', error);
             setIsUpdating(false);
         }
-    }, [calculateTimeLeft]);
+    }, [calculateTimeLeft, router]);
 
     useEffect(() => {
         calculateTimeLeft();

@@ -1,8 +1,7 @@
-import { ButtonScrollTop } from "@/components/button-scroll-top";
 import { getCardsPG, getLinkCasa } from "@/lib/actions";
 import { ContentPg } from "@/components/content-pg";
-import { format, toZonedTime } from "date-fns-tz";
 import { CardData, SectionCards } from "@/components/section-cards-pg";
+import { formatUpdateTime } from "@/lib/utils";
 
 export default async function Home() {
   const cards = await getCardsPG();
@@ -10,12 +9,7 @@ export default async function Home() {
   const novoLink = propsSettings.data?.link;
   const imageBanner = propsSettings.data?.bannerImage;
 
-  let horario = cards?.data[0].updatedAt || '';
-  const date = new Date(horario);
-  
-  const timeZone = 'America/Sao_Paulo';
-  const zonedDate = toZonedTime(date, timeZone);
-  const formattedDate = format(zonedDate, 'HH:mm:ss', { timeZone });
+  const formattedDate = cards?.data[0]?.updatedAt ? formatUpdateTime(cards.data[0].updatedAt) : '';
 
   return (
     <main>
