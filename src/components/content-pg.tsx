@@ -17,27 +17,35 @@ export interface ContentPgProps {
 }
 
 export function ContentPg({ updateTime: initialUpdateTime, imageBanner }: ContentPgProps) {
-    const [showPopup, setShowPopup] = useState(true);
+    const [showPopup, setShowPopup] = useState<boolean>(false);
+    const [isClient, setIsClient] = useState<boolean>(false);
     const [timeLeft, setTimeLeft] = useState<number>(0);
     const [isUpdating, setIsUpdating] = useState<boolean>(false);
     const [updateTime, setUpdateTime] = useState<string | number | undefined>(initialUpdateTime);
     const router = useRouter();
 
+    useEffect(() => {
+        setIsClient(true);
+
+        if (isClient) {
+            const storedPopupShown = localStorage.getItem('popupShown');
+            const storedImageBanner = localStorage.getItem('lastImageBanner');
+            const storedTimestamp = localStorage.getItem('popupTimestamp');
+            const currentTime = Date.now();
+
+            const isTimestampValid = storedTimestamp && currentTime - parseInt(storedTimestamp, 10) < 3600000; // 1 hour
+
+            if (!isTimestampValid || storedPopupShown !== 'true' || storedImageBanner !== imageBanner) {
+                setShowPopup(true);
+            }
+        }
+    }, [imageBanner, isClient]);
+
     const handleClosePopup = useCallback(() => {
         setShowPopup(false);
         localStorage.setItem('popupShown', 'true');
         localStorage.setItem('lastImageBanner', imageBanner || '');
-    }, [imageBanner]);
-
-    useEffect(() => {
-        const popupShown = localStorage.getItem('popupShown');
-        const lastImageBanner = localStorage.getItem('lastImageBanner');
-
-        if (popupShown && lastImageBanner === imageBanner) {
-            setShowPopup(false);
-        } else {
-            setShowPopup(true);
-        }
+        localStorage.setItem('popupTimestamp', Date.now().toString());
     }, [imageBanner]);
 
     const calculateTimeLeft = useCallback(() => {
@@ -45,6 +53,7 @@ export function ContentPg({ updateTime: initialUpdateTime, imageBanner }: Conten
             const now = new Date();
             const [hours, minutes, seconds] = updateTime.split(':').map(Number);
             const lastUpdate = new Date(now);
+
             lastUpdate.setHours(hours, minutes, seconds, 0);
 
             const nextUpdate = new Date(lastUpdate.getTime() + 5 * 60 * 1000);
@@ -107,7 +116,7 @@ export function ContentPg({ updateTime: initialUpdateTime, imageBanner }: Conten
         const minutes = Math.floor((ms / (1000 * 60)) % 60);
         return `${minutes > 0 ? `${minutes}m ` : ''}${seconds}s`;
     };
-
+    
     return (
         <>
             {showPopup && imageBanner && <PopupImage onClose={handleClosePopup} imagePopup={imageBanner} />}

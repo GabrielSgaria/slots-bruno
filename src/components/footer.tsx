@@ -3,7 +3,7 @@ import logoFP from '../../public/favicon.png'
 
 export function Footer() {
     return (
-        <footer className='pb-20 border-t border-zinc-300/30 bg-transparent/95 mt-20'>
+        <footer className='pb-20 border-t border-zinc-300/30 bg-transparent/95 npm'>
             <div className="container mx-auto mt-16 flex flex-col gap-16 text-zinc-50 p-3">
                 <div className="flex flex-row justify-around">
                     <div className="flex flex-col justify-around w-full">
