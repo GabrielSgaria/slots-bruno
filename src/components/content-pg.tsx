@@ -9,6 +9,7 @@ import 'swiper/css/navigation';
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 import { bannerImages } from '@/lib/bannerImages';
 import { ReloadIcon } from '@radix-ui/react-icons';
+import { useRouter } from 'next/navigation';
 
 export interface ContentPgProps {
     updateTime: string | number | undefined;
@@ -20,6 +21,7 @@ export function ContentPg({ updateTime: initialUpdateTime, imageBanner }: Conten
     const [timeLeft, setTimeLeft] = useState<number>(0);
     const [isUpdating, setIsUpdating] = useState<boolean>(false);
     const [updateTime, setUpdateTime] = useState<string | number | undefined>(initialUpdateTime);
+    const router = useRouter();
 
     const handleClosePopup = useCallback(() => {
         setShowPopup(false);
@@ -56,6 +58,7 @@ export function ContentPg({ updateTime: initialUpdateTime, imageBanner }: Conten
                 const formattedTime = now.toTimeString().split(' ')[0];
                 setUpdateTime(formattedTime);
                 calculateTimeLeft();
+                router.refresh();
             } else {
                 console.error('Falha ao atualizar os dados.');
             }
