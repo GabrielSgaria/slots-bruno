@@ -41,6 +41,8 @@ const textMap: Record<string, string> = {
     'fortune-dragon': 'text-fortune-dragon-color',
 };
 
+export const runtime = 'edge';
+
 export default function PageGamesSinais({ params }: { params: { slug: string } }) {
     const gameName = params.slug ? params.slug.toString().replace(/%20/g, '-').toLowerCase() : '';
     const game = gamesSinais.find(signal => signal.slug === gameName);
