@@ -1,7 +1,7 @@
 import Image from "next/image";
 import logoFp from '../../../../../public/favicon.png'
 
-export const runtime = 'edge';
+
 
 export default function Loading() {
     return (
