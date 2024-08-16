@@ -3,6 +3,37 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden; /* Evita barra de rolagem horizontal */
+}
+
+body {
+  background-image: url('/bg-casino.png');
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* Ajuste para telas menores */
+@media (max-width: 768px) {
+  body {
+    background-image: url('/bg-casino-mobile.png');
+    background-size: cover; /* Mantém a imagem sem distorção */
+    background-position: top;
+    background-attachment: scroll; /* Evita problemas de rolagem em dispositivos móveis */
+  }
+}
+
+
 .roboto {
     font-family: var(--roboto);
   }
