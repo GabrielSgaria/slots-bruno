@@ -63,8 +63,8 @@ export default function RootLayout({
   return (
     <html lang="pt">
 
-      <body className={`bg-image-desktop bg-fixed bg-cover md:bg-cover bg-left text-zinc-50 ${roboto.variable}`}>
-          <ButtonScrollTop />
+      <body className={`text-zinc-50 ${roboto.variable}`} style={{ backgroundImage: "url('/bg-casino.png')" }}>
+        <ButtonScrollTop />
         <div className="bg-zinc-950/20 backdrop-blur-sm">
           <GoogleAnalytics gaId="G-9E7Z61LW2J" />
           <GoogleTagManager gtmId="G-9E7Z61LW2J" />
