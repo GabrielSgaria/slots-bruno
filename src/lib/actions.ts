@@ -15,8 +15,15 @@ async function createOrUpdateCard(i: number, gameData: any) {
     const minima = getRandomPorcentagem();
     const padrao = getRandomPorcentagem();
     const maxima = getRandomPorcentagem();
+
+    // Calculando a porcentagem de forma direta sem while
     const maiorValor = Math.max(minima, padrao, maxima);
-    const porcentagem = getPorcentagemAjustada(maiorValor);
+    let porcentagem = getPorcentagemAjustada(maiorValor);
+
+    // Se a porcentagem calculada for menor ou igual ao maior valor, ajustamos diretamente
+    if (porcentagem <= maiorValor) {
+        porcentagem = maiorValor + 10 <= 95 ? maiorValor + 10 : 95;
+    }
 
     const existingCard = await prisma.card.findUnique({ where: { id: i } });
 

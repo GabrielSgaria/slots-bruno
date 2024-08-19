@@ -7,7 +7,7 @@ export const getRandomPorcentagem = () => {
 };
 
 export const getPorcentagemAjustada = (minValue: number) => {
-    const offset = Math.floor(Math.random() * 11) + 10; 
+    const offset = Math.floor(Math.random() * 21) + 10; // Valor entre 10 e 30
     return Math.min(minValue + offset, 95);
 };
 
