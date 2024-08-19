@@ -5,22 +5,19 @@ import prisma from "./db";
 import { nameCards } from "./name-games";
 import { Buffer } from 'buffer';
 
-// Definindo os tempos de revalidação em segundos
 const fiveMinutesInSeconds = 300;
 const oneDayInSeconds = 86400;
 
-// Função auxiliar para criar ou atualizar um cartão
 async function createOrUpdateCard(i: number, gameData: any) {
     const { nome, categoria, colorBgGame } = gameData;
     const minima = getRandomPorcentagem();
     const padrao = getRandomPorcentagem();
     const maxima = getRandomPorcentagem();
 
-    // Calculando a porcentagem de forma direta sem while
     const maiorValor = Math.max(minima, padrao, maxima);
     let porcentagem = getPorcentagemAjustada(maiorValor);
 
-    // Se a porcentagem calculada for menor ou igual ao maior valor, ajustamos diretamente
+  
     if (porcentagem <= maiorValor) {
         porcentagem = maiorValor + 10 <= 95 ? maiorValor + 10 : 95;
     }
@@ -48,10 +45,10 @@ async function createOrUpdateCard(i: number, gameData: any) {
     }
 }
 
-// Função para atualizar os cartões existentes
+
 export async function updateCards() {
     try {
-        for (let i = 1; i <= 139; i++) {
+        for (let i = 1; i <= 155; i++) {
             const gameData = nameCards[i];
             if (!gameData) continue;
 
@@ -71,7 +68,7 @@ export async function updateCards() {
 // Função para criar novos cartões
 export async function createCards() {
     try {
-        for (let i = 1; i <= 139; i++) {
+        for (let i = 1; i <= 155; i++) {
             const gameData = nameCards[i];
             if (!gameData) continue;
 
@@ -107,7 +104,7 @@ export const getCardsPG = unstable_cache(async () => {
             });
             return { data: cards };
         }
-        return { data: [] }; // Garanta que sempre retorna um array vazio se não houver dados
+        return { data: [] };
     } catch (error) {
         console.error('Error generating getCardsPG data:', error);
         return { data: [] };
