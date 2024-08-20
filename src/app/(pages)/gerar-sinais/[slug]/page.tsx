@@ -11,11 +11,11 @@ import vBranco from '../../../../../public/image/icone-sinais/iconvalidadeBranco
 import { generateRandomNumber, calculateEndTime } from "@/lib/utils";
 
 const imageMap: Record<string, string> = {
-    "fortune-ox": '/image/games-pg/3.webp',
-    'fortune-rabbit': '/image/games-pg/1.webp',
-    'fortune-tiger': '/image/games-pg/2.webp',
-    'fortune-mouse': '/image/games-pg/4.webp',
-    'fortune-dragon': '/image/games-pg/5.webp',
+    "fortune-ox": '/image/games-pg/03.webp',
+    'fortune-rabbit': '/image/games-pg/01.webp',
+    'fortune-tiger': '/image/games-pg/02.webp',
+    'fortune-mouse': '/image/games-pg/04.webp',
+    'fortune-dragon': '/image/games-pg/05.webp',
 };
 
 const colorBgMap: Record<string, string> = {
