@@ -1,9 +1,28 @@
 import { type ClassValue, clsx } from 'clsx'
 import { twMerge } from 'tailwind-merge';
-import { getLinkCasa } from './actions';
-import { useRef, useState } from 'react';
+import { format, toZonedTime } from "date-fns-tz";
 
-export const getRandomPorcentagem = () => Math.floor(Math.random() * 100) + 1;
+export const getRandomPorcentagem = () => {
+    return Math.floor(Math.random() * 91) + 10;
+};
+
+export const getPorcentagemAjustada = (minValue: number) => {
+    const offset = Math.floor(Math.random() * 21) + 10; // Valor entre 10 e 30
+    return Math.min(minValue + offset, 95);
+};
+
+
+export function formatUpdateTime(horario: string | Date, offsetMinutes: number = 0) {
+    const date = typeof horario === 'string' ? new Date(horario) : horario;
+    if (offsetMinutes > 0) {
+        date.setTime(date.getTime() + offsetMinutes * 60 * 1000);
+    }
+
+    const timeZone = 'America/Sao_Paulo';
+    const zonedDate = toZonedTime(date, timeZone);
+    return format(zonedDate, 'HH:mm:ss', { timeZone });
+}
+
 
 export const getRandomColor = () => {
     const colors = ['#3f6212', '#65a30d', '#0d9488', '#7e22ce', '#db2777'];

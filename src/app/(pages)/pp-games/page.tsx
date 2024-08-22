@@ -1,35 +1,51 @@
+'use client'
+import { Suspense, useState, useEffect } from 'react';
 import { ButtonScrollTop } from "@/components/button-scroll-top";
 import { ContentPp } from "@/components/content-pp";
 import { CardData } from "@/components/section-cards-pg";
 import { SectionCardsPP } from "@/components/section-cards-pp";
 import { getCardsPP, getLinkCasa } from "@/lib/actions";
-import { format, toZonedTime } from "date-fns-tz";
-import { revalidateTag } from "next/cache";
-import logoFp from '../../../../public/favicon.png'
-import Image from "next/image";
+import { formatUpdateTime } from "@/lib/utils";
+import Loading from '@/app/loading'; // Assumindo que o componente de loading foi criado
 
+function PpGamesPage() {
+    const [dataLoaded, setDataLoaded] = useState(false);
+    const [cards, setCards] = useState<CardData[] | null>(null);
+    const [linkCasa, setLinkCasa] = useState<string | null>(null);
+    const [updateTime, setUpdateTime] = useState<string>('');
 
-export default async function PpGames() {
-    const cards = await getCardsPP();
-    const propsSettings = await getLinkCasa();
-    const novoLink = propsSettings.data?.link
+    useEffect(() => {
+        async function loadData() {
+            const cardsData = await getCardsPP();
+            const propsSettings = await getLinkCasa();
 
-    let horario = cards?.data[0].updatedAt || ''
+            setCards(cardsData?.data as CardData[]);
+            setLinkCasa(propsSettings.data?.link || null);
+            setUpdateTime(cardsData?.data[0]?.updatedAt ? formatUpdateTime(cardsData.data[0].updatedAt) : '');
 
-    const date = new Date(horario);
+            setDataLoaded(true);
+        }
 
-    date.setTime(date.getTime() + 5 * 60 * 1000);
+        loadData();
+    }, []);
 
-    const timeZone = 'America/Sao_Paulo'
-    const zonedDate = toZonedTime(date, timeZone)
-    const formattedDate = format(zonedDate, 'HH:mm', { timeZone })
+    if (!dataLoaded) {
+        return <Loading />;
+    }
 
-    revalidateTag('timeCron')
     return (
         <main>
             <ButtonScrollTop />
-            <ContentPp updateTime={formattedDate} />
-            <SectionCardsPP cards={cards?.data as CardData[]} linkCasa={novoLink} />
+            <ContentPp updateTime={updateTime} />
+            <SectionCardsPP cards={cards} linkCasa={linkCasa} />
         </main>
-    )
-} 
+    );
+}
+
+export default function PpGames() {
+    return (
+        <Suspense fallback={<Loading />}>
+            <PpGamesPage />
+        </Suspense>
+    );
+}
