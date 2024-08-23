@@ -8,7 +8,7 @@ import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 import { bannerImages } from '@/lib/bannerImages';
-
+import { useRouter } from 'next/navigation';
 
 export interface ContentPgProps {
     updateTime: string | number | undefined;
@@ -18,9 +18,13 @@ export interface ContentPgProps {
 export function ContentPg({ updateTime, imageBanner }: ContentPgProps) {
     const [showPopup, setShowPopup] = useState<boolean>(false);
     const [isClient, setIsClient] = useState<boolean>(false);
+    const [timeLeft, setTimeLeft] = useState<number>(0);
+    const [isUpdating, setIsUpdating] = useState<boolean>(false);
+    const router = useRouter();
+
     useEffect(() => {
         setIsClient(true);
-        
+
         if (isClient) {
             const storedPopupShown = localStorage.getItem('popupShown');
             const storedImageBanner = localStorage.getItem('lastImageBanner');
@@ -42,8 +46,74 @@ export function ContentPg({ updateTime, imageBanner }: ContentPgProps) {
         localStorage.setItem('popupTimestamp', Date.now().toString());
     }, [imageBanner]);
 
+    const calculateTimeLeft = useCallback(() => {
+        if (typeof updateTime === 'string') {
+            const now = new Date();
+            const [hours, minutes, seconds] = updateTime.split(':').map(Number);
+            const lastUpdate = new Date(now);
 
-    
+            lastUpdate.setHours(hours, minutes, seconds, 0);
+
+            const nextUpdate = new Date(lastUpdate.getTime() + 5 * 60 * 1000);
+
+            if (nextUpdate.getDate() !== lastUpdate.getDate()) {
+                nextUpdate.setDate(lastUpdate.getDate() + 1);
+            }
+
+            const timeDifference = nextUpdate.getTime() - now.getTime();
+            setTimeLeft(timeDifference > 0 ? timeDifference : 0);
+        }
+    }, [updateTime]);
+
+    const updateData = useCallback(async () => {
+        setIsUpdating(true);
+        try {
+            const response = await fetch('/api/update');
+            const updateResult = await response.json();
+
+            if (updateResult.success) {
+                const now = new Date();
+                const formattedTime = now.toTimeString().split(' ')[0];
+                calculateTimeLeft();
+                router.refresh();
+            } else {
+                console.error('Falha ao atualizar os dados.');
+            }
+
+            setIsUpdating(false);
+        } catch (error) {
+            console.error('Erro ao atualizar os dados:', error);
+            setIsUpdating(false);
+        }
+    }, [calculateTimeLeft, router]);
+
+    useEffect(() => {
+        calculateTimeLeft();
+
+        const timer = setInterval(() => {
+            setTimeLeft((prevTime) => {
+                if (prevTime <= 1000 && !isUpdating) {
+                    updateData();
+                    return 0;
+                } else if (prevTime > 0) {
+                    return prevTime - 1000;
+                } else {
+                    return 0;
+                }
+            });
+        }, 1000);
+
+        return () => clearInterval(timer);
+    }, [calculateTimeLeft, isUpdating, updateData]);
+
+    const formatTime = (ms: number) => {
+        if (isUpdating) return 'Buscando Dados...';
+        if (ms <= 0) return '0s';
+        const seconds = Math.floor((ms / 1000) % 60);
+        const minutes = Math.floor((ms / (1000 * 60)) % 60);
+        return `${minutes > 0 ? `${minutes}m ` : ''}${seconds}s`;
+    };
+
     return (
         <>
             {showPopup && imageBanner && <PopupImage onClose={handleClosePopup} imagePopup={imageBanner} />}
@@ -87,14 +157,13 @@ export function ContentPg({ updateTime, imageBanner }: ContentPgProps) {
                     </Swiper>
                 </div>
 
-                <div className="flex flex-col items-center justify-center max-w-[600px] shadow-2xl shadow-black w-full rounded-2xl p-5 bg-gradient-to-b to-green-800 via-green-600 from-green-500">
-                    {updateTime && (
-                        <h1 className="text-base uppercase font-bold">
-                            Última atualização as {updateTime}
-                        </h1>
-
-                    )}
-                    <p className='text-xs sm:text-base'>Nosso site atualiza automaticamente a cada 5 minutos</p>
+                <div className="flex flex-col items-center justify-center max-w-[600px] w-full rounded-2xl p-5 bg-gradient-to-b to-green-800 via-green-600 from-green-500 shadow-xl shadow-black">
+                    <h1 className="text-base uppercase font-bold">
+                        Última atualização às {updateTime}
+                    </h1>
+                    <p className='text-xs sm:text-base'>
+                        Próxima atualização em: {formatTime(timeLeft)}
+                    </p>
                 </div>
             </div>
         </>

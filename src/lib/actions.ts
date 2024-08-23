@@ -43,6 +43,9 @@ async function createOrUpdateCard(i: number, gameData: any) {
             }
         });
     }
+    revalidateTag('cards');
+    revalidateTag('cards-pg');
+    revalidateTag('cards-pp');
 }
 
 
