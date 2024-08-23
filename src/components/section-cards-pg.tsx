@@ -28,7 +28,7 @@ export function SectionCards({ cards, linkCasa }: SectionCardsPgProps) {
     const [visibleCards, setVisibleCards] = useState<CardData[]>([]);
     const loadMoreRef = useRef<HTMLDivElement | null>(null);
 
-    // Memoriza os cartões filtrados para evitar re-renderizações desnecessárias
+
     const memoizedFilteredCards = useMemo(() => filteredCards, [filteredCards]);
 
     useEffect(() => {
