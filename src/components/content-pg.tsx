@@ -22,7 +22,6 @@ export function ContentPg({ updateTime: initialUpdateTime, imageBanner }: Conten
     const [timeLeft, setTimeLeft] = useState<number>(0);
     const [isUpdating, setIsUpdating] = useState<boolean>(false);
     const [updateTime, setUpdateTime] = useState<string | number | undefined>(initialUpdateTime);
-    const [cards, setCards] = useState<any[]>([]);
     const router = useRouter();
 
     useEffect(() => {
@@ -68,51 +67,23 @@ export function ContentPg({ updateTime: initialUpdateTime, imageBanner }: Conten
         }
     }, [updateTime]);
 
-    const fetchCards = useCallback(async () => {
-        const storedCards = localStorage.getItem('cards');
-        if (storedCards) {
-            setCards(JSON.parse(storedCards));
-        } else {
-            const response = await fetch('/api/cards');
-            const data = await response.json();
-            setCards(data);
-            localStorage.setItem('cards', JSON.stringify(data));
-        }
-    }, []);
-
-    const updateData = useCallback(async () => {
+    const refreshUpdateTime = useCallback(() => {
         setIsUpdating(true);
-        try {
-            const response = await fetch('/api/update');
-            const updateResult = await response.json();
-
-            if (updateResult.success) {
-                const now = new Date();
-                const formattedTime = now.toTimeString().split(' ')[0];
-                setUpdateTime(formattedTime);
-                calculateTimeLeft();
-                localStorage.removeItem('cards'); // Invalida o cache dos cards
-                fetchCards(); // Busca os novos cards
-                router.refresh();
-            } else {
-                console.error('Falha ao atualizar os dados.');
-            }
-
-            setIsUpdating(false);
-        } catch (error) {
-            console.error('Erro ao atualizar os dados:', error);
-            setIsUpdating(false);
-        }
-    }, [calculateTimeLeft, fetchCards, router]);
+        const now = new Date();
+        const formattedTime = now.toTimeString().split(' ')[0];
+        setUpdateTime(formattedTime);
+        calculateTimeLeft();
+        setIsUpdating(false);
+    }, [calculateTimeLeft]);
 
     useEffect(() => {
         calculateTimeLeft();
-        fetchCards();
 
         const timer = setInterval(() => {
             setTimeLeft((prevTime) => {
-                if (prevTime <= 1000 && !isUpdating) {
-                    updateData();
+                if (prevTime <= 1000) {
+                    setIsUpdating(true);
+                    refreshUpdateTime();
                     return 0;
                 } else if (prevTime > 0) {
                     return prevTime - 1000;
@@ -123,16 +94,16 @@ export function ContentPg({ updateTime: initialUpdateTime, imageBanner }: Conten
         }, 1000);
 
         return () => clearInterval(timer);
-    }, [calculateTimeLeft, fetchCards, isUpdating, updateData]);
+    }, [calculateTimeLeft, refreshUpdateTime]);
 
     const formatTime = (ms: number) => {
-        if (isUpdating) return;
+        if (isUpdating) return 'BUSCANDO DADOS';
         if (ms <= 0) return '0s';
         const seconds = Math.floor((ms / 1000) % 60);
         const minutes = Math.floor((ms / (1000 * 60)) % 60);
         return `${minutes > 0 ? `${minutes}m ` : ''}${seconds}s`;
     };
-
+    
     return (
         <>
             {showPopup && imageBanner && <PopupImage onClose={handleClosePopup} imagePopup={imageBanner} />}
@@ -182,7 +153,7 @@ export function ContentPg({ updateTime: initialUpdateTime, imageBanner }: Conten
                     </h1>
                     {isUpdating ? (
                         <p className='text-xs sm:text-base flex flex-row gap-2 font-bold items-center justify-center'>
-                            Buscando Dados <ReloadIcon className='animate-spin text-lg font-bold' />
+                            {formatTime(timeLeft)} <ReloadIcon className='animate-spin text-lg font-bold' />
                         </p>
                     ) : (
                         <p className='text-xs sm:text-base'>
