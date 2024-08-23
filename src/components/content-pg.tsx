@@ -18,10 +18,36 @@ export interface ContentPgProps {
 
 export function ContentPg({ updateTime: initialUpdateTime, imageBanner }: ContentPgProps) {
     const [showPopup, setShowPopup] = useState<boolean>(false);
+    const [isClient, setIsClient] = useState<boolean>(false);
     const [timeLeft, setTimeLeft] = useState<number>(0);
     const [isUpdating, setIsUpdating] = useState<boolean>(false);
     const [updateTime, setUpdateTime] = useState<string | number | undefined>(initialUpdateTime);
+    const [cards, setCards] = useState<any[]>([]);
     const router = useRouter();
+
+    useEffect(() => {
+        setIsClient(true);
+
+        if (isClient) {
+            const storedPopupShown = localStorage.getItem('popupShown');
+            const storedImageBanner = localStorage.getItem('lastImageBanner');
+            const storedTimestamp = localStorage.getItem('popupTimestamp');
+            const currentTime = Date.now();
+
+            const isTimestampValid = storedTimestamp && currentTime - parseInt(storedTimestamp, 10) < 3600000; // 1 hour
+
+            if (!isTimestampValid || storedPopupShown !== 'true' || storedImageBanner !== imageBanner) {
+                setShowPopup(true);
+            }
+        }
+    }, [imageBanner, isClient]);
+
+    const handleClosePopup = useCallback(() => {
+        setShowPopup(false);
+        localStorage.setItem('popupShown', 'true');
+        localStorage.setItem('lastImageBanner', imageBanner || '');
+        localStorage.setItem('popupTimestamp', Date.now().toString());
+    }, [imageBanner]);
 
     const calculateTimeLeft = useCallback(() => {
         if (typeof updateTime === 'string') {
@@ -42,6 +68,18 @@ export function ContentPg({ updateTime: initialUpdateTime, imageBanner }: Conten
         }
     }, [updateTime]);
 
+    const fetchCards = useCallback(async () => {
+        const storedCards = localStorage.getItem('cards');
+        if (storedCards) {
+            setCards(JSON.parse(storedCards));
+        } else {
+            const response = await fetch('/api/cards');
+            const data = await response.json();
+            setCards(data);
+            localStorage.setItem('cards', JSON.stringify(data));
+        }
+    }, []);
+
     const updateData = useCallback(async () => {
         setIsUpdating(true);
         try {
@@ -53,6 +91,8 @@ export function ContentPg({ updateTime: initialUpdateTime, imageBanner }: Conten
                 const formattedTime = now.toTimeString().split(' ')[0];
                 setUpdateTime(formattedTime);
                 calculateTimeLeft();
+                localStorage.removeItem('cards'); // Invalida o cache dos cards
+                fetchCards(); // Busca os novos cards
                 router.refresh();
             } else {
                 console.error('Falha ao atualizar os dados.');
@@ -63,10 +103,11 @@ export function ContentPg({ updateTime: initialUpdateTime, imageBanner }: Conten
             console.error('Erro ao atualizar os dados:', error);
             setIsUpdating(false);
         }
-    }, [calculateTimeLeft, router]);
+    }, [calculateTimeLeft, fetchCards, router]);
 
     useEffect(() => {
         calculateTimeLeft();
+        fetchCards();
 
         const timer = setInterval(() => {
             setTimeLeft((prevTime) => {
@@ -82,7 +123,7 @@ export function ContentPg({ updateTime: initialUpdateTime, imageBanner }: Conten
         }, 1000);
 
         return () => clearInterval(timer);
-    }, [calculateTimeLeft, isUpdating, updateData]);
+    }, [calculateTimeLeft, fetchCards, isUpdating, updateData]);
 
     const formatTime = (ms: number) => {
         if (isUpdating) return;
@@ -91,13 +132,6 @@ export function ContentPg({ updateTime: initialUpdateTime, imageBanner }: Conten
         const minutes = Math.floor((ms / (1000 * 60)) % 60);
         return `${minutes > 0 ? `${minutes}m ` : ''}${seconds}s`;
     };
-
-    const handleClosePopup = useCallback(() => {
-        setShowPopup(false);
-        localStorage.setItem('popupShown', 'true');
-        localStorage.setItem('lastImageBanner', imageBanner || '');
-        localStorage.setItem('popupTimestamp', Date.now().toString());
-    }, [imageBanner]);
 
     return (
         <>
