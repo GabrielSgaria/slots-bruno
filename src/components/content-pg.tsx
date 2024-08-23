@@ -8,6 +8,7 @@ import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 import { bannerImages } from '@/lib/bannerImages';
+import { ReloadIcon } from '@radix-ui/react-icons';
 import { useRouter } from 'next/navigation';
 
 export interface ContentPgProps {
@@ -15,11 +16,12 @@ export interface ContentPgProps {
     imageBanner: string | null | undefined;
 }
 
-export function ContentPg({ updateTime, imageBanner }: ContentPgProps) {
+export function ContentPg({ updateTime: initialUpdateTime, imageBanner }: ContentPgProps) {
     const [showPopup, setShowPopup] = useState<boolean>(false);
     const [isClient, setIsClient] = useState<boolean>(false);
     const [timeLeft, setTimeLeft] = useState<number>(0);
     const [isUpdating, setIsUpdating] = useState<boolean>(false);
+    const [updateTime, setUpdateTime] = useState<string | number | undefined>(initialUpdateTime);
     const router = useRouter();
 
     useEffect(() => {
@@ -72,20 +74,16 @@ export function ContentPg({ updateTime, imageBanner }: ContentPgProps) {
             const updateResult = await response.json();
 
             if (updateResult.success) {
-                const now = new Date();
-                const formattedTime = now.toTimeString().split(' ')[0];
-                calculateTimeLeft();
-                router.refresh();
+                router.refresh(); // Recarrega os dados da página
             } else {
                 console.error('Falha ao atualizar os dados.');
             }
-
-            setIsUpdating(false);
         } catch (error) {
             console.error('Erro ao atualizar os dados:', error);
+        } finally {
             setIsUpdating(false);
         }
-    }, [calculateTimeLeft, router]);
+    }, [router]);
 
     useEffect(() => {
         calculateTimeLeft();
@@ -93,7 +91,7 @@ export function ContentPg({ updateTime, imageBanner }: ContentPgProps) {
         const timer = setInterval(() => {
             setTimeLeft((prevTime) => {
                 if (prevTime <= 1000 && !isUpdating) {
-                    updateData();
+                    updateData(); // Chama a função de atualização quando o tempo chegar a 0
                     return 0;
                 } else if (prevTime > 0) {
                     return prevTime - 1000;
@@ -157,13 +155,13 @@ export function ContentPg({ updateTime, imageBanner }: ContentPgProps) {
                     </Swiper>
                 </div>
 
-                <div className="flex flex-col items-center justify-center max-w-[600px] w-full rounded-2xl p-5 bg-gradient-to-b to-green-800 via-green-600 from-green-500 shadow-xl shadow-black">
-                    <h1 className="text-base uppercase font-bold">
-                        Última atualização às {updateTime}
-                    </h1>
-                    <p className='text-xs sm:text-base'>
-                        Próxima atualização em: {formatTime(timeLeft)}
-                    </p>
+                <div className="flex flex-col items-center justify-center max-w-[600px] shadow-2xl shadow-black w-full rounded-2xl p-5 bg-gradient-to-b to-green-800 via-green-600 from-green-500">
+                    {updateTime && (
+                        <h1 className="text-base uppercase font-bold">
+                            Última atualização às {updateTime}
+                        </h1>
+                    )}
+                    <p className='text-xs sm:text-base'>Próxima atualização em: {formatTime(timeLeft)}</p>
                 </div>
             </div>
         </>
