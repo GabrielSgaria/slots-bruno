@@ -19,7 +19,7 @@ async function createOrUpdateCard(i: number, gameData: any) {
 
   
     if (porcentagem <= maiorValor) {
-        porcentagem = maiorValor + 1 <= 95 ? maiorValor + 1 : 95;
+        porcentagem = maiorValor + 1 <= 98 ? maiorValor + 1 : 98;
     }
 
     const existingCard = await prisma.card.findUnique({ where: { id: i } });
