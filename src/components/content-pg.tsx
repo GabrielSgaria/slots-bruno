@@ -8,18 +8,16 @@ import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 import { bannerImages } from '@/lib/bannerImages';
-import { ReloadIcon } from '@radix-ui/react-icons';
+
 
 export interface ContentPgProps {
     updateTime: string | number | undefined;
     imageBanner: string | null | undefined;
 }
 
-export function ContentPg({ updateTime: initialUpdateTime, imageBanner }: ContentPgProps) {
+export function ContentPg({ updateTime, imageBanner }: ContentPgProps) {
     const [showPopup, setShowPopup] = useState<boolean>(false);
     const [isClient, setIsClient] = useState<boolean>(false);
-    const [timeLeft, setTimeLeft] = useState<number>(0);
-
     useEffect(() => {
         setIsClient(true);
         
@@ -44,50 +42,7 @@ export function ContentPg({ updateTime: initialUpdateTime, imageBanner }: Conten
         localStorage.setItem('popupTimestamp', Date.now().toString());
     }, [imageBanner]);
 
-    const calculateTimeLeft = useCallback(() => {
-        if (typeof initialUpdateTime === 'string') {
-            const now = new Date();
-            const [hours, minutes, seconds] = initialUpdateTime.split(':').map(Number);
-            const lastUpdate = new Date(now);
 
-            lastUpdate.setHours(hours, minutes, seconds, 0);
-
-            const nextUpdate = new Date(lastUpdate.getTime() + 5 * 60 * 1000);
-
-            if (nextUpdate.getDate() !== lastUpdate.getDate()) {
-                nextUpdate.setDate(lastUpdate.getDate() + 1);
-            }
-
-            const timeDifference = nextUpdate.getTime() - now.getTime();
-            setTimeLeft(timeDifference > 0 ? timeDifference : 0);
-        }
-    }, [initialUpdateTime]);
-
-    useEffect(() => {
-        calculateTimeLeft();
-
-        const timer = setInterval(() => {
-            setTimeLeft((prevTime) => {
-                if (prevTime <= 1000) {
-                    calculateTimeLeft();
-                    return 0;
-                } else if (prevTime > 0) {
-                    return prevTime - 1000;
-                } else {
-                    return 0;
-                }
-            });
-        }, 1000);
-
-        return () => clearInterval(timer);
-    }, [calculateTimeLeft]);
-
-    const formatTime = (ms: number) => {
-        if (ms <= 0) return '0s';
-        const seconds = Math.floor((ms / 1000) % 60);
-        const minutes = Math.floor((ms / (1000 * 60)) % 60);
-        return `${minutes > 0 ? `${minutes}m ` : ''}${seconds}s`;
-    };
     
     return (
         <>
@@ -132,13 +87,14 @@ export function ContentPg({ updateTime: initialUpdateTime, imageBanner }: Conten
                     </Swiper>
                 </div>
 
-                <div className="flex flex-col items-center justify-center max-w-[600px] w-full rounded-2xl p-5 bg-gradient-to-b to-green-800 via-green-600 from-green-500 shadow-xl shadow-black">
-                    <h1 className="text-base uppercase font-bold">
-                        Última atualização às {initialUpdateTime}
-                    </h1>
-                    <p className='text-xs sm:text-base'>
-                        Próxima atualização em: {formatTime(timeLeft)}
-                    </p>
+                <div className="flex flex-col items-center justify-center max-w-[600px] shadow-2xl shadow-black w-full rounded-2xl p-5 bg-gradient-to-b to-green-800 via-green-600 from-green-500">
+                    {updateTime && (
+                        <h1 className="text-base uppercase font-bold">
+                            Última atualização as {updateTime}
+                        </h1>
+
+                    )}
+                    <p className='text-xs sm:text-base'>Nosso site atualiza automaticamente a cada 5 minutos</p>
                 </div>
             </div>
         </>

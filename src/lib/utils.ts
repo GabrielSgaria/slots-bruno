@@ -21,7 +21,7 @@ export function formatUpdateTime(horario: string | Date, offsetMinutes: number =
 
     const timeZone = 'America/Sao_Paulo';
     const zonedDate = toZonedTime(date, timeZone);
-    return format(zonedDate, 'HH:mm:ss', { timeZone });
+    return format(zonedDate, 'HH:mm', { timeZone });
 }
 
 
