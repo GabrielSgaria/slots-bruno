@@ -1,35 +1,28 @@
-'use client'
-import { Suspense, useState, useEffect } from 'react';
+
+import { Suspense } from 'react';
 import { ButtonScrollTop } from "@/components/button-scroll-top";
 import { ContentPp } from "@/components/content-pp";
 import { CardData } from "@/components/section-cards-pg";
 import { SectionCardsPP } from "@/components/section-cards-pp";
 import { getCardsPP, getLinkCasa } from "@/lib/actions";
 import { formatUpdateTime } from "@/lib/utils";
-import Loading from '@/app/loading'; // Assumindo que o componente de loading foi criado
+import Loading from '@/app/loading';
 
-function PpGamesPage() {
-    const [dataLoaded, setDataLoaded] = useState(false);
-    const [cards, setCards] = useState<CardData[] | null>(null);
-    const [linkCasa, setLinkCasa] = useState<string | null>(null);
-    const [updateTime, setUpdateTime] = useState<string>('');
+async function loadData() {
+    const cardsData = await getCardsPP();
+    const propsSettings = await getLinkCasa();
 
-    useEffect(() => {
-        async function loadData() {
-            const cardsData = await getCardsPP();
-            const propsSettings = await getLinkCasa();
+    const cards = cardsData?.data as CardData[];
+    const linkCasa = propsSettings.data?.link || null;
+    const updateTime = cardsData?.data[0]?.updatedAt ? formatUpdateTime(cardsData.data[0].updatedAt) : '';
 
-            setCards(cardsData?.data as CardData[]);
-            setLinkCasa(propsSettings.data?.link || null);
-            setUpdateTime(cardsData?.data[0]?.updatedAt ? formatUpdateTime(cardsData.data[0].updatedAt) : '');
+    return { cards, linkCasa, updateTime };
+}
 
-            setDataLoaded(true);
-        }
+export default async function PpGamesPage() {
+    const { cards, linkCasa, updateTime } = await loadData();
 
-        loadData();
-    }, []);
-
-    if (!dataLoaded) {
+    if (!cards || !linkCasa || !updateTime) {
         return <Loading />;
     }
 
@@ -39,13 +32,5 @@ function PpGamesPage() {
             <ContentPp updateTime={updateTime} />
             <SectionCardsPP cards={cards} linkCasa={linkCasa} />
         </main>
-    );
-}
-
-export default function PpGames() {
-    return (
-        <Suspense fallback={<Loading />}>
-            <PpGamesPage />
-        </Suspense>
     );
 }
