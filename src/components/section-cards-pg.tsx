@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { DotFilledIcon } from "@radix-ui/react-icons";
 import { CardGames } from "./card-games";
 import { SearchFilter } from "./filter-cards";
@@ -26,10 +26,32 @@ export function SectionCards({ cards, linkCasa }: SectionCardsPgProps) {
     const [loading, setLoading] = useState<boolean>(false);
     const [filteredCards, setFilteredCards] = useState<CardData[]>(cards || []);
     const [visibleCards, setVisibleCards] = useState<CardData[]>([]);
+    const [popularGames, setPopularGames] = useState<CardData[]>([]); // Estado para jogos populares
     const loadMoreRef = useRef<HTMLDivElement | null>(null);
 
+    // Lista de jogos populares pelo nome
+    const popularGamesNames = useMemo(() => [
+        'Fortune Tiger',
+        'Ganesha Gold',
+        'Dragon Hatch',
+        'Mafia Mayhem',
+        'Zombie Outbreak',
+        'Shark Hunter'
+    ], []);
 
     const memoizedFilteredCards = useMemo(() => filteredCards, [filteredCards]);
+
+    // Selecionar jogos populares com base nos nomes
+    const filterPopularGames = useCallback((cards: CardData[]) => {
+        return cards.filter((card) => popularGamesNames.includes(card.nomeJogo));
+    }, [popularGamesNames]);
+
+    useEffect(() => {
+        if (cards) {
+            const selectedPopularGames = filterPopularGames(cards);
+            setPopularGames(selectedPopularGames); // Atualizar jogos populares
+        }
+    }, [cards, filterPopularGames]);
 
     useEffect(() => {
         setFilteredCards(cards || []);
@@ -66,24 +88,57 @@ export function SectionCards({ cards, linkCasa }: SectionCardsPgProps) {
 
     return (
         <section className="flex flex-col mx-auto items-center justify-center px-2">
-            <SearchFilter cardsProps={{ data: cards }} setFilteredCards={setFilteredCards} />
 
+            {/* Seção de Jogos Populares da Semana */}
+            {popularGames.length > 0 && (
+                <div className="mb-8 bg-green-600/90 backdrop-blur-lg p-2 md:p-10 md:px-16 rounded-2xl">
+                    <div className="w-full flex flex-col mb-8">
+                        <h2 className="text-3xl font-bold text-center text-zinc-50 mb-1">Jogos Populares da Semana</h2>
+                        <span className="text-center text-lg">Confira os jogos mais populares da semana!</span>
+                    </div>
+                    <div className="flex w-full justify-center items-center">
+
+                        <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-2 justify-center w-full ">
+                            {popularGames.map(({ id, nomeJogo, porcentagem, minima, padrao, maxima, categoriaJogo, colorBgGame }) => (
+                                <CardGames
+                                    key={id}
+                                    id={id}
+                                    porcentagem={porcentagem}
+                                    linkCasa={linkCasa}
+                                    minima={minima}
+                                    padrao={padrao}
+                                    maxima={maxima}
+                                    nomeJogo={nomeJogo}
+                                    categoriaJogo={categoriaJogo}
+                                    colorBgGame={colorBgGame}
+                                />
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Seção principal de jogos */}
             {linkCasa ? (
-                <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-8 2xl:grid-cols-9 gap-2">
-                    {visibleCards.map(({ id, nomeJogo, porcentagem, minima, padrao, maxima, categoriaJogo, colorBgGame }) => (
-                        <CardGames
-                            key={id}
-                            id={id}
-                            porcentagem={porcentagem}
-                            linkCasa={linkCasa}
-                            minima={minima}
-                            padrao={padrao}
-                            maxima={maxima}
-                            nomeJogo={nomeJogo}
-                            categoriaJogo={categoriaJogo}
-                            colorBgGame={colorBgGame}
-                        />
-                    ))}
+                <div className="flex flex-col justify-center items-center bg-green-600/90 md:bg-transparent p-2 md:p-10 md:px-16 rounded-2xl">
+                    <h1 className="text-3xl font-bold text-center text-zinc-50 mb-4">Principais jogos PG Games</h1>
+                    <SearchFilter cardsProps={{ data: cards }} setFilteredCards={setFilteredCards} />
+                    <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-8 2xl:grid-cols-9 gap-2">
+                        {visibleCards.map(({ id, nomeJogo, porcentagem, minima, padrao, maxima, categoriaJogo, colorBgGame }) => (
+                            <CardGames
+                                key={id}
+                                id={id}
+                                porcentagem={porcentagem}
+                                linkCasa={linkCasa}
+                                minima={minima}
+                                padrao={padrao}
+                                maxima={maxima}
+                                nomeJogo={nomeJogo}
+                                categoriaJogo={categoriaJogo}
+                                colorBgGame={colorBgGame}
+                            />
+                        ))}
+                    </div>
                 </div>
             ) : (
                 <div className="flex justify-center items-center flex-col">
