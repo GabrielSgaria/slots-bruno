@@ -13,7 +13,9 @@ const config: Config = {
         'fortune-tiger-color': 'rgb(173, 3, 10)',
         'fortune-ox-color': 'rgb(122, 1, 0)',
         'fortune-mouse-color': 'rgb(103, 2, 9)',
-        'fortune-dragon-color': 'rgb(121, 75, 164)'
+        'fortune-dragon-color': 'rgb(121, 75, 164)',
+        'yellow-fp': 'rgba(254,230,21,255)',
+        'green-fp': 'rgba(35,101,74,255)',
 
       },
       animation: {
@@ -21,8 +23,8 @@ const config: Config = {
       },
       backgroundImage: {
         'custom-mask': 'linear-gradient(to bottom, transparent 0%, transparent 60%, #000 94%, #000 100%)',
-        'image-desktop': 'url(../../public/bg-casino.png)',
-        'image-mobile': 'url(../../public/bg-casino-mobile.png)',
+        'image-desktop': 'url(../../public/bg-teste1.jpg)',
+        'image-mobile': 'url(../../public/bg-teste1.jpg)',
         'fortune-rabbit': 'url(/image/bg-sinais/bg-rabbit.jpg)',
         'fortune-tiger': '/image/bg-sinais/bg-tiger.jpg',
         'fortune-ox': 'url(/image/bg-sinais/bg-ox.jpg)',

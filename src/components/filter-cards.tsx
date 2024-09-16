@@ -32,7 +32,7 @@ export function SearchFilter({ cardsProps, setFilteredCards }: SearchFilterProps
                 placeholder="Buscar jogo..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="rounded-xl text-zinc-50 placeholder:text-zinc-50/60 placeholder:italic bg-green-600/90 w-full py-2 px-4 text-sm focus-visible:ring-1 focus-visible:ring-green-600 outline-none shadow-black shadow-inner"
+                className="rounded-xl text-zinc-950 placeholder:text-zinc-950/60 placeholder:italic bg-yellow-fp w-full py-2 px-4 text-sm focus-visible:ring-1 focus-visible:ring-green-600 outline-none shadow-black shadow-inner"
             />
         </div>
     );

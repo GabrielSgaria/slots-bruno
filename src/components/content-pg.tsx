@@ -8,6 +8,8 @@ import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 import { bannerImages } from '@/lib/bannerImages';
+import Link from 'next/link';
+import { InstagramLogo } from '@phosphor-icons/react';
 
 
 export interface ContentPgProps {
@@ -20,7 +22,7 @@ export function ContentPg({ updateTime, imageBanner }: ContentPgProps) {
     const [isClient, setIsClient] = useState<boolean>(false);
     useEffect(() => {
         setIsClient(true);
-        
+
         if (isClient) {
             const storedPopupShown = localStorage.getItem('popupShown');
             const storedImageBanner = localStorage.getItem('lastImageBanner');
@@ -43,12 +45,12 @@ export function ContentPg({ updateTime, imageBanner }: ContentPgProps) {
     }, [imageBanner]);
 
 
-    
+
     return (
         <>
             {showPopup && imageBanner && <PopupImage onClose={handleClosePopup} imagePopup={imageBanner} />}
 
-            <div className="container mx-auto flex flex-col items-center px-3 sm:px-0 gap-10 mb-10 pt-20">
+            <div className="container mx-auto flex flex-col items-center px-3 sm:px-0 gap-5 mb-10 pt-20">
                 <div className="relative w-full max-w-[1200px] shadow-xl shadow-black rounded-lg overflow-hidden">
                     <Swiper
                         spaceBetween={30}
@@ -87,7 +89,31 @@ export function ContentPg({ updateTime, imageBanner }: ContentPgProps) {
                     </Swiper>
                 </div>
 
-                <div className="flex flex-col items-center justify-center max-w-[600px] shadow-2xl shadow-black w-full rounded-2xl p-5 bg-gradient-to-b to-green-800 via-green-600 from-green-500">
+                {/* Siga nosso instagram */}
+
+                <div className="mt-5 flex flex-col items-center justify-center max-w-[600px] shadow-2xl shadow-black w-[70%] rounded-2xl p-5 bg-zinc-950/50 backdrop-blur-3xl">
+                    <h1>Siga o nosso instagram Oficial! </h1>
+                    <div className='flex gap-2 items-center justify-center mt-2'>
+                        <Link href="https://www.instagram.com/fpgrupo_oficlal?igsh=NHo0MGRyMDI1aDFx" className='text-xs sm:text-base w-5 h-5 relative'>
+                            <Image
+                                alt="Instagram Icon grupo fp"
+                                src="/image/instagram_icon.png"
+                                fill
+                                quality={100}
+                                sizes="(min-width: 808px) 50vw, 100vw"
+                                className='object-cover'
+
+                            />
+                        </Link>
+                        <Link href="https://www.instagram.com/fpgrupo_oficlal?igsh=NHo0MGRyMDI1aDFx" className='font-semibold flex gap-2 items-center justify-center'>
+                            @fpgrupo_oficlal
+                        </Link>
+                    </div>
+                </div>
+
+                {/* Horário Atualizado */}
+
+                <div className="flex flex-col items-center justify-center max-w-[600px] shadow-2xl shadow-black w-full rounded-2xl p-5 bg-green-600">
                     {updateTime && (
                         <h1 className="text-base uppercase font-bold">
                             Última atualização as {updateTime}
