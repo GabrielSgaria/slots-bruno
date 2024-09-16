@@ -12,24 +12,24 @@ html, body {
   padding: 0;
   width: 100%;
   height: 100%;
-  overflow-x: hidden; /* Evita barra de rolagem horizontal */
+  overflow-x: hidden; 
 }
 
 body {
-  background-image: url('/bg-casino.png');
+  background-image: url('/bg-teste-2.jpg');
   background-size: cover;
   background-attachment: fixed;
   background-position: center;
   background-repeat: no-repeat;
 }
 
-/* Ajuste para telas menores */
+
 @media (max-width: 768px) {
   body {
-    background-image: url('/bg-casino-mobile.png');
-    background-size: cover; /* Mantém a imagem sem distorção */
+    background-image: url('/bg-teste-2.jpg');
+    background-size: cover; 
     background-position: top;
-    background-attachment: scroll; /* Evita problemas de rolagem em dispositivos móveis */
+    background-attachment: scroll; 
   }
 }
 
