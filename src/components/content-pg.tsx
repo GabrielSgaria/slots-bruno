@@ -94,7 +94,7 @@ export function ContentPg({ updateTime, imageBanner }: ContentPgProps) {
                 <div className="mt-5 flex flex-col items-center justify-center max-w-[600px] shadow-2xl shadow-black w-[70%] rounded-2xl p-5 bg-zinc-950/50 backdrop-blur-3xl">
                     <h1>Siga o nosso instagram Oficial! </h1>
                     <div className='flex gap-2 items-center justify-center mt-2'>
-                        <Link href="https://www.instagram.com/fpgrupo_oficlal?igsh=NHo0MGRyMDI1aDFx" className='text-xs sm:text-base w-5 h-5 relative'>
+                        <span className='text-xs sm:text-base w-5 h-5 relative'>
                             <Image
                                 alt="Instagram Icon grupo fp"
                                 src="/image/instagram_icon.png"
@@ -104,10 +104,10 @@ export function ContentPg({ updateTime, imageBanner }: ContentPgProps) {
                                 className='object-cover'
 
                             />
-                        </Link>
-                        <Link href="https://www.instagram.com/fpgrupo_oficlal?igsh=NHo0MGRyMDI1aDFx" className='font-semibold flex gap-2 items-center justify-center'>
-                            @fpgrupo_oficlal
-                        </Link>
+                        </span>
+                        <p className='font-semibold flex gap-2 items-center justify-center'>
+                            @fpgrupo_oficial
+                        </p>
                     </div>
                 </div>
 
