@@ -106,7 +106,7 @@ export function ContentPg({ updateTime, imageBanner }: ContentPgProps) {
                             />
                         </span>
                         <p className='font-semibold flex gap-2 items-center justify-center'>
-                            @fpgrupo_oficial
+                            @fpgrupo_oficlal
                         </p>
                     </div>
                 </div>
