@@ -19,10 +19,10 @@ export async function NavBar() {
                         <p className="text-yellow-fp text-xs sm:text-sm">JOGOS PP</p>
                     </Link>
 
-                    <div className="h-8 border-r border-zinc-50/10" />
+                    {/* <div className="h-8 border-r border-zinc-50/10" />
                     <Link href="/gerar-sinais" className="text-center justify-center items-center flex bg-green-fp hover:bg-green-700 py-2 px-2 font-bold rounded-md transition-all duration-10  sm:text-base">
                         <p className="text-yellow-fp text-xs sm:text-sm">GERAR SINAIS</p>
-                    </Link>
+                    </Link> */}
                     <div className="h-8 border-r border-zinc-50/10" />
                     {novoLink ? (
                         <Link href={novoLink} target='_blank' className="h-full text-xs sm:text-sm italic font-bold py-2 px-2 text-center bg-green-600 hover:bg-green-500 text-yellow-300 rounded-md transition-all duration-200">

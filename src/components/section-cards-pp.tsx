@@ -3,6 +3,7 @@ import { useEffect, useRef, useState, useMemo, useCallback } from "react";
 import { DotFilledIcon } from "@radix-ui/react-icons";
 import { CardGames } from "./card-games";
 import { SearchFilter } from "./filter-cards";
+import {motion} from "framer-motion"
 
 export interface CardData {
     id: number;
@@ -33,12 +34,12 @@ export function SectionCardsPP({ cards, linkCasa }: SectionCardsPpProps) {
         setFilteredCards(cards || []);
     }, [cards]);
 
-   
+
     useEffect(() => {
         setVisibleCards(filteredCards.slice(0, cardsPerPage));
     }, [filteredCards, cardsPerPage]);
 
- 
+
     const handleLoadMore = useCallback(() => {
         if (loadMoreRef.current) {
             const observer = new IntersectionObserver(
@@ -69,36 +70,44 @@ export function SectionCardsPP({ cards, linkCasa }: SectionCardsPpProps) {
 
     return (
         <section className="flex flex-col mx-auto items-center justify-center px-2">
+            
             <SearchFilter cardsProps={{ data: cards }} setFilteredCards={setFilteredCards} />
 
             {linkCasa ? (
                 <div className='grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-8 2xl:grid-cols-9 gap-2'>
-                    {memoizedVisibleCards.map(({ id, nomeJogo, porcentagem, minima, padrao, maxima, categoriaJogo, colorBgGame }) => (
-                        <CardGames
+                    {memoizedVisibleCards.map(({ id, nomeJogo, porcentagem, minima, padrao, maxima, categoriaJogo, colorBgGame }, index) => (
+                        <motion.div
                             key={id}
-                            id={id}
-                            porcentagem={porcentagem}
-                            linkCasa={linkCasa}
-                            minima={minima}
-                            padrao={padrao}
-                            maxima={maxima}
-                            nomeJogo={nomeJogo}
-                            categoriaJogo={categoriaJogo}
-                            colorBgGame={colorBgGame}
-                        />
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: index * 0.1 }} // Atraso para cada card
+                        >
+                            <CardGames
+                                key={id}
+                                id={id}
+                                porcentagem={porcentagem}
+                                linkCasa={linkCasa}
+                                minima={minima}
+                                padrao={padrao}
+                                maxima={maxima}
+                                nomeJogo={nomeJogo}
+                                categoriaJogo={categoriaJogo}
+                                colorBgGame={colorBgGame}
+                            />
+                            </motion.div>
                     ))}
-                </div>
-            ) : (
-                <div className="flex justify-center items-center flex-col">
-                    <p className="text-zinc-50 text-xl uppercase font-bold flex">
-                        Link não encontrado <DotFilledIcon className="size-8 text-red-600 animate-ping text-center" />
-                    </p>
-                    <p className="text-zinc-500">atualize na página do administrador</p>
-                </div>
+                        </div>
+                    ) : (
+                    <div className="flex justify-center items-center flex-col">
+                        <p className="text-zinc-50 text-xl uppercase font-bold flex">
+                            Link não encontrado <DotFilledIcon className="size-8 text-red-600 animate-ping text-center" />
+                        </p>
+                        <p className="text-zinc-500">atualize na página do administrador</p>
+                    </div>
             )}
-            <div ref={loadMoreRef} className="h-10 flex items-center justify-center mt-4">
-                {loading && visibleCards.length < filteredCards.length && <p className="text-zinc-50">Carregando...</p>}
-            </div>
-        </section>
-    );
+                    <div ref={loadMoreRef} className="h-10 flex items-center justify-center mt-4">
+                        {loading && visibleCards.length < filteredCards.length && <p className="text-zinc-50">Carregando...</p>}
+                    </div>
+                </section>
+            );
 }
