@@ -8,8 +8,7 @@ import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 import { bannerImages } from '@/lib/bannerImages';
-import Link from 'next/link';
-import { InstagramLogo } from '@phosphor-icons/react';
+import { motion } from 'framer-motion'
 
 
 export interface ContentPgProps {
@@ -47,51 +46,60 @@ export function ContentPg({ updateTime, imageBanner }: ContentPgProps) {
 
 
     return (
-        <>
+        <div>
             {showPopup && imageBanner && <PopupImage onClose={handleClosePopup} imagePopup={imageBanner} />}
 
             <div className="container mx-auto flex flex-col items-center px-3 sm:px-0 gap-5 mb-10 pt-20">
-                <div className="relative w-full max-w-[1200px] shadow-xl shadow-black rounded-lg overflow-hidden">
-                    <Swiper
-                        spaceBetween={30}
-                        centeredSlides={true}
-                        autoplay={{ delay: 3500, disableOnInteraction: false }}
-                        pagination={{ clickable: true }}
-                        navigation={true}
-                        modules={[Autoplay, Pagination, Navigation]}
-                        className="mySwiper"
-                    >
-                        {bannerImages.map((image, index) => (
-                            <SwiperSlide key={index}>
-                                <div className="relative h-[330px] hidden md:flex">
-                                    <Image
-                                        src={image.desktop}
-                                        alt={`Banner Desktop ${index + 1}`}
-                                        width={1500}
-                                        height={530}
-                                        quality={100}
-                                        priority
-                                    />
-                                </div>
-                                <div className="relative w-full h-[256px] md:hidden">
-                                    <Image
-                                        src={image.mobile}
-                                        alt={`Banner Mobile ${index + 1}`}
-                                        width={1350}
-                                        height={1350}
-                                        quality={100}
-                                        className="object-cover"
-                                        priority
-                                    />
-                                </div>
-                            </SwiperSlide>
-                        ))}
-                    </Swiper>
-                </div>
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                >
+                    <div className="relative w-full max-w-[1200px] shadow-xl shadow-black rounded-lg overflow-hidden">
+                        <Swiper
+                            spaceBetween={30}
+                            centeredSlides={true}
+                            autoplay={{ delay: 3500, disableOnInteraction: false }}
+                            pagination={{ clickable: true }}
+                            navigation={true}
+                            modules={[Autoplay, Pagination, Navigation]}
+                            className="mySwiper"
+                        >
+                            {bannerImages.map((image, index) => (
+                                <SwiperSlide key={index}>
+                                    <div className="relative h-[330px] hidden md:flex">
+                                        <Image
+                                            src={image.desktop}
+                                            alt={`Banner Desktop ${index + 1}`}
+                                            width={1500}
+                                            height={530}
+                                            quality={100}
+                                            priority
+                                        />
+                                    </div>
+                                    <div className="relative w-full h-[256px] md:hidden">
+                                        <Image
+                                            src={image.mobile}
+                                            alt={`Banner Mobile ${index + 1}`}
+                                            width={1350}
+                                            height={1350}
+                                            quality={100}
+                                            className="object-cover"
+                                            priority
+                                        />
+                                    </div>
+                                </SwiperSlide>
+                            ))}
+                        </Swiper>
+                    </div>
+                </motion.div>
 
-                {/* Siga nosso instagram */}
 
-                <div className="mt-5 flex flex-col items-center justify-center max-w-[600px] shadow-2xl shadow-black w-[70%] rounded-2xl p-5 bg-zinc-950/50 backdrop-blur-3xl">
+
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="mt-5 flex flex-col items-center justify-center max-w-[600px] shadow-2xl shadow-black w-[70%] rounded-2xl p-5 bg-zinc-950/50 backdrop-blur-3xl"
+                >
                     <h1>Siga o nosso instagram Oficial! </h1>
                     <div className='flex gap-2 items-center justify-center mt-2'>
                         <span className='text-xs sm:text-base w-5 h-5 relative'>
@@ -109,11 +117,15 @@ export function ContentPg({ updateTime, imageBanner }: ContentPgProps) {
                             @fpgrupo_oficlal
                         </p>
                     </div>
-                </div>
+                </motion.div>
 
                 {/* Horário Atualizado */}
 
-                <div className="flex flex-col items-center justify-center max-w-[600px] shadow-2xl shadow-black w-full rounded-2xl p-5 bg-green-600">
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="flex flex-col items-center justify-center max-w-[600px] shadow-2xl shadow-black w-full rounded-2xl p-5 bg-green-600"
+                >
                     {updateTime && (
                         <h1 className="text-base uppercase font-bold">
                             Última atualização as {updateTime}
@@ -121,8 +133,8 @@ export function ContentPg({ updateTime, imageBanner }: ContentPgProps) {
 
                     )}
                     <p className='text-xs sm:text-base'>Nosso site atualiza automaticamente a cada 5 minutos</p>
-                </div>
-            </div>
-        </>
+                </motion.div>
+            </div >
+        </div >
     );
 }

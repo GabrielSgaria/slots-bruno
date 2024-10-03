@@ -3,6 +3,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { DotFilledIcon } from "@radix-ui/react-icons";
 import { CardGames } from "./card-games";
 import { SearchFilter } from "./filter-cards";
+import { motion } from "framer-motion";
 
 export interface CardData {
     id: number;
@@ -27,7 +28,6 @@ export function SectionCards({ cards, linkCasa }: SectionCardsPgProps) {
     const [filteredCards, setFilteredCards] = useState<CardData[]>(cards || []);
     const [visibleCards, setVisibleCards] = useState<CardData[]>([]);
     const loadMoreRef = useRef<HTMLDivElement | null>(null);
-
 
     const memoizedFilteredCards = useMemo(() => filteredCards, [filteredCards]);
 
@@ -70,19 +70,25 @@ export function SectionCards({ cards, linkCasa }: SectionCardsPgProps) {
 
             {linkCasa ? (
                 <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-8 2xl:grid-cols-9 gap-2">
-                    {visibleCards.map(({ id, nomeJogo, porcentagem, minima, padrao, maxima, categoriaJogo, colorBgGame }) => (
-                        <CardGames
+                    {visibleCards.map(({ id, nomeJogo, porcentagem, minima, padrao, maxima, categoriaJogo, colorBgGame }, index) => (
+                        <motion.div
                             key={id}
-                            id={id}
-                            porcentagem={porcentagem}
-                            linkCasa={linkCasa}
-                            minima={minima}
-                            padrao={padrao}
-                            maxima={maxima}
-                            nomeJogo={nomeJogo}
-                            categoriaJogo={categoriaJogo}
-                            colorBgGame={colorBgGame}
-                        />
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: index * 0.1 }} // Atraso para cada card
+                        >
+                            <CardGames
+                                id={id}
+                                porcentagem={porcentagem}
+                                linkCasa={linkCasa}
+                                minima={minima}
+                                padrao={padrao}
+                                maxima={maxima}
+                                nomeJogo={nomeJogo}
+                                categoriaJogo={categoriaJogo}
+                                colorBgGame={colorBgGame}
+                            />
+                        </motion.div>
                     ))}
                 </div>
             ) : (
@@ -99,3 +105,4 @@ export function SectionCards({ cards, linkCasa }: SectionCardsPgProps) {
         </section>
     );
 }
+''
