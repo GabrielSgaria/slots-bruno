@@ -46,6 +46,7 @@ export function GeradorSinal({ gameSlug }: GeradorSinalProps) {
     const [turboValue, setTurboValue] = useState<string | JSX.Element>("--");
     const [endTime, setEndTime] = useState<string | JSX.Element>("--");
 
+    
     const handleGenerateSignal = () => {
         setButtonDisabled(true);
         setMessage("IA LENDO O CASSINO");
@@ -82,7 +83,7 @@ export function GeradorSinal({ gameSlug }: GeradorSinalProps) {
 
     return (
         <div className={cn("w-full flex flex-col items-center justify-center ")}>
-            <div className={cn("max-w-[400px] sm:max-w-[450px] min-w-[400px] game rounded-xl flex flex-col my-1 justify-between shadow-xl shadow-black w-full relative overflow-hidden", `${colorBgMap[gameSlug]}`)}>
+            <div className={cn("max-w-[400px] sm:max-w-[450px] sm:min-w-[400px] game rounded-xl flex flex-col my-1 justify-between shadow-xl shadow-black w-full relative overflow-hidden", `${colorBgMap[gameSlug]}`)}>
                 <div className="flex flex-col">
                     <div className='h-full max-h-[150px] min-h-[100px] w-full'>
                         <Image
