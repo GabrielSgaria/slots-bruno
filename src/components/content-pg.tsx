@@ -8,8 +8,10 @@ import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 import { bannerImages } from '@/lib/bannerImages';
-import { ReloadIcon } from '@radix-ui/react-icons';
+import { motion } from 'framer-motion'
 import { useRouter } from 'next/navigation';
+
+
 
 export interface ContentPgProps {
     updateTime: string | number | undefined;
@@ -74,7 +76,7 @@ export function ContentPg({ updateTime: initialUpdateTime, imageBanner }: Conten
             const updateResult = await response.json();
 
             if (updateResult.success) {
-                router.refresh(); // Recarrega os dados da página
+                router.refresh; // Recarrega os dados da página
             } else {
                 console.error('Falha ao atualizar os dados.');
             }
@@ -113,10 +115,10 @@ export function ContentPg({ updateTime: initialUpdateTime, imageBanner }: Conten
     };
 
     return (
-        <>
+        <div>
             {showPopup && imageBanner && <PopupImage onClose={handleClosePopup} imagePopup={imageBanner} />}
 
-            <div className="container mx-auto flex flex-col items-center px-3 sm:px-0 gap-10 mb-10 pt-20">
+            <div className="container mx-auto flex flex-col items-center px-3 sm:px-0 gap-5 mb-10 pt-20">
                 <div className="relative w-full max-w-[1200px] shadow-xl shadow-black rounded-lg overflow-hidden">
                     <Swiper
                         spaceBetween={30}
@@ -155,15 +157,47 @@ export function ContentPg({ updateTime: initialUpdateTime, imageBanner }: Conten
                     </Swiper>
                 </div>
 
-                <div className="flex flex-col items-center justify-center max-w-[600px] shadow-2xl shadow-black w-full rounded-2xl p-5 bg-gradient-to-b to-green-800 via-green-600 from-green-500">
+
+
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="mt-5 flex flex-col items-center justify-center max-w-[600px] shadow-2xl shadow-black w-[70%] rounded-2xl p-5 bg-zinc-950/50 backdrop-blur-3xl"
+                >
+                    <h1>Siga o nosso instagram Oficial! </h1>
+                    <div className='flex gap-2 items-center justify-center mt-2'>
+                        <span className='text-xs sm:text-base w-5 h-5 relative'>
+                            <Image
+                                alt="Instagram Icon grupo fp"
+                                src="/image/instagram_icon.png"
+                                fill
+                                quality={100}
+                                sizes="(min-width: 808px) 50vw, 100vw"
+                                className='object-cover'
+
+                            />
+                        </span>
+                        <p className='font-semibold flex gap-2 items-center justify-center'>
+                            @fpgrupo_oficlal
+                        </p>
+                    </div>
+                </motion.div>
+
+                {/* Horário Atualizado */}
+
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="flex flex-col items-center justify-center max-w-[600px] shadow-2xl shadow-black w-full rounded-2xl p-5 bg-green-600"
+                >
                     {updateTime && (
                         <h1 className="text-base uppercase font-bold">
                             Última atualização às {updateTime}
                         </h1>
                     )}
-                    <p className='text-xs sm:text-base'>Próxima atualização em: {formatTime(timeLeft)}</p>
-                </div>
-            </div>
-        </>
+                    <p className='text-xs sm:text-base'>Nosso site atualiza automaticamente a cada 5 minutos</p>
+                </motion.div>
+            </div >
+        </div >
     );
 }

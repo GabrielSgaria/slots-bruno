@@ -4,49 +4,25 @@ export const nameCards: { [key: number]: { nome: string; categoria: string, colo
     3: { nome: 'Fortune Ox', categoria: 'PG', colorBgGame: 'rgb(122, 1, 0)' },
     4: { nome: 'Fortune Mouse', categoria: 'PG', colorBgGame: 'rgb(103, 2, 9)' },
     5: { nome: 'Fortune Dragon', categoria: 'PG', colorBgGame: 'rgb(121, 75, 164)' },
-
-    // Novos Jogos PG adicionados
     6: { nome: 'Mafia Mayhem', categoria: 'PG', colorBgGame: 'rgb(32, 28, 36)' },
     7: { nome: 'Dragon Hatch 2', categoria: 'PG', colorBgGame: 'rgb(77, 88, 99)' },
-
     8: { nome: 'Ganesha Gold', categoria: 'PG', colorBgGame: 'rgb(220, 148, 70)' },
-
-    // Novo Jogo PG adicionado
     9: { nome: 'Werewolf’s Hunt', categoria: 'PG', colorBgGame: 'rgb(111, 222, 111)' },
-
     10: { nome: 'Wild Ape', categoria: 'PG', colorBgGame: 'rgb(131, 36, 86)' },
     11: { nome: 'Dragon Tiger Luck', categoria: 'PG', colorBgGame: 'rgb(88, 2, 168)' },
-
-    // Novo Jogo PG adicionado
     12: { nome: 'Tsar Treasures', categoria: 'PG', colorBgGame: 'rgb(255, 255, 0)' },
-
     13: { nome: 'Dragon Hatch', categoria: 'PG', colorBgGame: 'rgb(160, 50, 50)' },
-
-    // Novo Jogo PG adicionado
     14: { nome: 'Fortune Dogs', categoria: 'PG', colorBgGame: 'rgb(100, 100, 100)' },
-
     15: { nome: 'Bikini Paradise', categoria: 'PG', colorBgGame: 'rgb(17, 139, 148)' },
-
-    // Novo Jogo PG adicionado
     16: { nome: 'Anubis Wrath', categoria: 'PG', colorBgGame: 'rgb(200, 100, 50)' },
-
     17: { nome: 'Songkran Splash', categoria: 'PG', colorBgGame: 'rgb(17, 139, 148)' },
-
-    // Novo Jogo PG adicionado
     18: { nome: 'Mystic Potion', categoria: 'PG', colorBgGame: 'rgb(120, 60, 30)' },
-
     19: { nome: 'Cash Mania', categoria: 'PG', colorBgGame: 'rgb(115, 133, 65)' },
     20: { nome: 'Jungle Delight', categoria: 'PG', colorBgGame: 'rgb(17, 139, 148)' },
-
-    // Novo Jogo PG adicionado
     21: { nome: 'Shark Hunter', categoria: 'PG', colorBgGame: 'rgb(60, 120, 180)' },
-
     22: { nome: 'Muay Thai Champion', categoria: 'PG', colorBgGame: 'rgb(112, 55, 26)' },
     23: { nome: 'Wild Bandito', categoria: 'PG', colorBgGame: 'rgb(103, 71, 128)' },
-
-    // Novo Jogo PG adicionado
     24: { nome: 'Futebol Fever', categoria: 'PG', colorBgGame: 'rgb(50, 150, 200)' },
-
     25: { nome: 'Super Market Spree', categoria: 'PG', colorBgGame: 'rgb(252, 237, 190)' },
     26: { nome: 'Ganesha Fortune', categoria: 'PG', colorBgGame: 'rgb(254, 238, 128)' },
     27: { nome: 'Piggy Gold', categoria: 'PG', colorBgGame: 'rgb(171, 45, 33)' },
@@ -144,41 +120,23 @@ export const nameCards: { [key: number]: { nome: string; categoria: string, colo
 
     
     // JOGOS PP
-    119: { nome: 'Buffalo King', categoria: 'PP', colorBgGame: 'rgb(157, 54, 58)' }, // Novo Jogo PP adicionado
+    119: { nome: 'Buffalo King', categoria: 'PP', colorBgGame: 'rgb(157, 54, 58)' }, 
     120: { nome: 'Fortune Of Giza', categoria: 'PP', colorBgGame: 'rgb(141, 39, 37)' },
     121: { nome: 'Cleocatra', categoria: 'PP', colorBgGame: 'rgb(122, 19, 73)' },
-
-    // Novo Jogo PP adicionado
     122: { nome: 'Book of Tut', categoria: 'PP', colorBgGame: 'rgb(200, 150, 50)' },
-
     123: { nome: 'Egyptian Fortunes', categoria: 'PP', colorBgGame: 'rgb(154, 53, 39)' },
     124: { nome: 'Gates of Olympus', categoria: 'PP', colorBgGame: 'rgb(250, 194, 30)' },
-
-    // Novo Jogo PP adicionado
     125: { nome: 'The Dog House', categoria: 'PP', colorBgGame: 'rgb(180, 80, 100)' },
-
     126: { nome: 'Rise of Giza PowerNudge', categoria: 'PP', colorBgGame: 'rgb(152, 39, 35)' },
     127: { nome: 'Eye of Cleopatra', categoria: 'PP', colorBgGame: 'rgb(170, 59, 54)' },
-
-    // Novo Jogo PP adicionado
     128: { nome: 'Wolf Gold', categoria: 'PP', colorBgGame: 'rgb(100, 100, 255)' },
-
     129: { nome: 'Gold Party', categoria: 'PP', colorBgGame: 'rgb(95, 56, 199)' },
-
-    // Novo Jogo PP adicionado
     130: { nome: 'Great Rhino', categoria: 'PP', colorBgGame: 'rgb(150, 75, 0)' },
-
     131: { nome: 'Spirit of Adventure', categoria: 'PP', colorBgGame: 'rgb(130, 36, 35)' },
     132: { nome: 'Christmas Big Bass Bonanza', categoria: 'PP', colorBgGame: 'rgb(85, 30, 203)' },
-
-    // Novo Jogo PP adicionado
     133: { nome: 'John Hunter and the Tomb of the Scarab Queen', categoria: 'PP', colorBgGame: 'rgb(250, 200, 150)' },
-
     134: { nome: 'Cash Bonanza', categoria: 'PP', colorBgGame: 'rgb(147, 54, 44)' },
-
-    // Novo Jogo PP adicionado
     135: { nome: 'Madame Destiny', categoria: 'PP', colorBgGame: 'rgb(200, 100, 200)' },
-
     136: { nome: 'Drill That Gold', categoria: 'PP', colorBgGame: 'rgb(160, 50, 50)' },
     137: { nome: 'Chicken Chase', categoria: 'PP', colorBgGame: 'rgb(6, 1, 80)' },
     138: { nome: 'Queenie', categoria: 'PP', colorBgGame: 'rgb(180, 10, 78)' },

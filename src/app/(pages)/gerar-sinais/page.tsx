@@ -56,7 +56,7 @@ export default function GerarSinais() {
                             </div>
                         </div>
                         <div className="w-full h-full backdrop-blur-md py-2 bg-zinc-950/10">
-                            <p className="text-center text-xs px-2 ">Os sinais do fortune-tiger são validos apenas para nossas casas!</p>
+                            <p className="text-center text-xs px-2 ">Os sinais do {slug} são validos apenas para nossas casas!</p>
                         </div>
 
                     </div>

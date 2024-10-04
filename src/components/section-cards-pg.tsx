@@ -3,6 +3,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { DotFilledIcon } from "@radix-ui/react-icons";
 import { CardGames } from "./card-games";
 import { SearchFilter } from "./filter-cards";
+import { motion } from "framer-motion";
 
 export interface CardData {
     id: number;
@@ -29,29 +30,7 @@ export function SectionCards({ cards, linkCasa }: SectionCardsPgProps) {
     const [popularGames, setPopularGames] = useState<CardData[]>([]); // Estado para jogos populares
     const loadMoreRef = useRef<HTMLDivElement | null>(null);
 
-    // Lista de jogos populares pelo nome
-    const popularGamesNames = useMemo(() => [
-        'Fortune Tiger',
-        'Ganesha Gold',
-        'Dragon Hatch',
-        'Mafia Mayhem',
-        'Zombie Outbreak',
-        'Shark Hunter'
-    ], []);
-
     const memoizedFilteredCards = useMemo(() => filteredCards, [filteredCards]);
-
-    // Selecionar jogos populares com base nos nomes
-    const filterPopularGames = useCallback((cards: CardData[]) => {
-        return cards.filter((card) => popularGamesNames.includes(card.nomeJogo));
-    }, [popularGamesNames]);
-
-    useEffect(() => {
-        if (cards) {
-            const selectedPopularGames = filterPopularGames(cards);
-            setPopularGames(selectedPopularGames); // Atualizar jogos populares
-        }
-    }, [cards, filterPopularGames]);
 
     useEffect(() => {
         setFilteredCards(cards || []);
@@ -120,13 +99,15 @@ export function SectionCards({ cards, linkCasa }: SectionCardsPgProps) {
 
             {/* Seção principal de jogos */}
             {linkCasa ? (
-                <div className="flex flex-col justify-center items-center bg-green-600/90 md:bg-transparent p-2 md:p-10 md:px-16 rounded-2xl">
-                    <h1 className="text-3xl font-bold text-center text-zinc-50 mb-4">Principais jogos PG Games</h1>
-                    <SearchFilter cardsProps={{ data: cards }} setFilteredCards={setFilteredCards} />
-                    <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-8 2xl:grid-cols-9 gap-2">
-                        {visibleCards.map(({ id, nomeJogo, porcentagem, minima, padrao, maxima, categoriaJogo, colorBgGame }) => (
+                <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-8 2xl:grid-cols-9 gap-2">
+                    {visibleCards.map(({ id, nomeJogo, porcentagem, minima, padrao, maxima, categoriaJogo, colorBgGame }, index) => (
+                        <motion.div
+                            key={id}
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: index * 0.1 }} // Atraso para cada card
+                        >
                             <CardGames
-                                key={id}
                                 id={id}
                                 porcentagem={porcentagem}
                                 linkCasa={linkCasa}
@@ -137,8 +118,8 @@ export function SectionCards({ cards, linkCasa }: SectionCardsPgProps) {
                                 categoriaJogo={categoriaJogo}
                                 colorBgGame={colorBgGame}
                             />
-                        ))}
-                    </div>
+                        </motion.div>
+                    ))}
                 </div>
             ) : (
                 <div className="flex justify-center items-center flex-col">
@@ -154,3 +135,4 @@ export function SectionCards({ cards, linkCasa }: SectionCardsPgProps) {
         </section>
     );
 }
+''
