@@ -162,7 +162,7 @@ export const CardGames = React.memo(function CardGames({
                     <div className="w-full h-full px-1 py-3">
                         <div className="font-medium w-full h-full bg-black/20 px-2 py-2 text-xs flex flex-col justify-center items-center gap-2 rounded-xl">
                             <span>Mínima R$0,50 a R$2,40</span>
-                            <span>Padrão R$2,50 a R$10,00</span>
+                            <span>Padrão R$2,50 a R$8,00</span>
                             <span>Máxima acima de R$10,00</span>
                         </div>
                     </div>
