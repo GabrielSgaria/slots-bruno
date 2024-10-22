@@ -22,6 +22,7 @@ const config: Config = {
         'pulse-slow': 'pulse 3s linear infinite',
       },
       backgroundImage: {
+        'image-dolar': 'url(../../public/image/fundo-dolar.png)', 
         'custom-mask': 'linear-gradient(to bottom, transparent 0%, transparent 60%, #000 94%, #000 100%)',
         'image-desktop': 'url(../../public/bg-teste1.jpg)',
         'image-mobile': 'url(../../public/bg-teste1.jpg)',

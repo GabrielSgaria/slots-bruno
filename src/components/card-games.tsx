@@ -135,7 +135,7 @@ export const CardGames = React.memo(function CardGames({
                                     GERAR SINAL
                                 </button>
                             </DialogTrigger>
-                            <DialogContent className="bg-green-600 border-none">
+                            <DialogContent className="bg-image-dolar bg-cover border-none">
                                 <motion.div
                                     initial={{ opacity: 0, y: 50 }}
                                     animate={{ opacity: 1, y: 0 }}
