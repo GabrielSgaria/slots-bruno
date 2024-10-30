@@ -126,7 +126,7 @@ export const CardGames = React.memo(function CardGames({
 
                 {isHot ? (
                     <div className="w-[90%] h-full flex mx-auto pb-4 items-center justify-center">
-                        {/* Botão para abrir o popup do Gerador de Sinal */}
+                    
                         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen} >
                             <DialogTrigger asChild>
                                 <button

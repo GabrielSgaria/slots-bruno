@@ -33,13 +33,15 @@ body {
   }
 }
 
-
-.roboto {
+/* .roboto {
     font-family: var(--roboto);
+  } */
+.poppins {
+    font-family: var(--poppins);
   }
-.rubik {
+/* .rubik {
     font-family: var(--rubik)
-  }
+  } */
 
 .imagebg {
   background-position-x: 100%;
