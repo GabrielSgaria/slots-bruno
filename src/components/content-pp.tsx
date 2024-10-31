@@ -16,17 +16,11 @@ export function ContentPp({ updateTime }: ContentPpProps) {
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="flex flex-col justify-center items-center gap-2 backdrop-blur-sm bg-green-700/75 shadow-2xl shadow-black rounded-2xl py-5 px-10">
+                    className="flex flex-col justify-center items-center">
 
-                    <div className="w-72">
-                        <Image
-                            src={logoPp}
-                            width={1980}
-                            height={1080}
-                            quality={70}
-                            alt='PP Games'
-                        />
-                    </div>
+
+                    <Image src="/image/banner/gerar-sinais/pragmatic.png" alt="Logo FP Gerar Sinal" width={500} height={500} quality={100} priority className="w-full max-w-[650px] h-full rounded-xl shadow-lg" />
+
                 </motion.div>
             </div>
         </div>
