@@ -1,10 +1,13 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { Fire } from "@phosphor-icons/react";
 import { allImageCards } from "@/lib/images-cards";
 import Link from "next/link";
 import { ImageCard } from "./card-components/image";
+import { GeradorSinal } from "@/components/gerador-sinal"; // Importando o Gerador de Sinal
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog"; // Importando o diálogo
+import { motion } from "framer-motion"; // Importando o Framer Motion
 
 interface CardGamesProps {
     linkCasa?: string | null;
@@ -29,6 +32,8 @@ export const CardGames = React.memo(function CardGames({
     categoriaJogo,
     colorBgGame,
 }: CardGamesProps) {
+    const [isDialogOpen, setIsDialogOpen] = useState(false);
+
     const getColor = useMemo(() => (value: number) => {
         if (value >= 70) return 'bg-green-500';
         if (value >= 40) return 'bg-yellow-500';
@@ -120,13 +125,28 @@ export const CardGames = React.memo(function CardGames({
                 <span className="distribution">Distribuição: {porcentagem}%</span>
 
                 {isHot ? (
-                    <div className="w-[90%] h-full flex mx-auto pt-3 items-center justify-center">
-                        <Link
-                            href={`/gerar-sinais/${nomeJogo}`}
-                            className="rounded-xl bg-green-600 text-zinc-50 font-bold py-3 px-1 hover:bg-green-500 w-full text-center text-nowrap text-sm sm:text-sm animate-pulse"
-                        >
-                            Estratégia detectada
-                        </Link>
+                    <div className="w-[90%] h-full flex mx-auto pb-4 items-center justify-center">
+                    
+                        <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen} >
+                            <DialogTrigger asChild>
+                                <button
+                                    className="rounded-xl bg-green-600 text-zinc-50 font-bold py-3 px-1 hover:bg-green-500 w-full text-center text-nowrap text-sm sm:text-sm"
+                                >
+                                    GERAR SINAL
+                                </button>
+                            </DialogTrigger>
+                            <DialogContent className="bg-image-dolar bg-cover border-none">
+                                <motion.div
+                                    initial={{ opacity: 0, y: 50 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    exit={{ opacity: 0, y: 50 }}
+                                    transition={{ duration: 0.3 }}
+                                    
+                                >
+                                    <GeradorSinal gameSlug={nomeJogo.toLowerCase().replace(/ /g, "-")} />
+                                </motion.div>
+                            </DialogContent>
+                        </Dialog>
                     </div>
                 ) : isPlayGame ? (
                     <div className="w-[90%] h-full flex mx-auto pt-3 items-center justify-center">
@@ -142,7 +162,7 @@ export const CardGames = React.memo(function CardGames({
                     <div className="w-full h-full px-1 py-3">
                         <div className="font-medium w-full h-full bg-black/20 px-2 py-2 text-xs flex flex-col justify-center items-center gap-2 rounded-xl">
                             <span>Mínima R$0,50 a R$2,40</span>
-                            <span>Padrão R$2,50 a R$10,00</span>
+                            <span>Padrão R$2,50 a R$8,00</span>
                             <span>Máxima acima de R$10,00</span>
                         </div>
                     </div>

@@ -1,11 +1,18 @@
 import type { Metadata } from "next";
-import { Roboto } from "next/font/google";
+import { Roboto, Poppins } from "next/font/google";
+
 import "./globals.css";
 import { NavBar } from "@/components/nav-bar";
 import { Footer } from "@/components/footer";
 import { GoogleAnalytics, GoogleTagManager } from "@next/third-parties/google";
 import { ButtonScrollTop } from "@/components/button-scroll-top";
 
+const poppins = Poppins(
+  {
+    subsets: ["latin"],
+    weight: ['100', '300', '400', '500', '700', '900'],
+    variable: "--poppins"
+  });
 
 const roboto = Roboto(
   {
@@ -63,7 +70,7 @@ export default function RootLayout({
   return (
     <html lang="pt">
 
-      <body className={`text-zinc-50 ${roboto.variable}`}>
+      <body className={`text-zinc-50 ${poppins.variable}`}>
         <ButtonScrollTop />
         <div className="bg-zinc-950/20 backdrop-blur-sm">
           <GoogleAnalytics gaId="G-9E7Z61LW2J" />

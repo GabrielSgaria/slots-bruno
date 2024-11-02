@@ -9,16 +9,7 @@ export default function GerarSinais() {
     return (
         <div className="mb-20">
             <div className="container mx-auto flex justify-center pt-28 flex-col items-center px-3 mb-10">
-                <div className="flex flex-col justify-center items-center gap-2 backdrop-blur-sm bg-green-700/75 shadow-2xl shadow-black rounded-2xl py-5 px-10">
-
-                    <div className="w-20">
-                        <Image width={9000} height={9000} src={logoFP} alt="Logo Oficial FP" />
-                    </div>
-
-                    <h1 className="text-center text-xl sm:text-2xl font-bold text-yellow-400 uppercase">
-                        Gere um sinal para cada jogo
-                    </h1>
-                </div>
+                <Image src="/image/banner/gerar-sinais/gerar-sinal.png" alt="Logo FP Gerar Sinal" width={500} height={500} quality={100} priority className="w-full max-w-[650px] h-full rounded-xl shadow-lg"/>
             </div>
 
             <div className="grid grid-cols-2 px-2 sm:grid-cols-3 sm:px-10 md:grid-cols-3 lg:grid-cols-5 lg: gap-2 container mx-auto justify-items-center" >
@@ -50,7 +41,7 @@ export default function GerarSinais() {
                                     <Link
                                         href={`/gerar-sinais/${slug}`}
                                         className="rounded-xl text-zinc-50 font-bold py-3 px-1 w-full text-center text-nowrap text-sm sm:text-sm backdrop-blur-md bg-zinc-50/10 border border-zinc-50/50 flex items-center justify-center gap-2" >
-                                        GERAR SINAL <DotFilledIcon className="animate-ping text-green-300"/>
+                                        GERAR SINAL <DotFilledIcon className="animate-ping text-green-300" />
                                     </Link>
                                 </div>
                             </div>

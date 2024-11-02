@@ -7,7 +7,6 @@ export async function NavBar() {
     const novoLink = getLink.data?.link
 
     return (
-
         <nav className="shadow-xl bg-yellow-fp border-b border-zinc-900/20 fixed top-0 w-full z-50">
             <div className="container mx-auto flex flex-col items-center justify-center gap-5 py-3 px-2">
                 <div className="flex flex-row gap-2 sm:gap-10 text-lg w-full justify-center items-center">

@@ -6,8 +6,12 @@ const config: Config = {
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
+  
   theme: {
     extend: {
+      fontFamily: {
+        poppins: ['Poppins', 'sans-serif'], // Define como a fonte principal
+      },
       colors: {
         'fortune-rabbit-color': 'rgb(13, 28, 124)',
         'fortune-tiger-color': 'rgb(173, 3, 10)',
@@ -22,6 +26,8 @@ const config: Config = {
         'pulse-slow': 'pulse 3s linear infinite',
       },
       backgroundImage: {
+        'image-insta': 'url(../../public/image/banner/botão-site-sem-fundo.png)',
+        'image-dolar': 'url(../../public/image/fundo-dolar.png)', 
         'custom-mask': 'linear-gradient(to bottom, transparent 0%, transparent 60%, #000 94%, #000 100%)',
         'image-desktop': 'url(../../public/bg-teste1.jpg)',
         'image-mobile': 'url(../../public/bg-teste1.jpg)',
