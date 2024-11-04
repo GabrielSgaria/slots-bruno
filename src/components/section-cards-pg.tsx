@@ -69,7 +69,7 @@ export function SectionCards({ cards, linkCasa }: SectionCardsPgProps) {
         <section className="flex flex-col mx-auto items-center justify-center px-2">
 
             {/* Seção de Jogos Populares da Semana */}
-            {popularGames.length > 0 && (
+            {/* {popularGames.length > 0 && (
                 <div className="mb-8 bg-green-600/90 backdrop-blur-lg p-2 md:p-10 md:px-16 rounded-2xl">
                     <div className="w-full flex flex-col mb-8">
                         <h2 className="text-3xl font-bold text-center text-zinc-50 mb-1">Jogos Populares da Semana</h2>
@@ -95,31 +95,36 @@ export function SectionCards({ cards, linkCasa }: SectionCardsPgProps) {
                         </div>
                     </div>
                 </div>
-            )}
+            )} */}
 
             {/* Seção principal de jogos */}
             {linkCasa ? (
-                <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-8 2xl:grid-cols-9 gap-2">
-                    {visibleCards.map(({ id, nomeJogo, porcentagem, minima, padrao, maxima, categoriaJogo, colorBgGame }, index) => (
-                        <motion.div
-                            key={id}
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: index * 0.1 }} // Atraso para cada card
-                        >
-                            <CardGames
-                                id={id}
-                                porcentagem={porcentagem}
-                                linkCasa={linkCasa}
-                                minima={minima}
-                                padrao={padrao}
-                                maxima={maxima}
-                                nomeJogo={nomeJogo}
-                                categoriaJogo={categoriaJogo}
-                                colorBgGame={colorBgGame}
-                            />
-                        </motion.div>
-                    ))}
+                <div className="flex flex-col justify-center items-center bg-green-600/90 md:bg-transparent p-2 md:p-10 md:px-16 rounded-2xl">
+                    <h1 className="text-3xl font-bold text-center text-zinc-50 mb-4">Principais jogos PG Games</h1>
+                    <SearchFilter cardsProps={{ data: cards }} setFilteredCards={setFilteredCards} />
+                    <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-8 2xl:grid-cols-9 gap-2">
+                        {visibleCards.map(({ id, nomeJogo, porcentagem, minima, padrao, maxima, categoriaJogo, colorBgGame }, index) => (
+                            <motion.div
+                                key={id}
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: index * 0.1 }} // Atraso para cada card
+                            >
+                                <CardGames
+                                    id={id}
+                                    porcentagem={porcentagem}
+                                    linkCasa={linkCasa}
+                                    minima={minima}
+                                    padrao={padrao}
+                                    maxima={maxima}
+                                    nomeJogo={nomeJogo}
+                                    categoriaJogo={categoriaJogo}
+                                    colorBgGame={colorBgGame}
+                                />
+
+                            </motion.div>
+                        ))}
+                    </div>
                 </div>
             ) : (
                 <div className="flex justify-center items-center flex-col">
