@@ -99,8 +99,8 @@ export function SectionCards({ cards, linkCasa }: SectionCardsPgProps) {
 
             {/* Seção principal de jogos */}
             {linkCasa ? (
-                <div className="flex flex-col justify-center items-center bg-green-600/90 md:bg-transparent p-2 md:p-10 md:px-16 rounded-2xl">
-                    <h1 className="text-3xl font-bold text-center text-zinc-50 mb-4">Principais jogos PG Games</h1>
+                <div className="flex flex-col justify-center items-center p-2 md:p-10 md:px-16 rounded-2xl">
+                    {/* <h1 className="text-3xl font-bold text-center text-zinc-50 mb-4">Principais jogos PG Games</h1> */}
                     <SearchFilter cardsProps={{ data: cards }} setFilteredCards={setFilteredCards} />
                     <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-8 2xl:grid-cols-9 gap-2">
                         {visibleCards.map(({ id, nomeJogo, porcentagem, minima, padrao, maxima, categoriaJogo, colorBgGame }, index) => (

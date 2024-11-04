@@ -118,7 +118,7 @@ export function ContentPg({ updateTime: initialUpdateTime, imageBanner }: Conten
         <div>
             {showPopup && imageBanner && <PopupImage onClose={handleClosePopup} imagePopup={imageBanner} />}
 
-            <div className="container mx-auto flex flex-col items-center px-2 sm:px-2 gap-5 mb-10 pt-20">
+            <div className="container mx-auto flex flex-col items-center px-2 sm:px-2 gap-5 mb-2 pt-20">
 
                     <div className="relative w-full max-w-[1200px] shadow-xl shadow-black rounded-lg overflow-hidden">
                         <Swiper
