@@ -30,7 +30,7 @@ export function SearchFilter({ cardsProps, setFilteredCards }: SearchFilterProps
         <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="w-full flex items-center justify-center px-4 py-5 max-w-[600px] ">
+            className="w-full flex items-center justify-center px-4 pb-5 max-w-[600px] ">
             <input
                 type="text"
                 placeholder="Buscar jogo..."
