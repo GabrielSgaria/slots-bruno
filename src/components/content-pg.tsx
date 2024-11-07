@@ -93,7 +93,7 @@ export function ContentPg({ updateTime: initialUpdateTime, imageBanner }: Conten
         const timer = setInterval(() => {
             setTimeLeft((prevTime) => {
                 if (prevTime <= 1000 && !isUpdating) {
-                    updateData(); // Chama a função de atualização quando o tempo chegar a 0
+                    updateData();
                     return 0;
                 } else if (prevTime > 0) {
                     return prevTime - 1000;
@@ -118,53 +118,54 @@ export function ContentPg({ updateTime: initialUpdateTime, imageBanner }: Conten
         <div>
             {showPopup && imageBanner && <PopupImage onClose={handleClosePopup} imagePopup={imageBanner} />}
 
-            <div className="container mx-auto flex flex-col items-center px-2 sm:px-2 gap-5 mb-2 pt-20">
+            <div className="container mx-auto flex flex-col items-center px-2 sm:px-2 sm:gap-5 pt-20">
 
-                    <div className="relative w-full max-w-[1200px] shadow-xl shadow-black rounded-lg overflow-hidden">
-                        <Swiper
-                            spaceBetween={30}
-                            centeredSlides={true}
-                            autoplay={{ delay: 3500, disableOnInteraction: false }}
-                            pagination={{ clickable: true }}
-                            navigation={true}
-                            modules={[Autoplay, Pagination, Navigation]}
-                            className="mySwiper"
-                        >
-                            {bannerImages.map((image, index) => (
-                                <SwiperSlide key={index}>
-                                    <div className="relative h-[330px] hidden md:flex">
-                                        <Image
-                                            src={image.desktop}
-                                            alt={`Banner Desktop ${index + 1}`}
-                                            width={1500}
-                                            height={530}
-                                            quality={100}
-                                            priority
-                                        />
-                                    </div>
-                                    <div className="relative w-full h-[256px] md:hidden">
-                                        <Image
-                                            src={image.mobile}
-                                            alt={`Banner Mobile ${index + 1}`}
-                                            width={1350}
-                                            height={1350}
-                                            quality={100}
-                                            className="object-cover"
-                                            priority
-                                        />
-                                    </div>
-                                </SwiperSlide>
-                            ))}
-                        </Swiper>
-                    </div>
+                <div className="relative w-full max-w-[1200px] shadow-xl shadow-black rounded-lg overflow-hidden">
+                    <Swiper
+                        spaceBetween={30}
+                        centeredSlides={true}
+                        autoplay={{ delay: 3500, disableOnInteraction: false }}
+                        pagination={{ clickable: true }}
+                        navigation={true}
+                        modules={[Autoplay, Pagination, Navigation]}
+                        className="mySwiper"
+                    >
+                        {bannerImages.map((image, index) => (
+                            <SwiperSlide key={index}>
+                                <div className="relative h-[330px] hidden md:flex">
+                                    <Image
+                                        src={image.desktop}
+                                        alt={`Banner Desktop ${index + 1}`}
+                                        width={1500}
+                                        height={530}
+                                        quality={100}
+                                        priority
+                                    />
+                                </div>
+                                <div className="relative w-full h-[256px] md:hidden">
+                                    <Image
+                                        src={image.mobile}
+                                        alt={`Banner Mobile ${index + 1}`}
+                                        width={1350}
+                                        height={1350}
+                                        quality={100}
+                                        className="object-cover"
+                                        priority
+                                    />
+                                </div>
+                            </SwiperSlide>
+                        ))}
+                    </Swiper>
+                </div>
 
 
 
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="relative mt-5 flex flex-col items-center justify-center max-w-[600px] w-[100%] h-[220px] py-5"
-                ><Image
+                    className="relative flex flex-col items-center justify-center w-full max-w-[600px] h-[220px] "
+                >
+                    <Image
                         alt='bg'
                         src="/image/banner/botão-site-sem-fundo.png"
                         quality={100}

@@ -1,24 +1,29 @@
-import React, { useMemo, useState } from "react";
-import Image from "next/image";
-import { cn } from "@/lib/utils";
+'use client'
+
+import React, { useMemo, useState } from "react"
+import Image from "next/image"
+import { cn } from "@/lib/utils"
+import { Bell } from "lucide-react"
 import { Fire } from "@phosphor-icons/react";
-import { allImageCards } from "@/lib/images-cards";
-import Link from "next/link";
-import { ImageCard } from "./card-components/image";
-import { GeradorSinal } from "@/components/gerador-sinal"; // Importando o Gerador de Sinal
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog"; // Importando o diálogo
-import { motion } from "framer-motion"; // Importando o Framer Motion
+import { allImageCards } from "@/lib/images-cards"
+import Link from "next/link"
+import { ImageCard } from "./card-components/image"
+import { GeradorSinal } from "@/components/gerador-sinal"
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog"
+import { motion } from "framer-motion"
+import { Button } from "@/components/ui/button"
+import { toast } from "@/hooks/use-toast"
 
 interface CardGamesProps {
-    linkCasa?: string | null;
-    id: number;
-    porcentagem: number;
-    minima: number;
-    padrao: number;
-    maxima: number;
-    nomeJogo: string;
-    categoriaJogo: string;
-    colorBgGame: string;
+    linkCasa?: string | null
+    id: number
+    porcentagem: number
+    minima: number
+    padrao: number
+    maxima: number
+    nomeJogo: string
+    categoriaJogo: string
+    colorBgGame: string
 }
 
 export const CardGames = React.memo(function CardGames({
@@ -32,21 +37,23 @@ export const CardGames = React.memo(function CardGames({
     categoriaJogo,
     colorBgGame,
 }: CardGamesProps) {
-    const [isDialogOpen, setIsDialogOpen] = useState(false);
+    const [isDialogOpen, setIsDialogOpen] = useState(false)
+    const [notificationActive, setNotificationActive] = useState(false)
 
     const getColor = useMemo(() => (value: number) => {
-        if (value >= 70) return 'bg-green-500';
-        if (value >= 40) return 'bg-yellow-500';
-        return 'bg-red-600';
-    }, []);
+        if (value >= 70) return 'bg-green-500'
+        if (value >= 40) return 'bg-yellow-500'
+        return 'bg-red-600'
+    }, [])
 
     const isHot = useMemo(
         () =>
             nomeJogo.toLowerCase().startsWith('fortune') &&
+            nomeJogo.toLowerCase() !== 'fortune-dogs' &&
             (minima > 90 || padrao > 90 || maxima > 90) &&
             categoriaJogo === "PG",
         [nomeJogo, minima, padrao, maxima, categoriaJogo]
-    );
+    )
 
     const isPlayGame = useMemo(
         () =>
@@ -55,10 +62,40 @@ export const CardGames = React.memo(function CardGames({
                 categoriaJogo === 'PG') &&
             (minima > 90 || padrao > 90 || maxima > 90),
         [categoriaJogo, nomeJogo, minima, padrao, maxima]
-    );
+    )
+
+    const toggleNotification = () => {
+        setNotificationActive(!notificationActive)
+        if (!notificationActive) {
+            requestNotificationPermission()
+        } else {
+            toast({
+                title: "Notificações desativadas",
+                description: `Você não receberá mais notificações para ${nomeJogo}.`,
+            })
+        }
+    }
+
+    const requestNotificationPermission = async () => {
+        if ('Notification' in window) {
+            const permission = await Notification.requestPermission()
+            if (permission === 'granted') {
+                toast({
+                    title: "Notificações ativadas",
+                    description: `Você receberá notificações quando ${nomeJogo} estiver hot ou +90%.`,
+                })
+            } else {
+                toast({
+                    title: "Permissão negada",
+                    description: "Por favor, permita notificações nas configurações do seu navegador.",
+                    variant: "destructive",
+                })
+            }
+        }
+    }
 
     if (!linkCasa) {
-        return <p>Link não encontrado</p>;
+        return <p>Link não encontrado</p>
     }
 
     return (
@@ -70,28 +107,41 @@ export const CardGames = React.memo(function CardGames({
             {isHot && (
                 <div className="absolute top-[2px] right-[2px] z-20 w-[60px] h-6 rounded-md flex items-center justify-center bg-green-600 animate-pulse">
                     <p className="text-zinc-50 text-base font-medium">HOT</p>
-                    <Fire weight="fill" className="text-red-50 text-xl animate-pulse" />
+                    <Fire className="text-red-50 text-xl animate-pulse" />
                 </div>
             )}
             {isPlayGame && (
                 <div className="absolute top-[2px] right-[2px] z-20 px-3 h-6 rounded-md flex items-center justify-center bg-green-600 animate-pulse">
                     <p className="text-zinc-50 text-base font-medium">+90%</p>
-                    <Fire weight="fill" className="text-red-50 text-xl animate-pulse" />
+                    <Fire className="text-red-50 text-xl animate-pulse" />
                 </div>
             )}
             <ImageCard id={id} linkCasa={linkCasa} />
             <div className="gameContent relative z-20 -top-1 pt-[10px] flex flex-col min-h-[260px] justify-between">
-                <div className="flex px-3 items-center justify-center gap-3">
-                    <Image
-                        width={150}
-                        height={150}
-                        src={allImageCards[id].icon}
-                        alt={`Card ${id}`}
-                        className="w-[55px] min-w-[55px] max-w-[55px] h-[50px] min-h-[50px] max-h-[50px] rounded-xl"
-                        quality={100}
-                        loading="lazy"
-                    />
-                    <span className="font-[12px] leading-none">{nomeJogo}</span>
+                <div className="flex px-3 items-center justify-between">
+                    <div className="flex items-center gap-3">
+                        <Image
+                            width={150}
+                            height={150}
+                            src={allImageCards[id].icon}
+                            alt={`Card ${id}`}
+                            className="w-[55px] min-w-[55px] max-w-[55px] h-[50px] min-h-[50px] max-h-[50px] rounded-xl"
+                            quality={100}
+                            loading="lazy"
+                        />
+                        <span className="font-[12px] leading-none">{nomeJogo}</span>
+                    </div>
+                    <Button
+                        variant="ghost"
+                        size="icon"
+                        className={cn(
+                            "h-8 w-8",
+                            notificationActive ? "text-yellow-400" : "text-gray-400"
+                        )}
+                        onClick={toggleNotification}
+                    >
+                        <Bell className="h-4 w-4" />
+                    </Button>
                 </div>
                 <div className="flex flex-col text-center items-center justify-center gap-1 text-xs sm:text-[15px] h-full">
                     <div className="w-full px-3">
@@ -126,7 +176,6 @@ export const CardGames = React.memo(function CardGames({
 
                 {isHot ? (
                     <div className="w-[90%] h-full flex mx-auto pb-4 items-center justify-center">
-                    
                         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen} >
                             <DialogTrigger asChild>
                                 <button
@@ -141,7 +190,6 @@ export const CardGames = React.memo(function CardGames({
                                     animate={{ opacity: 1, y: 0 }}
                                     exit={{ opacity: 0, y: 50 }}
                                     transition={{ duration: 0.3 }}
-                                    
                                 >
                                     <GeradorSinal gameSlug={nomeJogo.toLowerCase().replace(/ /g, "-")} />
                                 </motion.div>
@@ -149,7 +197,7 @@ export const CardGames = React.memo(function CardGames({
                         </Dialog>
                     </div>
                 ) : isPlayGame ? (
-                    <div className="w-[90%] h-full flex mx-auto pt-3 items-center justify-center">
+                    <div className="w-[90%] h-full flex mx-auto pb-4 items-center justify-center">
                         <Link
                             href={linkCasa}
                             target="_blank"
@@ -169,5 +217,5 @@ export const CardGames = React.memo(function CardGames({
                 )}
             </div>
         </div>
-    );
-});
+    )
+})

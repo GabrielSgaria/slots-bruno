@@ -1,5 +1,8 @@
+import withPWA from 'next-pwa';
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+    reactStrictMode: true,
     async headers() {
         return [
             {
@@ -19,7 +22,8 @@ const nextConfig = {
                         value: 'public, max-age=31536000, immutable',
                     },
                 ],
-            }]
+            }
+        ]
     },
     images: {
         remotePatterns: [
@@ -28,7 +32,6 @@ const nextConfig = {
                 hostname: 'www.facebook.com',
                 pathname: '/**',
             },
-
             {
                 protocol: 'https',
                 hostname: 'sa-east-1.graphassets.com',
@@ -40,4 +43,11 @@ const nextConfig = {
     },
 };
 
-export default nextConfig;
+const withPWAConfig = withPWA({
+    dest: 'public',
+    disable: process.env.NODE_ENV === 'development',
+    register: true,
+    skipWaiting: true,
+});
+
+export default withPWAConfig(nextConfig);

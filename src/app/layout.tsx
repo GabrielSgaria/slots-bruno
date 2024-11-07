@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Roboto, Poppins } from "next/font/google";
-
+import { Toaster } from "@/components/ui/toaster"
 import "./globals.css";
 import { NavBar } from "@/components/nav-bar";
 import { Footer } from "@/components/footer";
@@ -25,7 +25,17 @@ export const metadata: Metadata = {
   title: "FP - SINAIS SLOTS",
   description: "Grupo FP Site de Sinais Slots",
   metadataBase: new URL("https://www.grupofpsinais.com.br"),
-  icons: '/favicon.png',
+  icons: [
+    { rel: 'icon', url: '/favicon.png' },
+    { rel: 'apple-touch-icon', url: '/icon-192x192.png' },
+  ],
+  manifest: '/manifest.json',
+  themeColor: '#000000',
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'default',
+    title: 'FP - SINAIS SLOTS',
+  },
   openGraph: {
     title: "Grupo FP Site de Sinais Slots",
     description: "Grupo FP Site de Sinais Slots",
@@ -35,9 +45,9 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: '../../public/favicon.png',
-        width: 500,
-        height: 500,
+        url: '/icon-512x512.png',
+        width: 512,
+        height: 512,
       }
     ],
   },
@@ -61,16 +71,27 @@ export const metadata: Metadata = {
   ]
 };
 
-
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pt">
-
-      <body className={`text-zinc-50 ${poppins.variable}`}>
+    <html lang="pt" suppressHydrationWarning>
+      <head>
+        <meta name='viewport' content='minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, user-scalable=no, viewport-fit=cover' />
+        <meta name="application-name" content="FP - SINAIS SLOTS" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <meta name="apple-mobile-web-app-title" content="FP Slots" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="msapplication-TileColor" content="#000000" />
+        <meta name="msapplication-tap-highlight" content="no" />
+        <link rel="apple-touch-icon" href="/icon-192x192.png" />
+        <link rel="manifest" href="/manifest.json" />
+      </head>
+      <body className={`text-zinc-50 ${poppins.variable} ${roboto.variable}`}>
         <ButtonScrollTop />
         <div className="bg-zinc-950/20 backdrop-blur-sm">
           <GoogleAnalytics gaId="G-9E7Z61LW2J" />
@@ -79,6 +100,7 @@ export default function RootLayout({
           {children}
           <Footer />
         </div>
+        <Toaster />
       </body>
     </html>
   );

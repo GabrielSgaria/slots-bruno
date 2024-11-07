@@ -1,0 +1,21 @@
+{
+  "name": "FP - SINAIS SLOTS",
+  "short_name": "FP Slots",
+  "description": "Grupo FP Site de Sinais Slots",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#000000",
+  "icons": [
+    {
+      "src": "/favicon.png",
+      "sizes": "286x286",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon.png",
+      "sizes": "286x286",
+      "type": "image/png"
+    }
+  ]
+}
