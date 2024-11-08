@@ -3,6 +3,8 @@ import { ContentPg } from "@/components/content-pg";
 import { CardData, SectionCards } from "@/components/section-cards-pg";
 import { formatUpdateTime } from "@/lib/utils";
 import Loading from './loading';
+import { NavBar } from "@/components/nav-bar";
+import { Footer } from "@/components/footer";
 
 async function loadData() {
   const cardsData = await getCardsPG();
@@ -24,9 +26,13 @@ export default async function HomePage() {
   }
 
   return (
-    <main>
-      <ContentPg updateTime={updateTime} imageBanner={imageBanner} />
-      <SectionCards cards={cards} linkCasa={linkCasa} />
-    </main>
+    <>
+      <NavBar />
+      <main>
+        <ContentPg updateTime={updateTime} imageBanner={imageBanner} />
+        <SectionCards cards={cards} linkCasa={linkCasa} />
+      </main>
+      <Footer />
+    </>
   );
 }

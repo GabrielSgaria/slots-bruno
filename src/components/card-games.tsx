@@ -49,7 +49,7 @@ export const CardGames = React.memo(function CardGames({
     const isHot = useMemo(
         () =>
             nomeJogo.toLowerCase().startsWith('fortune') &&
-            nomeJogo.toLowerCase() !== 'fortune-dogs' &&
+            nomeJogo.toLowerCase() !== 'fortune dogs' &&
             (minima > 90 || padrao > 90 || maxima > 90) &&
             categoriaJogo === "PG",
         [nomeJogo, minima, padrao, maxima, categoriaJogo]
