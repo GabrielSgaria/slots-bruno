@@ -14,7 +14,7 @@ export default function DownloadPage() {
               <div className="w-24 h-24 md:w-32 md:h-32 rounded-2xl overflow-hidden bg-gray-700 flex-shrink-0">
                 <img
                   src="/favicon.png"
-                  alt="App icon"
+                  alt="App iconn"
                   className="w-full h-full object-cover"
                 />
               </div>
