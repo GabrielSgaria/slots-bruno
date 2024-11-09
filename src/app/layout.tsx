@@ -112,8 +112,8 @@ export default function RootLayout({
         </div>
         {/* <LocalNotificationHandler /> */}
         <Toaster />
-        <ServiceWorkerInitializer />
-        <DownloadAppButton />
+        {/* <ServiceWorkerInitializer /> */}
+        {/* <DownloadAppButton /> */}
       </body>
     </html>
   )
