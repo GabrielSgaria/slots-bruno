@@ -1,9 +1,12 @@
 'use client'
-import { useEffect, useRef, useState, useMemo, useCallback } from "react";
+
+import { useEffect, useState, useMemo } from "react";
 import { DotFilledIcon } from "@radix-ui/react-icons";
 import { CardGames } from "./card-games";
 import { SearchFilter } from "./filter-cards";
-import {motion} from "framer-motion"
+import { motion } from "framer-motion"
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useToast } from "@/hooks/use-toast";
 
 export interface CardData {
     id: number;
@@ -14,7 +17,7 @@ export interface CardData {
     padrao: number;
     maxima: number;
     colorBgGame: string;
-    updatedAt: Date;
+    updatedAt: string | number | Date;
 }
 
 interface SectionCardsPpProps {
@@ -23,65 +26,87 @@ interface SectionCardsPpProps {
 }
 
 export function SectionCardsPP({ cards, linkCasa }: SectionCardsPpProps) {
-    const [cardsPerPage, setCardsPerPage] = useState<number>(14);
-    const [loading, setLoading] = useState<boolean>(false);
     const [filteredCards, setFilteredCards] = useState<CardData[]>(cards || []);
-    const [visibleCards, setVisibleCards] = useState<CardData[]>([]);
-    const loadMoreRef = useRef<HTMLDivElement | null>(null);
+    const [activeTab, setActiveTab] = useState<string>("all");
+    const { toast } = useToast();
 
+    const isHot = useMemo(() => (card: CardData) =>
+        (card.minima > 90 || card.padrao > 90 || card.maxima > 90),
+        []);
 
     useEffect(() => {
         setFilteredCards(cards || []);
     }, [cards]);
 
+    const handleTabChange = (value: string) => {
+        setActiveTab(value);
+        let filteredGames: CardData[] = [];
 
-    useEffect(() => {
-        setVisibleCards(filteredCards.slice(0, cardsPerPage));
-    }, [filteredCards, cardsPerPage]);
-
-
-    const handleLoadMore = useCallback(() => {
-        if (loadMoreRef.current) {
-            const observer = new IntersectionObserver(
-                (entries) => {
-                    if (entries[0].isIntersecting && !loading && visibleCards.length < filteredCards.length) {
-                        setLoading(true);
-                        setTimeout(() => {
-                            setCardsPerPage((prev) => prev + 8);
-                            setLoading(false);
-                        }, 500);
-                    }
-                },
-                { threshold: 1 }
-            );
-
-            observer.observe(loadMoreRef.current);
-
-            return () => observer.disconnect();
+        switch (value) {
+            case "hot":
+                filteredGames = (cards || []).filter(card => isHot(card));
+                break;
+            case "new":
+                filteredGames = (cards || []).sort((a, b) => {
+                    const dateA = new Date(a.updatedAt);
+                    const dateB = new Date(b.updatedAt);
+                    return dateB.getTime() - dateA.getTime();
+                }).slice(0, 20);
+                break;
+            case "all":
+            default:
+                filteredGames = (cards || []).sort((a, b) => a.id - b.id);
+                break;
         }
-    }, [loading, visibleCards.length, filteredCards.length]);
 
-
-    useEffect(() => {
-        handleLoadMore();
-    }, [handleLoadMore]);
-
-    const memoizedVisibleCards = useMemo(() => visibleCards, [visibleCards]);
+        setFilteredCards(filteredGames);
+        toast({
+            title: `Jogos ${value === 'hot' ? 'populares' : value === 'new' ? 'novos' : 'todos'} selecionados`,
+            description: `Mostrando os ${value === 'all' ? 'todos os jogos' : value === 'hot' ? 'jogos HOT e +90%' : '20 jogos mais recentes'}.`,
+            className: "bg-green-500 border-none text-white font-bold",
+            duration: 2000
+        });
+    };
 
     return (
         <section className="flex flex-col mx-auto items-center justify-center px-2">
-            
-            <SearchFilter cardsProps={{ data: cards }} setFilteredCards={setFilteredCards} />
+            <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+            >
+                <Tabs defaultValue="all" className="w-full mt-4 flex items-center justify-center" onValueChange={handleTabChange}>
+                    <TabsList className="flex w-fit bg-yellow-400 rounded-lg p-1">
+                        <TabsTrigger
+                            value="hot"
+                            className="px-4 py-2 text-sm rounded-md transition-all text-black
+                                     data-[state=active]:bg-green-500 data-[state=active]:text-white"
+                        >
+                            🔥 HOT
+                        </TabsTrigger>
+                        <TabsTrigger
+                            value="new"
+                            className="px-4 py-2 text-sm rounded-md transition-all text-black
+                                     data-[state=active]:bg-green-500 data-[state=active]:text-white"
+                        >
+                            ✨ NEW
+                        </TabsTrigger>
+                        <TabsTrigger
+                            value="all"
+                            className="px-4 py-2 text-sm rounded-md transition-all text-black
+                                     data-[state=active]:bg-green-500 data-[state=active]:text-white"
+                        >
+                            ALL
+                        </TabsTrigger>
+                    </TabsList>
+                </Tabs>
+            </motion.div>
+
+            <SearchFilter cardsProps={{ data: filteredCards }} setFilteredCards={setFilteredCards} />
 
             {linkCasa ? (
-                <div className='grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-8 2xl:grid-cols-9 gap-2'>
-                    {memoizedVisibleCards.map(({ id, nomeJogo, porcentagem, minima, padrao, maxima, categoriaJogo, colorBgGame }, index) => (
-                        <motion.div
-                            key={id}
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: index * 0.1 }} // Atraso para cada card
-                        >
+                <div className='grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-8 2xl:grid-cols-9 gap-2 my-5'>
+                    {filteredCards.map(({ id, nomeJogo, porcentagem, minima, padrao, maxima, categoriaJogo, colorBgGame }, index) => (
+                        <div key={id}>
                             <CardGames
                                 key={id}
                                 id={id}
@@ -94,20 +119,17 @@ export function SectionCardsPP({ cards, linkCasa }: SectionCardsPpProps) {
                                 categoriaJogo={categoriaJogo}
                                 colorBgGame={colorBgGame}
                             />
-                            </motion.div>
-                    ))}
                         </div>
-                    ) : (
-                    <div className="flex justify-center items-center flex-col">
-                        <p className="text-zinc-50 text-xl uppercase font-bold flex">
-                            Link não encontrado <DotFilledIcon className="size-8 text-red-600 animate-ping text-center" />
-                        </p>
-                        <p className="text-zinc-500">atualize na página do administrador</p>
-                    </div>
+                    ))}
+                </div>
+            ) : (
+                <div className="flex justify-center items-center flex-col">
+                    <p className="text-zinc-50 text-xl uppercase font-bold flex">
+                        Link não encontrado <DotFilledIcon className="size-8 text-red-600 animate-ping text-center" />
+                    </p>
+                    <p className="text-zinc-500">atualize na página do administrador</p>
+                </div>
             )}
-                    <div ref={loadMoreRef} className="h-10 flex items-center justify-center mt-4">
-                        {loading && visibleCards.length < filteredCards.length && <p className="text-zinc-50">Carregando...</p>}
-                    </div>
-                </section>
-            );
+        </section>
+    );
 }

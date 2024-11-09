@@ -6,6 +6,7 @@ import { NavBar } from "@/components/nav-bar";
 import { Footer } from "@/components/footer";
 import { GoogleAnalytics, GoogleTagManager } from "@next/third-parties/google";
 import { ButtonScrollTop } from "@/components/button-scroll-top";
+import { Toaster } from "@/components/ui/toaster";
 
 const poppins = Poppins(
   {
@@ -79,6 +80,7 @@ export default function RootLayout({
           {children}
           <Footer />
         </div>
+        <Toaster />
       </body>
     </html>
   );

@@ -1,6 +1,10 @@
-import { type ClassValue, clsx } from 'clsx'
-import { twMerge } from 'tailwind-merge';
+import { clsx, type ClassValue } from "clsx"
+import { twMerge } from "tailwind-merge"
 import { format, toZonedTime } from "date-fns-tz";
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs))
+}
 
 export const getRandomPorcentagem = () => {
     return Math.floor(Math.random() * 91) + 10;
@@ -56,9 +60,7 @@ export const getRandomClass = () => {
     return colors[Math.floor(Math.random() * colors.length)];
 };
 
-export function cn(...inputs: ClassValue[]) {
-    return twMerge(clsx(inputs))
-}
+
 
 export function generateRandomNumber(): number {
     return Math.floor(Math.random() * (9 - 3 + 1)) + 3;
