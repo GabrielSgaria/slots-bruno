@@ -110,7 +110,7 @@ export default function RootLayout({
           <GoogleTagManager gtmId="G-9E7Z61LW2J" />
           {children}
         </div>
-        <LocalNotificationHandler />
+        {/* <LocalNotificationHandler /> */}
         <Toaster />
         <ServiceWorkerInitializer />
         <DownloadAppButton />

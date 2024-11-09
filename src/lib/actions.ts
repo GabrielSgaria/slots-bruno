@@ -1,11 +1,9 @@
 'use server';
 import { revalidateTag, unstable_cache } from "next/cache";
 import { getPorcentagemAjustada, getRandomPorcentagem } from "./utils";
-import { updateCards as updateCardsInDB } from './db'
 import prisma from "./db";
 import { nameCards } from "./name-games";
 import { Buffer } from 'buffer';
-import { sendNotification } from "./notification-service";
 
 const fiveMinutesInSeconds = 300;
 const oneDayInSeconds = 86400;
@@ -19,6 +17,7 @@ async function createOrUpdateCard(i: number, gameData: any) {
     const maiorValor = Math.max(minima, padrao, maxima);
     let porcentagem = getPorcentagemAjustada(maiorValor);
 
+  
     if (porcentagem <= maiorValor) {
         porcentagem = maiorValor + 1 <= 98 ? maiorValor + 1 : 98;
     }
@@ -47,73 +46,27 @@ async function createOrUpdateCard(i: number, gameData: any) {
     revalidateTag('cards');
     revalidateTag('cards-pg');
     revalidateTag('cards-pp');
-
-    return { nome, porcentagem };
 }
+
 
 export async function updateCards() {
     try {
-      const hotGames = []
-      const updatedCards = []
-  
-      for (let i = 1; i <= 155; i++) {
-        const gameData = nameCards[i]
-        if (!gameData) continue
-  
-        const { nome, categoria, colorBgGame } = gameData
-        const minima = getRandomPorcentagem()
-        const padrao = getRandomPorcentagem()
-        const maxima = getRandomPorcentagem()
-  
-        const maiorValor = Math.max(minima, padrao, maxima)
-        let porcentagem = getPorcentagemAjustada(maiorValor)
-  
-        if (porcentagem <= maiorValor) {
-          porcentagem = maiorValor + 1 <= 98 ? maiorValor + 1 : 98
+        for (let i = 1; i <= 155; i++) {
+            const gameData = nameCards[i];
+            if (!gameData) continue;
+
+            await createOrUpdateCard(i, gameData);
         }
-  
-        updatedCards.push({
-          id: i,
-          nome,
-          categoria,
-          porcentagem,
-          minima,
-          padrao,
-          maxima,
-          colorBgGame,
-        })
-  
-        if (
-          nome.toLowerCase().startsWith("fortune") &&
-          nome.toLowerCase() !== "fortune dogs" &&
-          porcentagem > 90
-        ) {
-          hotGames.push({ nome, porcentagem })
-        }
-      }
-  
-      await updateCardsInDB(updatedCards)
-  
-      if (hotGames.length > 0) {
-        const hotGamesList = hotGames
-          .map(game => `${game.nome} (${game.porcentagem}%)`)
-          .join(', ')
-  
-        await sendNotification(
-          '🔥 Jogos Fortune HOT!',
-          `Jogos quentes agora: ${hotGamesList}`,
-          'hot'
-        )
-        console.log('Notificação registrada para', hotGames.length, 'jogos quentes')
-      }
-  
-      console.log(`Atualização concluída. ${hotGames.length} jogos quentes encontrados.`)
-      return { success: true, hotGames }
+        // Revalidando os caches
+        revalidateTag('cards');
+        revalidateTag('cards-pg');
+        revalidateTag('cards-pp');
+        return { success: true };
     } catch (error) {
-      console.error('Error updating cards data:', error)
-      return { success: false, error: error }
+        console.error('Error updating cards data:', error);
+        return { success: false };
     }
-  }
+}
 
 // Função para criar novos cartões
 export async function createCards() {
@@ -184,7 +137,7 @@ export const getCardsPP = unstable_cache(async () => {
             });
             return { data: cards };
         }
-        return { data: [] };
+        return { data: [] }; // Garanta que sempre retorna um array vazio se não houver dados
     } catch (error) {
         console.error('Error generating getCardsPP data:', error);
         return { data: [] };
