@@ -2,13 +2,13 @@ import type { Metadata, Viewport } from "next"
 import { Roboto, Poppins } from "next/font/google"
 import { Toaster } from "@/components/ui/toaster"
 import "./globals.css"
-import { NavBar } from "@/components/nav-bar"
-import { Footer } from "@/components/footer"
+// import { NavBar } from "@/components/nav-bar"
+// import { Footer } from "@/components/footer"
 import { GoogleAnalytics, GoogleTagManager } from "@next/third-parties/google"
 
-import { ServiceWorkerInitializer } from "@/components/service-worker-initializer"
-// import { LocalNotificationHandler } from "@/components/notification-local"
-import { DownloadAppButton } from "@/components/download-app-button"
+// import { ServiceWorkerInitializer } from "@/components/service-worker-initializer"
+// // import { LocalNotificationHandler } from "@/components/notification-local"
+// import { DownloadAppButton } from "@/components/download-app-button"
 
 const poppins = Poppins(
   {
@@ -110,8 +110,8 @@ export default function RootLayout({
         </div>
         {/* <LocalNotificationHandler /> */}
         <Toaster />
-        <ServiceWorkerInitializer />
-        <DownloadAppButton />
+        {/* <ServiceWorkerInitializer /> */}
+        {/* <DownloadAppButton /> */}
       </body>
     </html>
   )
