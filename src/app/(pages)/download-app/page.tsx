@@ -6,7 +6,7 @@ import { InstallationTutorial } from '@/components/installation-tutorial'
 
 export default function DownloadPage() {
   return (
-    <div className="min-h-screen  bg-transparent text-white p-4 sm:p-6 lg:p-8">
+    <div className="min-h-screen bg-transparent text-white sm:p-6 lg:p-8">
       <div className="max-w-4xl mx-auto">
         <div className="bg-gray-800 rounded-2xl shadow-2xl overflow-hidden">
           <div className="p-6 sm:p-8 md:p-10">
