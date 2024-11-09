@@ -81,14 +81,14 @@ export function MultiPlatformInstallButton() {
         )}
       </Button>
 
-      <Dialog open={showIOSInstructions} onOpenChange={setShowIOSInstructions}>
-        <DialogContent>
+      <Dialog open={showIOSInstructions} onOpenChange={setShowIOSInstructions} >
+        <DialogContent className="text-black">
           <DialogHeader>
             <DialogTitle>Como instalar no iOS</DialogTitle>
           </DialogHeader>
-          <div className="space-y-4">
+          <div className="space-y-4 text-black">
             <p>Siga estes passos para adicionar o app à sua tela inicial:</p>
-            <ol className="list-decimal list-inside space-y-2">
+            <ol className="list-decimal list-inside space-y-2 text-black">
               <li>Toque no ícone de compartilhamento <Share className="inline h-5 w-5 text-blue-500" /></li>
               <li>Role para baixo e toque em "Adicionar à Tela de Início"</li>
               <li>Toque em "Adicionar" no canto superior direito</li>
