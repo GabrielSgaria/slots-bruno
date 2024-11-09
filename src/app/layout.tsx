@@ -95,12 +95,12 @@ export default function RootLayout({
         <meta name="application-name" content="FP - SINAIS SLOTS" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-        <meta name="apple-mobile-web-app-title" content="FP Slots" />
+        <meta name="apple-mobile-web-app-title" content="FP Sinais" />
         <meta name="format-detection" content="telephone=no" />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="msapplication-TileColor" content="#000000" />
         <meta name="msapplication-tap-highlight" content="no" />
-        <link rel="apple-touch-icon" href="/icon-192x192.png" />
+        <link rel="apple-touch-icon" href="/favicon.png" />
         <link rel="manifest" href="/manifest.json" />
       </head>
       <body className={`text-zinc-50 ${poppins.variable} ${roboto.variable}`}>
