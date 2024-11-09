@@ -18,5 +18,12 @@
       "sizes": "286x286",
       "type": "image/png"
     }
+  ],
+  "related_applications": [
+    {
+      "platform": "webapp",
+      "url": "https://grupofpsinais.com.br/manifest.json"
+    }
   ]
+  
 }
