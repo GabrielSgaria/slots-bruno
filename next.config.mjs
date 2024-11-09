@@ -1,37 +1,3 @@
-import NextPWA from 'next-pwa';
-
-const withPWA = NextPWA({
-  dest: 'public',
-  disable: process.env.NODE_ENV === 'development',
-  register: true,
-  skipWaiting: true,
-  runtimeCaching: [
-    {
-      urlPattern: /^https?.*/,
-      handler: 'NetworkFirst',
-      options: {
-        cacheName: 'offlineCache',
-        expiration: {
-          maxEntries: 200,
-          maxAgeSeconds: 30 * 24 * 60 * 60, // 30 dias
-        },
-        networkTimeoutSeconds: 10, // Timeout para requisições de rede
-      },
-    },
-    {
-      urlPattern: /\.(png|jpg|jpeg|svg|gif|webp)$/,
-      handler: 'CacheFirst',
-      options: {
-        cacheName: 'image-cache',
-        expiration: {
-          maxEntries: 50,
-          maxAgeSeconds: 60 * 60 * 24 * 30, // 30 dias
-        },
-      },
-    },
-  ],
-});
-
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   outputFileTracing: false,
@@ -56,14 +22,6 @@ const nextConfig = {
         ],
       },
       {
-        source: '/sw.js',
-        headers: [
-          { key: 'Content-Type', value: 'application/javascript; charset=utf-8' },
-          { key: 'Cache-Control', value: 'no-cache, no-store, must-revalidate' },
-          { key: 'Content-Security-Policy', value: "default-src 'self'; script-src 'self' 'unsafe-eval'; connect-src 'self' https:; img-src 'self' data: https:;" },
-        ],
-      },
-      {
         source: '/_next/static/:path*',
         headers: [
           { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
@@ -75,20 +33,13 @@ const nextConfig = {
           { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
         ],
       },
-      {
-        source: '/manifest.json',
-        headers: [
-          { key: 'Content-Type', value: 'application/manifest+json' },
-          { key: 'Cache-Control', value: 'public, max-age=3600, must-revalidate' }, // Cache por 1 hora
-        ],
-      },
     ];
   },
   images: {
     remotePatterns: [
       { protocol: 'https', hostname: 'www.facebook.com', pathname: '/**' },
       { protocol: 'https', hostname: 'sa-east-1.graphassets.com', pathname: '/**' },
-      { protocol: 'https', hostname: 'grupofpsinais.com.br', pathname: '/**' }, // Adicionado seu domínio
+      { protocol: 'https', hostname: 'grupofpsinais.com.br', pathname: '/**' },
     ],
     formats: ['image/webp'],
     minimumCacheTTL: 86400,
@@ -97,4 +48,4 @@ const nextConfig = {
   },
 };
 
-export default withPWA(nextConfig);
+export default nextConfig;
