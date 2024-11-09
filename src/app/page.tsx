@@ -5,6 +5,7 @@ import { formatUpdateTime } from "@/lib/utils";
 import Loading from './loading';
 import { NavBar } from "@/components/nav-bar";
 import { Footer } from "@/components/footer";
+import { DownloadAppButton } from "@/components/download-app-button";
 
 async function loadData() {
   const cardsData = await getCardsPG();
@@ -33,6 +34,7 @@ export default async function HomePage() {
         <SectionCards cards={cards} linkCasa={linkCasa} />
       </main>
       <Footer />
+   
     </>
   );
 }

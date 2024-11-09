@@ -3,7 +3,7 @@
 import React, { useMemo, useState } from "react"
 import Image from "next/image"
 import { cn } from "@/lib/utils"
-import { Bell } from "lucide-react"
+// import { Bell } from "lucide-react"
 import { Fire } from "@phosphor-icons/react";
 import { allImageCards } from "@/lib/images-cards"
 import Link from "next/link"
@@ -131,7 +131,7 @@ export const CardGames = React.memo(function CardGames({
                         />
                         <span className="font-[12px] leading-none">{nomeJogo}</span>
                     </div>
-                    <Button
+                    {/* <Button
                         variant="ghost"
                         size="icon"
                         className={cn(
@@ -141,7 +141,7 @@ export const CardGames = React.memo(function CardGames({
                         onClick={toggleNotification}
                     >
                         <Bell className="h-4 w-4" />
-                    </Button>
+                    </Button> */}
                 </div>
                 <div className="flex flex-col text-center items-center justify-center gap-1 text-xs sm:text-[15px] h-full">
                     <div className="w-full px-3">

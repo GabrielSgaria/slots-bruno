@@ -9,6 +9,7 @@ import { ButtonScrollTop } from "@/components/button-scroll-top"
 
 import { ServiceWorkerInitializer } from "@/components/service-worker-initializer"
 import { LocalNotificationHandler } from "@/components/notification-local"
+import { DownloadAppButton } from "@/components/download-app-button"
 
 const poppins = Poppins(
   {
@@ -112,6 +113,7 @@ export default function RootLayout({
         <LocalNotificationHandler />
         <Toaster />
         <ServiceWorkerInitializer />
+        <DownloadAppButton />
       </body>
     </html>
   )

@@ -1,7 +1,5 @@
 'use client'
 import Image from 'next/image'
-import logoPp from '../../public/pp.webp'
-import { CallBell } from "@phosphor-icons/react"
 import { motion } from 'framer-motion'
 
 interface ContentPpProps {

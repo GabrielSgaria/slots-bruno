@@ -1,104 +1,109 @@
 'use client'
 
-import { Star, HelpCircle } from 'lucide-react'
+import { HelpCircle, Star } from 'lucide-react'
 import { MultiPlatformInstallButton } from '@/components/install-pwa-button'
-import Image from 'next/image'
+import { InstallationTutorial } from '@/components/installation-tutorial'
 
 export default function DownloadPage() {
   return (
-    <div className="max-w-2xl mx-auto p-4 bg-gray-50 min-h-screen rounded-xl shadow-md">
-      <div className="flex items-start space-x-4 mb-6">
-        <div className="w-24 h-24 rounded-2xl overflow-hidden bg-blue-100">
-          <Image
-            width={500}
-            height={500}
-            quality={100}
-            priority
-            src="/favicon.png"
-            alt="App icon"
-            className="w-full h-full object-cover"
-          />
-        </div>
-        <div className="flex-1">
-          <h1 className="text-2xl font-semibold mb-1">Nosso App</h1>
-          <div className="flex items-center space-x-2 mb-4">
-            <button className="text-blue-500 flex items-center">
-              <HelpCircle className="w-4 h-4 mr-1" />
-              Tutorial de instalação
-            </button>
-          </div>
-          <MultiPlatformInstallButton />
-        </div>
-      </div>
-
-      <div className="flex items-center justify-between mb-8">
-        <div className="flex items-center space-x-2">
-          <span className="text-4xl font-bold">4.9</span>
-          <div className="flex">
-            {Array(5).fill(null).map((_, i) => (
-              <Star
-                key={i}
-                className="w-5 h-5 text-yellow-400"
-                fill="currentColor"
-              />
-            ))}
-          </div>
-        </div>
-        <div className="text-sm text-gray-500">
-          <span className="font-semibold">9999+</span> Avaliações
-        </div>
-      </div>
-
-      <div className="mb-8">
-        <div className="text-2xl font-bold mb-4">4.9 em 5 pontos</div>
-        <div className="space-y-2">
-          {[5, 4, 3, 2, 1].map((rating) => (
-            <div key={rating} className="flex items-center">
-              <div className="flex items-center w-24">
-                {Array(5).fill(null).map((_, i) => (
-                  <Star
-                    key={i}
-                    className={`w-4 h-4 ${i < rating ? 'text-yellow-400' : 'text-gray-300'}`}
-                    fill={i < rating ? 'currentColor' : 'none'}
-                  />
-                ))}
+    <div className="min-h-screen  bg-transparent text-white p-4 sm:p-6 lg:p-8">
+      <div className="max-w-4xl mx-auto">
+        <div className="bg-gray-800 rounded-2xl shadow-2xl overflow-hidden">
+          <div className="p-6 sm:p-8 md:p-10">
+            <div className="flex flex-col md:flex-row items-start md:items-center space-y-4 md:space-y-0 md:space-x-6">
+              <div className="w-24 h-24 md:w-32 md:h-32 rounded-2xl overflow-hidden bg-gray-700 flex-shrink-0">
+                <img
+                  src="/favicon.png"
+                  alt="App icon"
+                  className="w-full h-full object-cover"
+                />
               </div>
-              <div className="flex-1 ml-4">
-                <div className="h-2 bg-gray-200 rounded-full">
-                  <div
-                    className="h-2 bg-yellow-400 rounded-full"
-                    style={{
-                      width: rating === 5 ? '85%' :
-                        rating === 4 ? '10%' :
-                          rating === 3 ? '3%' :
-                            rating === 2 ? '1%' : '1%'
-                    }}
-                  />
+              <div className="flex-grow">
+                <h1 className="text-2xl md:text-3xl font-bold mb-2">Gerador De Sinais FP</h1>
+                <p className="text-gray-400 mb-4">Descubra os melhores sinais para seus jogos favoritos</p>
+                <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-2 sm:space-y-0 sm:space-x-4">
+                  <MultiPlatformInstallButton />
+                  <InstallationTutorial />
+
                 </div>
               </div>
             </div>
-          ))}
-        </div>
-      </div>
 
-      <div className="space-y-4 text-sm">
-        <div className="flex justify-between py-3 border-b">
-          <span className="text-gray-600">compatibilidade</span>
-          <span className="text-gray-900">Android, iOS, Desktop</span>
-        </div>
-        <div className="flex justify-between py-3 border-b">
-          <span className="text-gray-600">tamanho</span>
-          <span className="text-gray-900">&lt; 470 KB</span>
-        </div>
-        <div className="flex justify-between py-3 border-b">
-          <span className="text-gray-600">última atualização</span>
-          <span className="text-gray-900">2024-11-10 14:59:55</span>
-        </div>
-      </div>
+            <div className="mt-8 flex flex-col sm:flex-row justify-between items-start sm:items-center space-y-4 sm:space-y-0">
+              <div className="flex items-center space-x-2">
+                <span className="text-4xl font-bold">4.9</span>
+                <div className="flex">
+                  {Array(5).fill(null).map((_, i) => (
+                    <Star
+                      key={i}
+                      className="w-6 h-6 text-yellow-400"
+                      fill="currentColor"
+                    />
+                  ))}
+                </div>
+              </div>
+              <div className="text-sm text-gray-400">
+                <span className="font-semibold">9999+</span> Avaliações
+              </div>
+            </div>
 
-      <div className="mt-8 p-4 bg-gray-100 rounded-lg text-sm text-gray-600">
-        <h3 className="font-semibold mb-2">Declaração de isenção:</h3>
-        <p>Este aplicativo é fornecido como um Progressive Web App (PWA) e um perfil de configuração para iOS. O conteúdo e funcionalidade são responsabilidade do desenvolvedor.</p>
+            <div className="mt-8">
+              <h2 className="text-xl font-bold mb-4">Avaliações dos usuários</h2>
+              <div className="space-y-2">
+                {[5, 4, 3, 2, 1].map((rating) => (
+                  <div key={rating} className="flex items-center">
+                    <div className="flex items-center w-24">
+                      {Array(5).fill(null).map((_, i) => (
+                        <Star
+                          key={i}
+                          className={`w-4 h-4 ${i < rating ? 'text-yellow-400' : 'text-gray-600'}`}
+                          fill={i < rating ? 'currentColor' : 'none'}
+                        />
+                      ))}
+                    </div>
+                    <div className="flex-1 ml-4">
+                      <div className="h-2 bg-gray-700 rounded-full">
+                        <div
+                          className="h-2 bg-yellow-400 rounded-full"
+                          style={{
+                            width: rating === 5 ? '85%' :
+                              rating === 4 ? '10%' :
+                                rating === 3 ? '3%' :
+                                  rating === 2 ? '1%' : '1%'
+                          }}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
+              <div className="bg-gray-700 p-4 rounded-lg">
+                <h3 className="font-semibold mb-2">Compatibilidade</h3>
+                <p>Android, iOS, Desktop</p>
+              </div>
+              <div className="bg-gray-700 p-4 rounded-lg">
+                <h3 className="font-semibold mb-2">Tamanho</h3>
+                <p>&lt; 5 MB (PWA)</p>
+              </div>
+              <div className="bg-gray-700 p-4 rounded-lg">
+                <h3 className="font-semibold mb-2">Última atualização</h3>
+                <p>2024-10-17 14:59:55</p>
+              </div>
+              <div className="bg-gray-700 p-4 rounded-lg">
+                <h3 className="font-semibold mb-2">Versão</h3>
+                <p>1.0.0</p>
+              </div>
+            </div>
+
+            <div className="mt-8 p-4 bg-gray-700 rounded-lg text-sm text-gray-300">
+              <h3 className="font-semibold mb-2">Declaração de isenção:</h3>
+              <p>Este aplicativo é fornecido como um Progressive Web App (PWA).</p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   )

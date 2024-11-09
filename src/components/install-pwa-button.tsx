@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { Download, Share, Smartphone } from 'lucide-react'
+import { Button } from "@/components/ui/button"
 
 export function MultiPlatformInstallButton() {
   const [deferredPrompt, setDeferredPrompt] = useState<any>(null)
@@ -36,6 +37,7 @@ export function MultiPlatformInstallButton() {
       
       if (outcome === 'accepted') {
         console.log('PWA foi instalado')
+        setIsStandalone(true)
       } else {
         console.log('Instalação do PWA foi recusada')
       }
@@ -45,18 +47,22 @@ export function MultiPlatformInstallButton() {
   }
 
   if (isStandalone) {
-    return null // O app já está instalado, não mostramos o botão
+    return (
+      <Button disabled className="w-full sm:w-auto opacity-50 cursor-not-allowed">
+        Já instalado
+      </Button>
+    )
   }
 
   return (
-    <button
-      className="bg-blue-500 hover:bg-blue-600 text-white rounded-xl py-3 px-6 flex items-center justify-center font-semibold transition duration-300 ease-in-out"
+    <Button
+      className="w-full sm:w-auto"
       onClick={handleInstallClick}
     >
       {isIOS ? (
         <>
           <Smartphone className="mr-2 h-5 w-5" />
-          Adicionar à Tela Inicial (iOS)
+          Instalar no iOS
         </>
       ) : deferredPrompt ? (
         <>
@@ -69,6 +75,6 @@ export function MultiPlatformInstallButton() {
           Adicionar à Tela Inicial
         </>
       )}
-    </button>
+    </Button>
   )
 }
