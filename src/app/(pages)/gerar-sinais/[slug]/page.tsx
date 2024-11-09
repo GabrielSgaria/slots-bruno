@@ -1,4 +1,5 @@
 'use client';
+
 import { useState } from "react";
 import { gamesSinais } from "@/lib/constants";
 import { cn } from "@/lib/utils";
@@ -34,7 +35,7 @@ const textMap: Record<string, string> = {
     'fortune-dragon': 'text-fortune-dragon-color',
 };
 
-// Ajuste o tipo para evitar o problema de Promise
+// Definindo o tipo de params sem dependência de Promise ou PageProps
 interface Params {
     slug: string;
 }

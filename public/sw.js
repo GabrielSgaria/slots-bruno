@@ -2,52 +2,78 @@ const CACHE_NAME = 'my-pwa-cache-v1';
 const urlsToCache = [
   '/',
   '/index.html',
-  '/styles/main.css',
-  '/script/main.js',
-  '/images/logo.png'
+  '/manifest.json',
+  // Adicione aqui outros recursos estáticos importantes
 ];
 
-self.addEventListener('install', event => {
-  console.log('Service Worker: Install Event');
+// Otimize o processo de instalação do Service Worker
+self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then(cache => {
-        console.log('Opened cache:', CACHE_NAME);
+    Promise.all([
+      caches.open(CACHE_NAME).then((cache) => {
         return cache.addAll(urlsToCache);
-      })
-      .catch(error => console.error('Error caching files during install:', error))
+      }),
+      self.skipWaiting() // Força a ativação imediata
+    ])
   );
 });
 
-self.addEventListener('fetch', event => {
-  console.log('Service Worker: Fetch Event for', event.request.url);
+// Otimize a estratégia de cache
+self.addEventListener('fetch', (event) => {
   event.respondWith(
-    caches.match(event.request)
-      .then(response => {
-        if (response) {
-          console.log('Serving from cache:', event.request.url);
+    caches.match(event.request).then((response) => {
+      // Cache hit - retorna a resposta do cache
+      if (response) {
+        return response;
+      }
+
+      // Clone a requisição porque ela só pode ser usada uma vez
+      const fetchRequest = event.request.clone();
+
+      return fetch(fetchRequest).then((response) => {
+        // Verifica se recebemos uma resposta válida
+        if (!response || response.status !== 200 || response.type !== 'basic') {
           return response;
         }
-        console.log('Fetching from network:', event.request.url);
-        return fetch(event.request);
-      })
-      .catch(error => console.error('Fetch error:', error))
+
+        // Clone a resposta porque ela só pode ser usada uma vez
+        const responseToCache = response.clone();
+
+        // Adiciona a resposta ao cache para uso futuro
+        caches.open(CACHE_NAME).then((cache) => {
+          // Apenas cache recursos importantes
+          if (event.request.url.match(/\.(js|css|png|jpg|jpeg|gif|ico)$/)) {
+            cache.put(event.request, responseToCache);
+          }
+        });
+
+        return response;
+      });
+    })
   );
 });
 
-self.addEventListener('activate', event => {
-  console.log('Service Worker: Activate Event');
-  const cacheWhitelist = [CACHE_NAME];
+// Limpa caches antigos durante a ativação
+self.addEventListener('activate', (event) => {
   event.waitUntil(
-    caches.keys().then(cacheNames => {
-      return Promise.all(
-        cacheNames.map(cacheName => {
-          if (!cacheWhitelist.includes(cacheName)) {
-            console.log('Deleting old cache:', cacheName);
-            return caches.delete(cacheName);
-          }
-        })
-      );
-    })
+    Promise.all([
+      caches.keys().then((cacheNames) => {
+        return Promise.all(
+          cacheNames.map((cacheName) => {
+            if (cacheName !== CACHE_NAME) {
+              return caches.delete(cacheName);
+            }
+          })
+        );
+      }),
+      self.clients.claim() // Toma controle de todas as abas abertas
+    ])
   );
+});
+
+// Adiciona listener para mensagens
+self.addEventListener('message', (event) => {
+  if (event.data && event.data.type === 'SKIP_WAITING') {
+    self.skipWaiting();
+  }
 });
