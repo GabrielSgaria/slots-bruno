@@ -11,12 +11,8 @@ export function ServiceWorkerInitializer() {
           return registration.pushManager.getSubscription();
         })
         .then(subscription => {
-          if (!subscription && Notification.permission === 'default') {
-            Notification.requestPermission().then(permission => {
-              if (permission === 'granted') {
-                console.log('Permissão para notificações concedida');
-              }
-            });
+          if (!subscription) {
+            console.log('Nenhuma inscrição de push encontrada');
           }
         })
         .catch(error => {
