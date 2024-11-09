@@ -34,8 +34,14 @@ const textMap: Record<string, string> = {
     'fortune-dragon': 'text-fortune-dragon-color',
 };
 
-export default function PageGamesSinais({ params }: { params: { slug: string } }) {
-    const gameName = params.slug ? params.slug.toString().replace(/%20/g, '-').toLowerCase() : '';
+interface PageProps {
+  params: {
+    slug: string;
+  };
+}
+
+export default function PageGamesSinais({ params }: PageProps) {
+    const gameName = params.slug ? params.slug.replace(/%20/g, '-').toLowerCase() : '';
     const game = gamesSinais.find(signal => signal.slug === gameName);
 
     const [buttonDisabled, setButtonDisabled] = useState(false);
@@ -125,7 +131,7 @@ export default function PageGamesSinais({ params }: { params: { slug: string } }
                                             width={900}
                                             height={900}
                                             src={tBranco}
-                                            alt="Icon Entrada"
+                                            alt="Icon Turbo"
                                             className="w-9/12"
                                         />
                                     </div>
@@ -140,7 +146,7 @@ export default function PageGamesSinais({ params }: { params: { slug: string } }
                                             width={900}
                                             height={900}
                                             src={vBranco}
-                                            alt="Icon Entrada"
+                                            alt="Icon Validade"
                                             className="w-9/12"
                                         />
                                     </div>
