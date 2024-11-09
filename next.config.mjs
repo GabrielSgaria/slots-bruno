@@ -15,6 +15,18 @@ const withPWA = NextPWA({
           maxEntries: 200,
           maxAgeSeconds: 30 * 24 * 60 * 60, // 30 dias
         },
+        networkTimeoutSeconds: 10, // Timeout para requisições de rede
+      },
+    },
+    {
+      urlPattern: /\.(png|jpg|jpeg|svg|gif|webp)$/,
+      handler: 'CacheFirst',
+      options: {
+        cacheName: 'image-cache',
+        expiration: {
+          maxEntries: 50,
+          maxAgeSeconds: 60 * 60 * 24 * 30, // 30 dias
+        },
       },
     },
   ],
@@ -24,6 +36,13 @@ const withPWA = NextPWA({
 const nextConfig = {
   outputFileTracing: false,
   reactStrictMode: true,
+  swcMinify: true, // Habilita a minificação SWC para melhor performance
+  compiler: {
+    removeConsole: process.env.NODE_ENV !== 'development', // Remove console.logs em produção
+  },
+  serverRuntimeConfig: {
+    serverTimeout: 60000, // 60 segundos de timeout para o servidor
+  },
   async headers() {
     return [
       {
@@ -51,7 +70,7 @@ const nextConfig = {
         ],
       },
       {
-        source: '/:all*(svg|jpg|jpeg|png|gif|ico|js|css)',
+        source: '/:all*(svg|jpg|jpeg|png|gif|ico|webp|js|css)',
         headers: [
           { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
         ],
@@ -59,14 +78,8 @@ const nextConfig = {
       {
         source: '/manifest.json',
         headers: [
-          {
-            key: 'Content-Type',
-            value: 'application/manifest+json',
-          },
-          {
-            key: 'Cache-Control',
-            value: 'public, max-age=0, must-revalidate',
-          },
+          { key: 'Content-Type', value: 'application/manifest+json' },
+          { key: 'Cache-Control', value: 'public, max-age=3600, must-revalidate' }, // Cache por 1 hora
         ],
       },
     ];
@@ -75,9 +88,12 @@ const nextConfig = {
     remotePatterns: [
       { protocol: 'https', hostname: 'www.facebook.com', pathname: '/**' },
       { protocol: 'https', hostname: 'sa-east-1.graphassets.com', pathname: '/**' },
+      { protocol: 'https', hostname: 'grupofpsinais.com.br', pathname: '/**' }, // Adicionado seu domínio
     ],
     formats: ['image/webp'],
     minimumCacheTTL: 86400,
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
   },
 };
 
