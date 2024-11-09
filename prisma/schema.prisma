@@ -8,15 +8,15 @@ datasource db {
 }
 
 model Card {
-  id          Int      @id @default(autoincrement())
-  nomeJogo    String
-  categoriaJogo   String
-  porcentagem Int
-  minima      Int
-  padrao      Int
-  maxima      Int
-  colorBgGame String
-  updatedAt   DateTime @default(now()) @updatedAt
+  id            Int      @id @default(autoincrement())
+  nomeJogo      String
+  categoriaJogo String
+  porcentagem   Int
+  minima        Int
+  padrao        Int
+  maxima        Int
+  colorBgGame   String
+  updatedAt     DateTime @default(now()) @updatedAt
 }
 
 model Settings {
@@ -26,4 +26,34 @@ model Settings {
   bannerImage String?
 
   @@index([casa])
+}
+
+model PushSubscription {
+  id           Int      @id @default(autoincrement())
+  endpoint     String   @unique
+  p256dh       String
+  auth         String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  lastNotified DateTime @default(now())
+  active       Boolean  @default(true)
+  userId       String?  
+  platform     String?  
+
+  @@index([endpoint])
+}
+
+model Notification {
+  id        Int       @id @default(autoincrement())
+  title     String
+  body      String
+  icon      String?
+  url       String?
+  createdAt DateTime  @default(now())
+  sentAt    DateTime?
+  type      String   
+  status    String   
+
+  @@index([createdAt])
+  @@index([type])
 }
