@@ -8,7 +8,7 @@ import { GoogleAnalytics, GoogleTagManager } from "@next/third-parties/google"
 import { ButtonScrollTop } from "@/components/button-scroll-top"
 
 import { ServiceWorkerInitializer } from "@/components/service-worker-initializer"
-import { LocalNotificationHandler } from "@/components/notification-local"
+// import { LocalNotificationHandler } from "@/components/notification-local"
 import { DownloadAppButton } from "@/components/download-app-button"
 
 const poppins = Poppins(
