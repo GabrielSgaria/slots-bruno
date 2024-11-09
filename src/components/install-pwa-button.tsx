@@ -8,8 +8,11 @@ export function MultiPlatformInstallButton() {
   const [deferredPrompt, setDeferredPrompt] = useState<any>(null)
   const [isIOS, setIsIOS] = useState(false)
   const [isStandalone, setIsStandalone] = useState(false)
+  const [isMounted, setIsMounted] = useState(false)
 
   useEffect(() => {
+    setIsMounted(true)
+
     const handleBeforeInstallPrompt = (e: Event) => {
       e.preventDefault()
       setDeferredPrompt(e)
@@ -44,6 +47,10 @@ export function MultiPlatformInstallButton() {
 
       setDeferredPrompt(null)
     }
+  }
+
+  if (!isMounted) {
+    return null // or a loading placeholder
   }
 
   if (isStandalone) {
