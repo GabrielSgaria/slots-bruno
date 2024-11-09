@@ -22,6 +22,7 @@ const withPWA = NextPWA({
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  outputFileTracing: false,
   reactStrictMode: true,
   async headers() {
     return [

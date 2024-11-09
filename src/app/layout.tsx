@@ -5,7 +5,6 @@ import "./globals.css"
 import { NavBar } from "@/components/nav-bar"
 import { Footer } from "@/components/footer"
 import { GoogleAnalytics, GoogleTagManager } from "@next/third-parties/google"
-import { ButtonScrollTop } from "@/components/button-scroll-top"
 
 import { ServiceWorkerInitializer } from "@/components/service-worker-initializer"
 // import { LocalNotificationHandler } from "@/components/notification-local"
@@ -104,7 +103,6 @@ export default function RootLayout({
         <link rel="manifest" href="/manifest.json" />
       </head>
       <body className={`text-zinc-50 ${poppins.variable} ${roboto.variable}`}>
-        <ButtonScrollTop />
         <div className="bg-zinc-950/20 backdrop-blur-sm">
           <GoogleAnalytics gaId="G-9E7Z61LW2J" />
           <GoogleTagManager gtmId="G-9E7Z61LW2J" />
@@ -112,8 +110,8 @@ export default function RootLayout({
         </div>
         {/* <LocalNotificationHandler /> */}
         <Toaster />
-        {/* <ServiceWorkerInitializer /> */}
-        {/* <DownloadAppButton /> */}
+        <ServiceWorkerInitializer />
+        <DownloadAppButton />
       </body>
     </html>
   )

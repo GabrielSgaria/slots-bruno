@@ -1,5 +1,4 @@
 'use client';
-
 import { useState } from "react";
 import { gamesSinais } from "@/lib/constants";
 import { cn } from "@/lib/utils";
@@ -35,13 +34,8 @@ const textMap: Record<string, string> = {
     'fortune-dragon': 'text-fortune-dragon-color',
 };
 
-// Definindo o tipo de params sem dependência de Promise ou PageProps
-interface Params {
-    slug: string;
-}
-
-export default function PageGamesSinais({ params }: { params: Params }) {
-    const gameName = params.slug ? params.slug.replace(/%20/g, '-').toLowerCase() : '';
+export default function PageGamesSinais({ params }: { params: { slug: string } }) {
+    const gameName = params.slug ? params.slug.toString().replace(/%20/g, '-').toLowerCase() : '';
     const game = gamesSinais.find(signal => signal.slug === gameName);
 
     const [buttonDisabled, setButtonDisabled] = useState(false);
@@ -131,7 +125,7 @@ export default function PageGamesSinais({ params }: { params: Params }) {
                                             width={900}
                                             height={900}
                                             src={tBranco}
-                                            alt="Icon Turbo"
+                                            alt="Icon Entrada"
                                             className="w-9/12"
                                         />
                                     </div>
@@ -146,7 +140,7 @@ export default function PageGamesSinais({ params }: { params: Params }) {
                                             width={900}
                                             height={900}
                                             src={vBranco}
-                                            alt="Icon Validade"
+                                            alt="Icon Entrada"
                                             className="w-9/12"
                                         />
                                     </div>
