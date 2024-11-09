@@ -34,13 +34,12 @@ const textMap: Record<string, string> = {
     'fortune-dragon': 'text-fortune-dragon-color',
 };
 
-interface PageProps {
-  params: {
+// Ajuste o tipo para evitar o problema de Promise
+interface Params {
     slug: string;
-  };
 }
 
-export default function PageGamesSinais({ params }: PageProps) {
+export default function PageGamesSinais({ params }: { params: Params }) {
     const gameName = params.slug ? params.slug.replace(/%20/g, '-').toLowerCase() : '';
     const game = gamesSinais.find(signal => signal.slug === gameName);
 
