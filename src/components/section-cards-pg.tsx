@@ -25,6 +25,17 @@ interface SectionCardsPgProps {
   linkCasa: string | null | undefined;
 }
 
+const newGames = [
+  'Wild ape',
+  'Zombie Outbreak',
+  'futebol fever',
+  'battleground royale',
+  'butterfly blossom',
+  'dragon hatch 2',
+  'medusa II',
+  `santa's gift rush`
+];
+
 export function SectionCards({ cards, linkCasa }: SectionCardsPgProps) {
   const [filteredCards, setFilteredCards] = useState<CardData[]>(cards || []);
   const [activeTab, setActiveTab] = useState<string>("all");
@@ -56,11 +67,9 @@ export function SectionCards({ cards, linkCasa }: SectionCardsPgProps) {
         filteredGames = (cards || []).filter(card => isHot(card) || isPlayGame(card));
         break;
       case "new":
-        filteredGames = (cards || []).sort((a, b) => {
-          const dateA = new Date(a.updatedAt);
-          const dateB = new Date(b.updatedAt);
-          return dateB.getTime() - dateA.getTime();
-        }).slice(0, 20);
+        filteredGames = (cards || []).filter(card => 
+          newGames.some(newGame => card.nomeJogo.toLowerCase().includes(newGame.toLowerCase()))
+        );
         break;
       case "all":
       default:
@@ -71,7 +80,7 @@ export function SectionCards({ cards, linkCasa }: SectionCardsPgProps) {
     setFilteredCards(filteredGames);
     toast({
       title: `Jogos ${value === 'hot' ? 'populares' : value === 'new' ? 'novos' : 'todos'} selecionados`,
-      description: `Mostrando os ${value === 'all' ? 'todos os jogos' : value === 'hot' ? 'jogos HOT e +90%' : '20 jogos mais recentes'}.`,
+      description: `Mostrando ${value === 'all' ? 'todos os jogos' : value === 'hot' ? 'jogos HOT e +90%' : 'jogos novos selecionados'}.`,
       className: "bg-green-500 border-none text-white font-bold",
     });
   };
