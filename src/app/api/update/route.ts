@@ -1,53 +1,27 @@
-import { getCardsPG, getLinkCasa, updateCards } from "@/lib/actions";
-import { formatUpdateTime } from "@/lib/utils";
+import { updateCards } from "@/lib/actions";
 import { NextResponse } from "next/server";
+import { revalidateTag } from "next/cache"; // Importa a função revalidateTag para limpar o cache
 
-// Variáveis de cache em memória para controlar a expiração e atualização
-let cachedData: { cards: any[]; linkCasa: string; imageBanner: string; updateTime: string } | null = null;
-let cacheTimestamp: number = 0;
-
-// Função para atualizar os dados dos cartões
 export async function GET() {
     try {
-        // Executa a função de atualização
+        // Executa a função de atualização dos dados dos cartões
         const updateCard = await updateCards();
 
-        // Limpa o cache manualmente, para forçar a atualização dos dados na próxima solicitação
-        cachedData = null;
-        cacheTimestamp = 0;
+        // Invalida o cache para que seja atualizado na próxima requisição
+        revalidateTag('cards');
+        revalidateTag('cards-pg');
+        revalidateTag('cards-pp');
+        revalidateTag('link-casa'); // Caso também deseje invalidar o cache do link
 
-        // Responde com sucesso após a atualização
-        return NextResponse.json({ success: true, message: "Dados atualizados e cache invalidado" });
+        // Responde com sucesso após a atualização e limpeza do cache
+        return NextResponse.json({ updateCard, success: true, message: "Dados atualizados e cache invalidado" });
     } catch (error) {
         console.error("Erro ao atualizar os dados dos cartões:", error);
         return new NextResponse("Erro no servidor", { status: 500 });
     }
 }
 
-export async function loadData() {
-    const now = Date.now();
-    const CACHE_EXPIRATION_TIME = 300000; // 5 minutos em milissegundos
 
-    // Verifica se o cache está válido
-    if (cachedData && (now - cacheTimestamp) < CACHE_EXPIRATION_TIME) {
-        return cachedData;
-    }
-
-    // Se o cache expirou, recarrega os dados
-    const cardsData = await getCardsPG();
-    const propsSettings = await getLinkCasa();
-
-    const cards = cardsData?.data as any[];
-    const linkCasa = propsSettings.data?.link || '';
-    const imageBanner = propsSettings.data?.bannerImage || '';
-    const updateTime = cardsData?.data[0]?.updatedAt ? formatUpdateTime(cardsData.data[0].updatedAt) : '';
-
-    // Atualiza o cache e o timestamp
-    cachedData = { cards, linkCasa, imageBanner, updateTime };
-    cacheTimestamp = now;
-
-    return cachedData;
-}
 
 
 
