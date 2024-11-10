@@ -3,15 +3,11 @@ import { ContentPg } from "@/components/content-pg";
 import { CardData, SectionCards } from "@/components/section-cards-pg";
 import { formatUpdateTime } from "@/lib/utils";
 import Loading from './loading';
+import { unstable_cache } from "next/cache";
 
-// Cache simples
-let cachedData: { cards: CardData[]; linkCasa: string; imageBanner: string; updateTime: string } | null = null;
+const fiveMinutesInSeconds = 300;
 
-async function loadData() {
-  if (cachedData) {
-    return cachedData;
-  }
-
+const loadData = unstable_cache(async () => {
   const cardsData = await getCardsPG();
   const propsSettings = await getLinkCasa();
 
@@ -20,9 +16,11 @@ async function loadData() {
   const imageBanner = propsSettings.data?.bannerImage || '';
   const updateTime = cardsData?.data[0]?.updatedAt ? formatUpdateTime(cardsData.data[0].updatedAt) : '';
 
-  cachedData = { cards, linkCasa, imageBanner, updateTime };
-  return cachedData;
-}
+  return { cards, linkCasa, imageBanner, updateTime };
+}, ['cards-pg'], {
+  revalidate: fiveMinutesInSeconds,
+  tags: ['cards-pg']
+});
 
 export default async function HomePage() {
   const data = await loadData();

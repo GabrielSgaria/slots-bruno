@@ -17,7 +17,6 @@ async function createOrUpdateCard(i: number, gameData: any) {
     const maiorValor = Math.max(minima, padrao, maxima);
     let porcentagem = getPorcentagemAjustada(maiorValor);
 
-  
     if (porcentagem <= maiorValor) {
         porcentagem = maiorValor + 1 <= 98 ? maiorValor + 1 : 98;
     }
@@ -43,11 +42,7 @@ async function createOrUpdateCard(i: number, gameData: any) {
             }
         });
     }
-    revalidateTag('cards');
-    revalidateTag('cards-pg');
-    revalidateTag('cards-pp');
 }
-
 
 export async function updateCards() {
     try {
@@ -57,7 +52,6 @@ export async function updateCards() {
 
             await createOrUpdateCard(i, gameData);
         }
-        // Revalidando os caches
         revalidateTag('cards');
         revalidateTag('cards-pg');
         revalidateTag('cards-pp');
@@ -68,7 +62,6 @@ export async function updateCards() {
     }
 }
 
-// Função para criar novos cartões
 export async function createCards() {
     try {
         for (let i = 1; i <= 155; i++) {
@@ -85,7 +78,6 @@ export async function createCards() {
     }
 }
 
-// Função para buscar os cartões da categoria 'PG'
 export const getCardsPG = unstable_cache(async () => {
     try {
         const cards = await prisma.card.findMany({
@@ -117,7 +109,6 @@ export const getCardsPG = unstable_cache(async () => {
     tags: ['cards-pg']
 });
 
-// Função para buscar os cartões da categoria 'PP'
 export const getCardsPP = unstable_cache(async () => {
     try {
         const cards = await prisma.card.findMany({
@@ -137,7 +128,7 @@ export const getCardsPP = unstable_cache(async () => {
             });
             return { data: cards };
         }
-        return { data: [] }; // Garanta que sempre retorna um array vazio se não houver dados
+        return { data: [] };
     } catch (error) {
         console.error('Error generating getCardsPP data:', error);
         return { data: [] };
@@ -147,7 +138,6 @@ export const getCardsPP = unstable_cache(async () => {
     tags: ['cards-pp']
 });
 
-// Função para manipular o envio de formulários (atualização de link e imagem)
 const hashUnico = process.env.HASH_LINK as string;
 
 export const handleSubmit = async (e: FormData) => {
@@ -178,7 +168,6 @@ export const handleSubmit = async (e: FormData) => {
     }
 };
 
-// Função para buscar o link e a imagem da casa
 export const getLinkCasa = unstable_cache(async () => {
     try {
         const newLink = await prisma.settings.findUnique({
@@ -193,6 +182,7 @@ export const getLinkCasa = unstable_cache(async () => {
     revalidate: oneDayInSeconds,
     tags: ['link-casa']
 });
+
 
 
 // export async function updateCards() {
