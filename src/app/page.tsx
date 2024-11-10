@@ -3,11 +3,20 @@ import { ContentPg } from "@/components/content-pg";
 import { CardData, SectionCards } from "@/components/section-cards-pg";
 import { formatUpdateTime } from "@/lib/utils";
 import Loading from './loading';
-import { unstable_cache } from "next/cache";
 
-const fiveMinutesInSeconds = 300;
+const CACHE_EXPIRATION_TIME = 300000; // 5 minutos em milissegundos
+let cachedData: { cards: CardData[]; linkCasa: string; imageBanner: string; updateTime: string } | null = null;
+let cacheTimestamp: number = 0;
 
-const loadData = unstable_cache(async () => {
+async function loadData() {
+  const now = Date.now();
+
+  // Verifica se o cache existe e não está expirado
+  if (cachedData && (now - cacheTimestamp) < CACHE_EXPIRATION_TIME) {
+    return cachedData;
+  }
+
+  // Se o cache estiver expirado, recarrega os dados
   const cardsData = await getCardsPG();
   const propsSettings = await getLinkCasa();
 
@@ -16,11 +25,12 @@ const loadData = unstable_cache(async () => {
   const imageBanner = propsSettings.data?.bannerImage || '';
   const updateTime = cardsData?.data[0]?.updatedAt ? formatUpdateTime(cardsData.data[0].updatedAt) : '';
 
-  return { cards, linkCasa, imageBanner, updateTime };
-}, ['cards-pg'], {
-  revalidate: fiveMinutesInSeconds,
-  tags: ['cards-pg']
-});
+  // Atualiza o cache e o timestamp
+  cachedData = { cards, linkCasa, imageBanner, updateTime };
+  cacheTimestamp = now;
+
+  return cachedData;
+}
 
 export default async function HomePage() {
   const data = await loadData();
