@@ -1,16 +1,15 @@
-/** @type {import('next').NextConfig} */
+// next.config.js
+import withPWA from 'next-pwa';
 
-const withPWA = require('next-pwa')({
+/** @type {import('next').NextConfig} */
+const nextConfig = withPWA({
     dest: 'public',
     disable: process.env.NODE_ENV === 'development',
     register: true,
     skipWaiting: true,
-});
-
-const nextConfig = withPWA({
+})({
     reactStrictMode: true,
     output: 'standalone',
-    // Outras configurações do Next.js
     async headers() {
         return [
             {
@@ -48,7 +47,7 @@ const nextConfig = withPWA({
                     },
                 ],
             },
-        ]
+        ];
     },
     images: {
         remotePatterns: [
@@ -57,7 +56,6 @@ const nextConfig = withPWA({
                 hostname: 'www.facebook.com',
                 pathname: '/**',
             },
-
             {
                 protocol: 'https',
                 hostname: 'sa-east-1.graphassets.com',
@@ -67,6 +65,6 @@ const nextConfig = withPWA({
         formats: ['image/webp'],
         minimumCacheTTL: 60 * 60 * 24, // 1 dia
     },
-})
+});
 
 export default nextConfig;
