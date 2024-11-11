@@ -1,6 +1,6 @@
 export const bannerImages = [
     {
-        mobile: '/image/banner/mobile/banner-1.png',
+        mobile: '/image/banner/mobile/TESTE.png',
         desktop: '/image/banner/desktop/1.png'
     },
     {
