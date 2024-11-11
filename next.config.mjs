@@ -1,5 +1,16 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
+
+const withPWA = require('next-pwa')({
+    dest: 'public',
+    disable: process.env.NODE_ENV === 'development',
+    register: true,
+    skipWaiting: true,
+});
+
+const nextConfig = withPWA({
+    reactStrictMode: true,
+    output: 'standalone',
+    // Outras configurações do Next.js
     async headers() {
         return [
             {
@@ -19,7 +30,25 @@ const nextConfig = {
                         value: 'public, max-age=31536000, immutable',
                     },
                 ],
-            }]
+            },
+            {
+                source: '/sw.js',
+                headers: [
+                    {
+                        key: 'Content-Type',
+                        value: 'application/javascript; charset=utf-8',
+                    },
+                    {
+                        key: 'Cache-Control',
+                        value: 'no-cache, no-store, must-revalidate',
+                    },
+                    {
+                        key: 'Content-Security-Policy',
+                        value: "default-src 'self'; script-src 'self'",
+                    },
+                ],
+            },
+        ]
     },
     images: {
         remotePatterns: [
@@ -38,6 +67,6 @@ const nextConfig = {
         formats: ['image/webp'],
         minimumCacheTTL: 60 * 60 * 24, // 1 dia
     },
-};
+})
 
 export default nextConfig;
