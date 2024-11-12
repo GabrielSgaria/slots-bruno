@@ -88,7 +88,7 @@ export function SectionCards({ cards, linkCasa }: SectionCardsPgProps) {
   return (
     <section className="flex flex-col mx-auto items-center justify-center px-2 -mt-6">
       {linkCasa ? (
-        <div className="flex flex-col justify-center items-center p-2 md:px-16 rounded-2xl w-full">
+        <div className="flex flex-col justify-center items-center md:px-16 rounded-2xl w-full">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}>
@@ -121,7 +121,7 @@ export function SectionCards({ cards, linkCasa }: SectionCardsPgProps) {
 
           <SearchFilter cardsProps={{ data: filteredCards }} setFilteredCards={setFilteredCards} />
 
-          <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-8 2xl:grid-cols-9 gap-2 w-full mt-4">
+          <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-8 2xl:grid-cols-9 gap-2 my-5">
             {filteredCards.map(({ id, nomeJogo, porcentagem, minima, padrao, maxima, categoriaJogo, colorBgGame }) => (
               <div key={id}>
                 <CardGames

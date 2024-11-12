@@ -9,7 +9,7 @@ export async function NavBar() {
     return (
         <nav className="shadow-xl bg-yellow-fp border-b border-zinc-900/20 fixed top-0 w-full z-50">
             <div className="container mx-auto flex flex-col items-center justify-center gap-5 py-3 px-2">
-                <div className="flex flex-row gap-2 sm:gap-10 text-lg w-full justify-center items-center">
+                <div className="flex flex-row justify-around sm:gap-10 text-lg w-full sm:justify-center items-center">
                     <Link href="/" className="py-2 px-2 bg-green-fp hover:bg-green-700 text-center justify-center items-center flex text-zinc-950 font-bold rounded-md transition-all duration-200  sm:text-base">
                         <p className="text-yellow-fp text-xs sm:text-sm">JOGOS PG</p>
                     </Link>

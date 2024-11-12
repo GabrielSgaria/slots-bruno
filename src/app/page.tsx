@@ -3,6 +3,8 @@ import { ContentPg } from "@/components/content-pg";
 import { CardData, SectionCards } from "@/components/section-cards-pg";
 import { formatUpdateTime } from "@/lib/utils";
 import Loading from './loading';
+import { NavBar } from "@/components/nav-bar";
+import { Footer } from "@/components/footer";
 
 const CACHE_EXPIRATION_TIME = 300000; // 5 minutos em milissegundos
 let cachedData: { cards: CardData[]; linkCasa: string; imageBanner: string; updateTime: string } | null = null;
@@ -42,9 +44,13 @@ export default async function HomePage() {
   const { cards, linkCasa, imageBanner, updateTime } = data;
 
   return (
-    <main>
-      <ContentPg updateTime={updateTime} imageBanner={imageBanner} />
-      <SectionCards cards={cards} linkCasa={linkCasa} />
-    </main>
+    <>
+    <NavBar />
+      <main>
+        <ContentPg updateTime={updateTime} imageBanner={imageBanner} />
+        <SectionCards cards={cards} linkCasa={linkCasa} />
+      </main>
+      <Footer />
+    </>
   );
 }

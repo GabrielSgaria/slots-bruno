@@ -7,6 +7,8 @@ import { SectionCardsPP } from "@/components/section-cards-pp";
 import { getCardsPP, getLinkCasa } from "@/lib/actions";
 import { formatUpdateTime } from "@/lib/utils";
 import Loading from '@/app/loading';
+import { NavBar } from '@/components/nav-bar';
+import { Footer } from '@/components/footer';
 
 async function loadData() {
     const cardsData = await getCardsPP();
@@ -27,10 +29,14 @@ export default async function PpGamesPage() {
     }
 
     return (
-        <main>
-            <ButtonScrollTop />
-            <ContentPp updateTime={updateTime} />
-            <SectionCardsPP cards={cards} linkCasa={linkCasa} />
-        </main>
+        <>
+            <NavBar />
+                <main>
+                    <ButtonScrollTop />
+                    <ContentPp updateTime={updateTime} />
+                    <SectionCardsPP cards={cards} linkCasa={linkCasa} />
+                </main>
+            <Footer />
+        </>
     );
 }

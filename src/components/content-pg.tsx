@@ -43,15 +43,16 @@ export function ContentPg({ updateTime, imageBanner }: ContentPgProps) {
     <div>
       {showPopup && imageBanner && <PopupImage onClose={handleClosePopup} imagePopup={imageBanner} />}
 
-      <div className="container mx-auto flex flex-col items-center px-2 sm:px-2 gap-5 mb-2 pt-20">
-        <div className="relative w-full max-w-[1200px] shadow-xl shadow-black rounded-lg overflow-hidden">
+      <div className="container mx-auto flex flex-col items-center px-2 sm:px-2 mb-2 pt-20">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="relative w-full max-w-[1200px] shadow-xl shadow-black rounded-lg overflow-hidden">
           <Swiper
             spaceBetween={30}
             centeredSlides={true}
             autoplay={{ delay: 3500, disableOnInteraction: false }}
-            pagination={{ clickable: true }}
-            navigation={true}
-            modules={[Autoplay, Pagination, Navigation]}
+            modules={[Autoplay]}
             className="mySwiper"
           >
             {bannerImages.map((image, index) => (
@@ -80,7 +81,7 @@ export function ContentPg({ updateTime, imageBanner }: ContentPgProps) {
               </SwiperSlide>
             ))}
           </Swiper>
-        </div>
+        </motion.div>
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
