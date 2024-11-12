@@ -27,7 +27,7 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://www.grupofpsinais.com.br"),
   icons: [
     { rel: 'icon', url: '/favicon.png' },
-    { rel: 'apple-touch-icon', url: '/icon-192x192.png' },
+    { rel: 'apple-touch-icon', url: '/favicon.png' },
   ],
   manifest: '/manifest.json',
   appleWebApp: {
@@ -91,7 +91,7 @@ export default function RootLayout({
         <meta name="application-name" content="FP - SINAIS SLOTS" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-        <meta name="apple-mobile-web-app-title" content="FP Sinais" />
+        <meta name="apple-mobile-web-app-title" content="FP Sinais Slot" />
         <meta name="format-detection" content="telephone=no" />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="msapplication-TileColor" content="#000000" />
