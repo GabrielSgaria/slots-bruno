@@ -8,9 +8,6 @@ export const metadata: Metadata = {
     description: 'Page Download App Gerador de Sinais Slots - Grupo FP',
 }
 
-
-export const themeColor = "#000000"
-
 export default function GerarSinaisLayout({
     children,
 }: {
