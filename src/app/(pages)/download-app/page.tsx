@@ -1,6 +1,6 @@
 'use client'
 
-import { HelpCircle, Star, ArrowLeft } from 'lucide-react'
+import { Star, ArrowLeft } from 'lucide-react'
 import { MultiPlatformInstallButton } from '@/components/page-download/install-pwa-button'
 import { InstallationTutorial } from '@/components/page-download/install-tutorial'
 import Image from 'next/image'

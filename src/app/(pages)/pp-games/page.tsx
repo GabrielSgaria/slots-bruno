@@ -1,5 +1,3 @@
-
-import { Suspense } from 'react';
 import { ButtonScrollTop } from "@/components/button-scroll-top";
 import { ContentPp } from "@/components/content-pp";
 import { CardData } from "@/components/section-cards-pg";
@@ -33,7 +31,7 @@ export default async function PpGamesPage() {
             <NavBar />
                 <main>
                     <ButtonScrollTop />
-                    <ContentPp updateTime={updateTime} />
+                    <ContentPp/>
                     <SectionCardsPP cards={cards} linkCasa={linkCasa} />
                 </main>
             <Footer />
