@@ -67,7 +67,7 @@ export function SectionCards({ cards, linkCasa }: SectionCardsPgProps) {
         filteredGames = (cards || []).filter(card => isHot(card) || isPlayGame(card));
         break;
       case "new":
-        filteredGames = (cards || []).filter(card => 
+        filteredGames = (cards || []).filter(card =>
           newGames.some(newGame => card.nomeJogo.toLowerCase().includes(newGame.toLowerCase()))
         );
         break;
@@ -91,27 +91,35 @@ export function SectionCards({ cards, linkCasa }: SectionCardsPgProps) {
         <div className="flex flex-col justify-center items-center md:px-16 rounded-2xl w-full">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}>
-            <Tabs defaultValue="all" className="w-full mt-4 flex items-center justify-center" onValueChange={handleTabChange}>
-              <TabsList className="flex w-fit bg-yellow-400 rounded-lg p-1">
+            animate={{ opacity: 1, y: 0 }}
+            className="w-full mt-4 flex items-center justify-center pt-3"
+          >
+            <Tabs defaultValue="all" className="w-full max-w-md" onValueChange={handleTabChange}>
+              <TabsList className="flex w-full justify-between bg-transparent rounded-xl p-1 shadow-inner gap-1 ">
                 <TabsTrigger
                   value="hot"
-                  className="px-4 py-2 text-sm rounded-md transition-all text-black
-                           data-[state=active]:bg-green-500 data-[state=active]:text-white"
+                  className="w-1/3 px-4 py-2 text-sm font-semibold rounded-lg transition-all duration-300
+                       bg-yellow-400 text-yellow-900
+                       data-[state=active]:bg-green-500 data-[state=active]:text-white data-[state=active]:shadow-md
+                       hover:bg-yellow-300 hover:text-yellow-950"
                 >
                   🔥 HOT
                 </TabsTrigger>
                 <TabsTrigger
                   value="new"
-                  className="px-4 py-2 text-sm rounded-md transition-all text-black
-                           data-[state=active]:bg-green-500 data-[state=active]:text-white"
+                  className="w-1/3 px-4 py-2 text-sm font-semibold rounded-lg transition-all duration-300
+                       bg-yellow-400 text-yellow-900
+                       data-[state=active]:bg-green-500 data-[state=active]:text-white data-[state=active]:shadow-md
+                       hover:bg-yellow-300 hover:text-yellow-950"
                 >
                   ✨ NEW
                 </TabsTrigger>
                 <TabsTrigger
                   value="all"
-                  className="px-4 py-2 text-sm rounded-md transition-all text-black
-                           data-[state=active]:bg-green-500 data-[state=active]:text-white"
+                  className="w-1/3 px-4 py-2 text-sm font-semibold rounded-lg transition-all duration-300
+                       bg-yellow-400 text-yellow-900
+                       data-[state=active]:bg-green-500 data-[state=active]:text-white data-[state=active]:shadow-md
+                       hover:bg-yellow-300 hover:text-yellow-950"
                 >
                   ALL
                 </TabsTrigger>
