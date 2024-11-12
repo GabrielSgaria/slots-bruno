@@ -16,7 +16,7 @@ html, body {
 }
 
 body {
-  background-image: url('/bg-teste-3.jpg');
+  background-image: url('/fundo.jpeg');
   background-size: cover;
   background-attachment: fixed;
   background-position: center;
@@ -26,7 +26,7 @@ body {
 
 @media (max-width: 768px) {
   body {
-    background-image: url('/bg-teste-3.jpg');
+    background-image: url('/fundo.jpeg');
     background-size: cover; 
     background-position: top;
     background-attachment: scroll; 
