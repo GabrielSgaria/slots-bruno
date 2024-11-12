@@ -8,10 +8,6 @@ export const metadata: Metadata = {
     description: 'Page Download App Gerador de Sinais Slots - Grupo FP',
 }
 
-export const viewport = {
-    width: "device-width",
-    initialScale: 1,
-}
 
 export const themeColor = "#000000"
 
