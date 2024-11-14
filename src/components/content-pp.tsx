@@ -1,14 +1,8 @@
 'use client'
 import Image from 'next/image'
-import logoPp from '../../public/pp.webp'
-import { CallBell } from "@phosphor-icons/react"
 import { motion } from 'framer-motion'
 
-interface ContentPpProps {
-    updateTime: string | number | undefined;
-}
-
-export function ContentPp({ updateTime }: ContentPpProps) {
+export function ContentPp() {
 
     return (
         <div>
@@ -17,8 +11,6 @@ export function ContentPp({ updateTime }: ContentPpProps) {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     className="flex flex-col justify-center items-center">
-
-
                     <Image src="/image/banner/gerar-sinais/pragmatic.png" alt="Logo FP Gerar Sinal" width={500} height={500} quality={100} priority className="w-full max-w-[650px] h-full rounded-xl shadow-lg" />
 
                 </motion.div>

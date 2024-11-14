@@ -20,10 +20,10 @@ export function PopupImage({ onClose, imagePopup }: PopupImageProps) {
     }
 
     return (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-zinc-950 bg-opacity-80 backdrop-blur-sm">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-zinc-600 bg-opacity-20 backdrop-blur-sm">
             <div className="h-svh w-full fixed top-0 flex items-center justify-center">
                 <div className="sm:pt-14 rounded-lg w-full max-h-svh max-w-[454px] px-10 md:px-3 relative">
-                    <div className="relative rounded-lg shadow-lg overflow-hidden max-w-4xl max-h-[90vh] p-2">
+                    <div className="relative rounded-lg overflow-hidden max-w-4xl max-h-[90vh] p-2">
                         <div className="flex justify-center items-center w-full h-full relative">
                             <Image
                                 src={`data:image/png;base64,${imagePopup}`}

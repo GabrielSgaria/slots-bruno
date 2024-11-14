@@ -5,9 +5,9 @@ import { Fire } from "@phosphor-icons/react";
 import { allImageCards } from "@/lib/images-cards";
 import Link from "next/link";
 import { ImageCard } from "./card-components/image";
-import { GeradorSinal } from "@/components/gerador-sinal"; // Importando o Gerador de Sinal
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog"; // Importando o diálogo
-import { motion } from "framer-motion"; // Importando o Framer Motion
+import { GeradorSinal } from "@/components/gerador-sinal"; 
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog"; 
+import { motion } from "framer-motion";
 
 interface CardGamesProps {
     linkCasa?: string | null;

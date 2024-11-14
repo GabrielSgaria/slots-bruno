@@ -1,143 +1,172 @@
 'use client';
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+
+import { useEffect, useState, useMemo, useCallback } from "react";
+import { motion } from "framer-motion"
 import { DotFilledIcon } from "@radix-ui/react-icons";
 import { CardGames } from "./card-games";
 import { SearchFilter } from "./filter-cards";
-import { motion } from "framer-motion";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useToast } from "@/hooks/use-toast";
 
 export interface CardData {
-    id: number;
-    nomeJogo: string;
-    categoriaJogo: string;
-    porcentagem: number;
-    minima: number;
-    padrao: number;
-    maxima: number;
-    colorBgGame: string;
-    updatedAt: Date;
+  id: number;
+  nomeJogo: string;
+  categoriaJogo: string;
+  porcentagem: number;
+  minima: number;
+  padrao: number;
+  maxima: number;
+  colorBgGame: string;
+  updatedAt: string | number | Date;
 }
 
 interface SectionCardsPgProps {
-    cards: CardData[] | null | undefined;
-    linkCasa: string | null | undefined;
+  cards: CardData[] | null | undefined;
+  linkCasa: string | null | undefined;
 }
+
+const newGames = [
+  'Wild ape',
+  'Zombie Outbreak',
+  'futebol fever',
+  'battleground royale',
+  'butterfly blossom',
+  'dragon hatch 2',
+  'medusa II',
+  `santa's gift rush`
+];
 
 export function SectionCards({ cards, linkCasa }: SectionCardsPgProps) {
-    const [cardsPerPage, setCardsPerPage] = useState<number>(10);
-    const [loading, setLoading] = useState<boolean>(false);
-    const [filteredCards, setFilteredCards] = useState<CardData[]>(cards || []);
-    const [visibleCards, setVisibleCards] = useState<CardData[]>([]);
-    const [popularGames, setPopularGames] = useState<CardData[]>([]); // Estado para jogos populares
-    const loadMoreRef = useRef<HTMLDivElement | null>(null);
+  const [filteredCards, setFilteredCards] = useState<CardData[]>(cards || []);
+  const [activeTab, setActiveTab] = useState<string>("all");
+  const [searchTerm, setSearchTerm] = useState("");
+  const { toast } = useToast();
 
-    const memoizedFilteredCards = useMemo(() => filteredCards, [filteredCards]);
+  const isHot = useCallback((card: CardData) =>
+    card.nomeJogo.toLowerCase().startsWith('fortune') &&
+    (card.minima > 90 || card.padrao > 90 || card.maxima > 90) &&
+    card.categoriaJogo === "PG",
+  []);
 
-    useEffect(() => {
-        setFilteredCards(cards || []);
-    }, [cards]);
+  const isPlayGame = useCallback((card: CardData) =>
+    (card.categoriaJogo === 'PP' ||
+      (!card.nomeJogo.toLowerCase().startsWith('fortune') &&
+        card.categoriaJogo === 'PG')) &&
+    (card.minima > 90 || card.padrao > 90 || card.maxima > 90),
+  []);
 
-    useEffect(() => {
-        setVisibleCards(memoizedFilteredCards.slice(0, cardsPerPage));
-    }, [memoizedFilteredCards, cardsPerPage]);
+  const applyFilters = useCallback(() => {
+    let result = cards || [];
 
-    useEffect(() => {
-        const handleLoadMore = () => {
-            if (loadMoreRef.current) {
-                const observer = new IntersectionObserver(
-                    (entries) => {
-                        if (entries[0].isIntersecting && !loading && visibleCards.length < memoizedFilteredCards.length) {
-                            setLoading(true);
-                            setTimeout(() => {
-                                setCardsPerPage((prev) => prev + 8);
-                                setLoading(false);
-                            }, 500);
-                        }
-                    },
-                    { threshold: 1 }
-                );
+    // Apply tab filter
+    switch (activeTab) {
+      case "hot":
+        result = result.filter(card => isHot(card) || isPlayGame(card));
+        break;
+      case "new":
+        result = result.filter(card =>
+          newGames.some(newGame => card.nomeJogo.toLowerCase().includes(newGame.toLowerCase()))
+        );
+        break;
+      case "all":
+      default:
+        break;
+    }
 
-                observer.observe(loadMoreRef.current);
+    // Apply search filter
+    if (searchTerm) {
+      const lowerCaseSearch = searchTerm.toLowerCase();
+      result = result.filter(
+        ({ nomeJogo }) => nomeJogo.toLowerCase().includes(lowerCaseSearch)
+      );
+    }
 
-                return () => observer.disconnect();
-            }
-        };
+    setFilteredCards(result);
+  }, [cards, activeTab, searchTerm, isHot, isPlayGame]);
 
-        handleLoadMore();
-    }, [loading, visibleCards.length, memoizedFilteredCards.length]);
+  useEffect(() => {
+    applyFilters();
+  }, [applyFilters]);
 
-    return (
-        <section className="flex flex-col mx-auto items-center justify-center px-2">
+  const handleTabChange = (value: string) => {
+    setActiveTab(value);
+    toast({
+      title: `Jogos ${value === 'hot' ? 'populares' : value === 'new' ? 'novos' : 'todos'} selecionados`,
+      description: `Mostrando ${value === 'all' ? 'todos os jogos' : value === 'hot' ? 'jogos HOT e +90%' : 'jogos novos selecionados'}.`,
+      className: "bg-green-500 border-none text-white font-bold",
+    });
+  };
 
-            {/* Seção de Jogos Populares da Semana */}
-            {/* {popularGames.length > 0 && (
-                <div className="mb-8 bg-green-600/90 backdrop-blur-lg p-2 md:p-10 md:px-16 rounded-2xl">
-                    <div className="w-full flex flex-col mb-8">
-                        <h2 className="text-3xl font-bold text-center text-zinc-50 mb-1">Jogos Populares da Semana</h2>
-                        <span className="text-center text-lg">Confira os jogos mais populares da semana!</span>
-                    </div>
-                    <div className="flex w-full justify-center items-center">
+  return (
+    <section className="flex flex-col mx-auto items-center justify-center px-2 -mt-6">
+      {linkCasa ? (
+        <div className="flex flex-col justify-center items-center md:px-16 rounded-2xl w-full">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="w-full mt-4 flex items-center justify-center pt-3"
+          >
+            <Tabs defaultValue="all" className="w-full max-w-md" onValueChange={handleTabChange}>
+              <TabsList className="flex w-full justify-between bg-transparent rounded-xl p-1 shadow-inner gap-1 ">
+                <TabsTrigger
+                  value="hot"
+                  className="w-1/3 px-4 py-2 text-sm font-semibold rounded-lg transition-all duration-300
+                       bg-yellow-400 text-yellow-900
+                       data-[state=active]:bg-green-500 data-[state=active]:text-white data-[state=active]:shadow-md
+                       hover:bg-yellow-300 hover:text-yellow-950"
+                >
+                  🔥 HOT
+                </TabsTrigger>
+                <TabsTrigger
+                  value="new"
+                  className="w-1/3 px-4 py-2 text-sm font-semibold rounded-lg transition-all duration-300
+                       bg-yellow-400 text-yellow-900
+                       data-[state=active]:bg-green-500 data-[state=active]:text-white data-[state=active]:shadow-md
+                       hover:bg-yellow-300 hover:text-yellow-950"
+                >
+                  ✨ NEW
+                </TabsTrigger>
+                <TabsTrigger
+                  value="all"
+                  className="w-1/3 px-4 py-2 text-sm font-semibold rounded-lg transition-all duration-300
+                       bg-yellow-400 text-yellow-900
+                       data-[state=active]:bg-green-500 data-[state=active]:text-white data-[state=active]:shadow-md
+                       hover:bg-yellow-300 hover:text-yellow-950"
+                >
+                  ALL
+                </TabsTrigger>
+              </TabsList>
+            </Tabs>
+          </motion.div>
 
-                        <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-2 justify-center w-full ">
-                            {popularGames.map(({ id, nomeJogo, porcentagem, minima, padrao, maxima, categoriaJogo, colorBgGame }) => (
-                                <CardGames
-                                    key={id}
-                                    id={id}
-                                    porcentagem={porcentagem}
-                                    linkCasa={linkCasa}
-                                    minima={minima}
-                                    padrao={padrao}
-                                    maxima={maxima}
-                                    nomeJogo={nomeJogo}
-                                    categoriaJogo={categoriaJogo}
-                                    colorBgGame={colorBgGame}
-                                />
-                            ))}
-                        </div>
-                    </div>
-                </div>
-            )} */}
+          <SearchFilter searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
 
-            {/* Seção principal de jogos */}
-            {linkCasa ? (
-                <div className="flex flex-col justify-center items-center p-2 md:p-10 md:px-16 rounded-2xl">
-                    {/* <h1 className="text-3xl font-bold text-center text-zinc-50 mb-4">Principais jogos PG Games</h1> */}
-                    <SearchFilter cardsProps={{ data: cards }} setFilteredCards={setFilteredCards} />
-                    <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-8 2xl:grid-cols-9 gap-2">
-                        {visibleCards.map(({ id, nomeJogo, porcentagem, minima, padrao, maxima, categoriaJogo, colorBgGame }, index) => (
-                            <motion.div
-                                key={id}
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ delay: index * 0.1 }} // Atraso para cada card
-                            >
-                                <CardGames
-                                    id={id}
-                                    porcentagem={porcentagem}
-                                    linkCasa={linkCasa}
-                                    minima={minima}
-                                    padrao={padrao}
-                                    maxima={maxima}
-                                    nomeJogo={nomeJogo}
-                                    categoriaJogo={categoriaJogo}
-                                    colorBgGame={colorBgGame}
-                                />
-
-                            </motion.div>
-                        ))}
-                    </div>
-                </div>
-            ) : (
-                <div className="flex justify-center items-center flex-col">
-                    <p className="text-zinc-50 text-xl uppercase font-bold flex">
-                        Link não encontrado <DotFilledIcon className="size-8 text-red-600 animate-ping text-center" />
-                    </p>
-                    <p className="text-zinc-500">atualize na página do administrador</p>
-                </div>
-            )}
-            <div ref={loadMoreRef} className="h-10 flex items-center justify-center mt-4">
-                {loading && visibleCards.length < memoizedFilteredCards.length && <p className="text-zinc-50">Carregando...</p>}
-            </div>
-        </section>
-    );
+          <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-8 2xl:grid-cols-9 gap-2 my-5">
+            {filteredCards.map(({ id, nomeJogo, porcentagem, minima, padrao, maxima, categoriaJogo, colorBgGame }) => (
+              <div key={id}>
+                <CardGames
+                  id={id}
+                  porcentagem={porcentagem}
+                  linkCasa={linkCasa}
+                  minima={minima}
+                  padrao={padrao}
+                  maxima={maxima}
+                  nomeJogo={nomeJogo}
+                  categoriaJogo={categoriaJogo}
+                  colorBgGame={colorBgGame}
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      ) : (
+        <div className="flex justify-center items-center flex-col">
+          <p className="text-zinc-50 text-xl uppercase font-bold flex">
+            Link não encontrado <DotFilledIcon className="size-8 text-red-600 animate-ping text-center" />
+          </p>
+          <p className="text-zinc-500">atualize na página do administrador</p>
+        </div>
+      )}
+    </section>
+  );
 }
-''

@@ -1,0 +1,29 @@
+{
+    "name": "FP - SINAIS SLOTS",
+    "short_name": "FP Slots",
+    "description": "Grupo FP Site de Sinais Slots",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#000000",
+    "orientation": "portrait",
+    "icons": [
+      {
+        "src": "/favicon.png",
+        "sizes": "286x286",
+        "type": "image/png"
+      },
+      {
+        "src": "/favicon.png",
+        "sizes": "286x286",
+        "type": "image/png"
+      }
+    ],
+    "related_applications": [
+      {
+        "platform": "webapp",
+        "url": "https://grupofpsinais.com.br/manifest.json"
+      }
+    ]
+    
+  }
