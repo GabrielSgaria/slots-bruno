@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState, useMemo, useCallback } from "react";
 import { DotFilledIcon } from "@radix-ui/react-icons";
 import { CardGames } from "./card-games";
 import { SearchFilter } from "./filter-cards";
@@ -28,26 +28,23 @@ interface SectionCardsPpProps {
 export function SectionCardsPP({ cards, linkCasa }: SectionCardsPpProps) {
     const [filteredCards, setFilteredCards] = useState<CardData[]>(cards || []);
     const [activeTab, setActiveTab] = useState<string>("all");
+    const [searchTerm, setSearchTerm] = useState("");
     const { toast } = useToast();
 
-    const isHot = useMemo(() => (card: CardData) =>
+    const isHot = useCallback((card: CardData) =>
         (card.minima > 90 || card.padrao > 90 || card.maxima > 90),
-        []);
+    []);
 
-    useEffect(() => {
-        setFilteredCards(cards || []);
-    }, [cards]);
+    const applyFilters = useCallback(() => {
+        let result = cards || [];
 
-    const handleTabChange = (value: string) => {
-        setActiveTab(value);
-        let filteredGames: CardData[] = [];
-
-        switch (value) {
+        // Apply tab filter
+        switch (activeTab) {
             case "hot":
-                filteredGames = (cards || []).filter(card => isHot(card));
+                result = result.filter(card => isHot(card));
                 break;
             case "new":
-                filteredGames = (cards || []).sort((a, b) => {
+                result = result.sort((a, b) => {
                     const dateA = new Date(a.updatedAt);
                     const dateB = new Date(b.updatedAt);
                     return dateB.getTime() - dateA.getTime();
@@ -55,11 +52,27 @@ export function SectionCardsPP({ cards, linkCasa }: SectionCardsPpProps) {
                 break;
             case "all":
             default:
-                filteredGames = (cards || []).sort((a, b) => a.id - b.id);
+                result = result.sort((a, b) => a.id - b.id);
                 break;
         }
 
-        setFilteredCards(filteredGames);
+        // Apply search filter
+        if (searchTerm) {
+            const lowerCaseSearch = searchTerm.toLowerCase();
+            result = result.filter(
+                ({ nomeJogo }) => nomeJogo.toLowerCase().includes(lowerCaseSearch)
+            );
+        }
+
+        setFilteredCards(result);
+    }, [cards, activeTab, searchTerm, isHot]);
+
+    useEffect(() => {
+        applyFilters();
+    }, [applyFilters]);
+
+    const handleTabChange = (value: string) => {
+        setActiveTab(value);
         toast({
             title: `Jogos ${value === 'hot' ? 'populares' : value === 'new' ? 'novos' : 'todos'} selecionados`,
             description: `Mostrando os ${value === 'all' ? 'todos os jogos' : value === 'hot' ? 'jogos HOT e +90%' : '20 jogos mais recentes'}.`,
@@ -101,14 +114,13 @@ export function SectionCardsPP({ cards, linkCasa }: SectionCardsPpProps) {
                 </Tabs>
             </motion.div>
 
-            <SearchFilter cardsProps={{ data: filteredCards }} setFilteredCards={setFilteredCards} />
+            <SearchFilter searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
 
             {linkCasa ? (
                 <div className='grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-8 2xl:grid-cols-9 gap-2 my-5'>
-                    {filteredCards.map(({ id, nomeJogo, porcentagem, minima, padrao, maxima, categoriaJogo, colorBgGame }, index) => (
+                    {filteredCards.map(({ id, nomeJogo, porcentagem, minima, padrao, maxima, categoriaJogo, colorBgGame }) => (
                         <div key={id}>
                             <CardGames
-                                key={id}
                                 id={id}
                                 porcentagem={porcentagem}
                                 linkCasa={linkCasa}

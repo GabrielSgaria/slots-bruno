@@ -1,5 +1,4 @@
 
-import { Suspense } from 'react';
 import { ButtonScrollTop } from "@/components/button-scroll-top";
 import { ContentPp } from "@/components/content-pp";
 import { CardData } from "@/components/section-cards-pg";
@@ -29,12 +28,14 @@ export default async function PpGamesPage() {
     }
 
     return (
-        <main>
+        <>
             <NavBar />
-            <ButtonScrollTop />
-            <ContentPp updateTime={updateTime} />
-            <SectionCardsPP cards={cards} linkCasa={linkCasa} />
+                <main>
+                    <ButtonScrollTop />
+                    <ContentPp/>
+                    <SectionCardsPP cards={cards} linkCasa={linkCasa} />
+                </main>
             <Footer />
-        </main>
+        </>
     );
 }

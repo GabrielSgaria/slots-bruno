@@ -6,8 +6,6 @@ const inter = Inter({ subsets: ['latin'] })
 export const metadata: Metadata = {
     title: 'Download App - Gerador De Sinais FP',
     description: 'Page Download App Gerador de Sinais Slots - Grupo FP',
-    viewport: 'width=device-width, initial-scale=1',
-    themeColor: '#000000',
 }
 
 export default function GerarSinaisLayout({

@@ -2,14 +2,10 @@ import type { Metadata, Viewport } from "next"
 import { Roboto, Poppins } from "next/font/google"
 import { Toaster } from "@/components/ui/toaster"
 import "./globals.css"
-import { NavBar } from "@/components/nav-bar"
-import { Footer } from "@/components/footer"
 import { GoogleAnalytics, GoogleTagManager } from "@next/third-parties/google"
-import { ButtonScrollTop } from "@/components/button-scroll-top"
-
-import { ServiceWorkerInitializer } from "@/components/service-worker-initializer"
-import { LocalNotificationHandler } from "@/components/notification-local"
-import { DownloadAppButton } from "@/components/download-app-button"
+import { ServiceWorkerInitializer } from "@/components/page-download/sw-initializer"
+// import { LocalNotificationHandler } from "@/components/notification-local"
+import { DownloadAppButton } from "@/components/page-download/download-app-button"
 
 const poppins = Poppins(
   {
@@ -31,7 +27,7 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://www.grupofpsinais.com.br"),
   icons: [
     { rel: 'icon', url: '/favicon.png' },
-    { rel: 'apple-touch-icon', url: '/icon-192x192.png' },
+    { rel: 'apple-touch-icon', url: '/favicon.png' },
   ],
   manifest: '/manifest.json',
   appleWebApp: {
@@ -95,7 +91,7 @@ export default function RootLayout({
         <meta name="application-name" content="FP - SINAIS SLOTS" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-        <meta name="apple-mobile-web-app-title" content="FP Sinais" />
+        <meta name="apple-mobile-web-app-title" content="FP Sinais Slot" />
         <meta name="format-detection" content="telephone=no" />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="msapplication-TileColor" content="#000000" />
@@ -104,7 +100,6 @@ export default function RootLayout({
         <link rel="manifest" href="/manifest.json" />
       </head>
       <body className={`text-zinc-50 ${poppins.variable} ${roboto.variable}`}>
-        <ButtonScrollTop />
         <div className="bg-zinc-950/20 backdrop-blur-sm">
           <GoogleAnalytics gaId="G-9E7Z61LW2J" />
           <GoogleTagManager gtmId="G-9E7Z61LW2J" />

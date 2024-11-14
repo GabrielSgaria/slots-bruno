@@ -1,5 +1,4 @@
 import Image from "next/image";
-import logoFP from '../../../../public/favicon.png'
 import { gamesSinais } from "@/lib/constants";
 import Link from "next/link";
 import { DotFilledIcon } from "@radix-ui/react-icons";
