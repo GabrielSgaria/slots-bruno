@@ -62,6 +62,16 @@ export function SectionCards({ cards, linkCasa }: SectionCardsPgProps) {
     (card.minima > 90 || card.padrao > 90 || card.maxima > 90),
     []);
 
+  const sortedNewGames = useMemo(() => {
+    return (cards || [])
+      .filter(card => newGames.some(newGame => card.nomeJogo.toLowerCase().includes(newGame.toLowerCase())))
+      .sort((a, b) => {
+        const indexA = newGames.findIndex(game => a.nomeJogo.toLowerCase().includes(game.toLowerCase()));
+        const indexB = newGames.findIndex(game => b.nomeJogo.toLowerCase().includes(game.toLowerCase()));
+        return indexA - indexB;
+      });
+  }, [cards]);
+
   const applyFilters = useCallback(() => {
     let result = cards || [];
 
@@ -71,9 +81,7 @@ export function SectionCards({ cards, linkCasa }: SectionCardsPgProps) {
         result = result.filter(card => isHot(card) || isPlayGame(card));
         break;
       case "new":
-        result = result.filter(card =>
-          newGames.some(newGame => card.nomeJogo.toLowerCase().includes(newGame.toLowerCase()))
-        );
+        result = sortedNewGames;
         break;
       case "all":
       default:
@@ -89,7 +97,7 @@ export function SectionCards({ cards, linkCasa }: SectionCardsPgProps) {
     }
 
     setFilteredCards(result);
-  }, [cards, activeTab, searchTerm, isHot, isPlayGame]);
+  }, [cards, activeTab, searchTerm, isHot, isPlayGame, sortedNewGames]);
 
   useEffect(() => {
     applyFilters();
