@@ -1,18 +1,33 @@
 'use client'
 
+import { useEffect, useState } from "react"
+import { CardData } from "./section-cards-pg"
 import { motion } from "framer-motion"
 import { Input } from "@/components/ui/input"
-import { Search } from 'lucide-react'
+import { Search } from "lucide-react"
 
 interface SearchFilterProps {
-  searchTerm: string;
-  setSearchTerm: React.Dispatch<React.SetStateAction<string>>;
+  cardsProps: {
+    data: CardData[] | null | undefined
+  }
+  setFilteredCards: React.Dispatch<React.SetStateAction<CardData[]>>
 }
 
-export function SearchFilter({ searchTerm, setSearchTerm }: SearchFilterProps) {
-  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(e.target.value);
-  };
+export function SearchFilter({ cardsProps, setFilteredCards }: SearchFilterProps) {
+  const [searchTerm, setSearchTerm] = useState("")
+
+  useEffect(() => {
+    if (searchTerm === "") {
+      setFilteredCards(cardsProps?.data || [])
+    } else {
+      const lowerCaseSearchTerm = searchTerm.toLowerCase()
+      setFilteredCards(
+        (cardsProps?.data || []).filter(({ nomeJogo }) =>
+          nomeJogo.toLowerCase().includes(lowerCaseSearchTerm)
+        ) || []
+      )
+    }
+  }, [searchTerm, cardsProps, setFilteredCards])
 
   return (
     <motion.div
@@ -26,7 +41,7 @@ export function SearchFilter({ searchTerm, setSearchTerm }: SearchFilterProps) {
           type="text"
           placeholder="Buscar jogo..."
           value={searchTerm}
-          onChange={handleSearchChange}
+          onChange={(e) => setSearchTerm(e.target.value)}
           className="border-none rounded-lg text-zinc-950 placeholder:text-zinc-950/60 placeholder:italic bg-yellow-400 w-full py-2 pl-10 pr-4 text-sm focus-visible:ring-2 focus-visible:ring-green-600 focus-visible:ring-offset-2 focus-visible:ring-offset-yellow-400 outline-none shadow-lg"
         />
       </div>
