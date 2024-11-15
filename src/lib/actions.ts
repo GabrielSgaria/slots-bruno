@@ -5,7 +5,7 @@ import prisma from "./db";
 import { nameCards } from "./name-games";
 import { Buffer } from 'buffer';
 
-const fiveMinutesInSeconds = 300;
+const fiveMinutesInSeconds = 240000;
 const oneDayInSeconds = 86400;
 
 async function createOrUpdateCard(i: number, gameData: any) {
@@ -46,10 +46,10 @@ async function createOrUpdateCard(i: number, gameData: any) {
 
 export async function updateCards() {
     try {
-        for (let i = 1; i <= 155; i++) {
+        for (let i = 1; i <= 169; i++) {
             const gameData = nameCards[i];
             if (!gameData) continue;
-
+            
             await createOrUpdateCard(i, gameData);
         }
 
@@ -67,7 +67,7 @@ export async function updateCards() {
 
 export async function createCards() {
     try {
-        for (let i = 1; i <= 155; i++) {
+        for (let i = 1; i <= 169; i++) {
             const gameData = nameCards[i];
             if (!gameData) continue;
 
