@@ -27,9 +27,10 @@ interface SectionCardsPgProps {
 
 const newGames = [
   'Wild Ape',
-  'Pinata Winds',
+  'Wings of Iguazu',
+  'Pinata Wins',
   'Mystic Potion',
-  'Anúbis Wrath',
+  'Anubis Wrath',
   'Zombie Outbreak',
   'Futebol Fever',
   'Shark Bounty',
