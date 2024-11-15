@@ -10,4 +10,10 @@ export const bannerImages = [
     {
         mobile: '/image/banner/mobile/mobile3.png',
         desktop: '/image/banner/desktop/3.png',
-    }];
+    },
+    // {
+    //     mobile: '/image/banner/mobile/mobile2.png',
+    //     desktop: '/image/banner/desktop/3.png',
+    // }
+];
+;

@@ -20,10 +20,19 @@ export interface CardData {
     updatedAt: string | number | Date;
 }
 
+
 interface SectionCardsPpProps {
     cards: CardData[] | null | undefined;
     linkCasa: string | null | undefined;
 }
+
+const newGames = [
+    'Tigre Sortudo',
+    'Buffalo King Untamed Megaways',
+    'Hand of Midas 2',
+    'Mustang Gold Megaways',
+
+];
 
 export function SectionCardsPP({ cards, linkCasa }: SectionCardsPpProps) {
     const [filteredCards, setFilteredCards] = useState<CardData[]>(cards || []);
@@ -33,7 +42,7 @@ export function SectionCardsPP({ cards, linkCasa }: SectionCardsPpProps) {
 
     const isHot = useCallback((card: CardData) =>
         (card.minima > 90 || card.padrao > 90 || card.maxima > 90),
-    []);
+        []);
 
     const applyFilters = useCallback(() => {
         let result = cards || [];
@@ -44,11 +53,9 @@ export function SectionCardsPP({ cards, linkCasa }: SectionCardsPpProps) {
                 result = result.filter(card => isHot(card));
                 break;
             case "new":
-                result = result.sort((a, b) => {
-                    const dateA = new Date(a.updatedAt);
-                    const dateB = new Date(b.updatedAt);
-                    return dateB.getTime() - dateA.getTime();
-                }).slice(0, 20);
+                result = result.filter(card =>
+                    newGames.some(newGame => card.nomeJogo.toLowerCase().includes(newGame.toLowerCase()))
+                );
                 break;
             case "all":
             default:

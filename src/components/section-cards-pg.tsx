@@ -26,14 +26,21 @@ interface SectionCardsPgProps {
 }
 
 const newGames = [
-  'Wild ape',
+  'Wild Ape',
+  'Pinata Winds',
+  'Mystic Potion',
+  'Anúbis Wrath',
   'Zombie Outbreak',
-  'futebol fever',
-  'battleground royale',
-  'butterfly blossom',
-  'dragon hatch 2',
-  'medusa II',
-  `santa's gift rush`
+  'Futebol Fever',
+  'Shark Bounty',
+  'Yakuza Honor',
+  'Wings of Iguazu',
+  'Three Crazy Piggies',
+  'Oishi Delights',
+  'Safari Wilds',
+  `Gladiator's Glory`,
+  'Ultimate Striker',
+  'Wild Heist Cashout',
 ];
 
 export function SectionCards({ cards, linkCasa }: SectionCardsPgProps) {
@@ -46,14 +53,14 @@ export function SectionCards({ cards, linkCasa }: SectionCardsPgProps) {
     card.nomeJogo.toLowerCase().startsWith('fortune') &&
     (card.minima > 90 || card.padrao > 90 || card.maxima > 90) &&
     card.categoriaJogo === "PG",
-  []);
+    []);
 
   const isPlayGame = useCallback((card: CardData) =>
     (card.categoriaJogo === 'PP' ||
       (!card.nomeJogo.toLowerCase().startsWith('fortune') &&
         card.categoriaJogo === 'PG')) &&
     (card.minima > 90 || card.padrao > 90 || card.maxima > 90),
-  []);
+    []);
 
   const applyFilters = useCallback(() => {
     let result = cards || [];

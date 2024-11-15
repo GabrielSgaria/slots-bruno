@@ -149,7 +149,7 @@ export const CardGames = React.memo(function CardGames({
                         </Dialog>
                     </div>
                 ) : isPlayGame ? (
-                    <div className="w-[90%] h-full flex mx-auto pt-3 items-center justify-center">
+                    <div className="w-[90%] h-full flex mx-auto pb-4 items-center justify-center">
                         <Link
                             href={linkCasa}
                             target="_blank"
