@@ -12,38 +12,6 @@ const prisma = globalThis.prismaGlobal ?? prismaClientSingleton()
 
 if (process.env.NODE_ENV !== 'production') globalThis.prismaGlobal = prisma
 
-export async function createNotification(title: string, body: string, type: string) {
-  return prisma.notification.create({
-    data: {
-      title,
-      body,
-      type,
-      status: 'pending',
-    },
-  })
-}
-
-export async function getPendingNotifications() {
-  return prisma.notification.findMany({
-    where: {
-      status: 'pending',
-    },
-    orderBy: {
-      createdAt: 'asc',
-    },
-  })
-}
-
-export async function markNotificationAsSent(id: number) {
-  return prisma.notification.update({
-    where: { id },
-    data: {
-      status: 'sent',
-      sentAt: new Date(),
-    },
-  })
-}
-
 export async function updateCards(cards: any[]) {
   const updatePromises = cards.map(card =>
     prisma.card.upsert({

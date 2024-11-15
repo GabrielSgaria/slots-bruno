@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
 import { HelpCircle, Smartphone, Monitor, Share, ChevronRight } from 'lucide-react'
+import Image from 'next/image'
 
 export function InstallationTutorial() {
   const [deviceType, setDeviceType] = useState<'ios' | 'android' | 'desktop'>('desktop')
@@ -52,7 +53,7 @@ export function InstallationTutorial() {
             </div>
           </li>
         </ol>
-        <img 
+        <Image 
           src="/ios-install-animation.gif" 
           alt="Instruções de instalação no iOS" 
           className="w-full rounded-lg shadow-lg mt-4"
