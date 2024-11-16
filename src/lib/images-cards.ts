@@ -179,9 +179,9 @@ export const allImageCards: AllImageCards = {
 
     // new pp
     166: { image: `/image/capa-games-pp/38.webp`, icon: `/image/icons-pp/38.png` },
-    167: { image: `/image/capa-games-pp/39.webp`, icon: `/image/icons-pp/39.png` },
+    167: { image: `/image/capa-games-pp/39.webp`, icon: `/image/icons-pp/41.png` },
     168: { image: `/image/capa-games-pp/40.webp`, icon: `/image/icons-pp/40.png` },
-    169: { image: `/image/capa-games-pp/41.webp`, icon: `/image/icons-pp/41.png` },
+    169: { image: `/image/capa-games-pp/41.webp`, icon: `/image/icons-pp/39.png` },
 
 
 };
