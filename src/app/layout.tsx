@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     { rel: 'icon', url: '/favicon.png' },
     { rel: 'apple-touch-icon', url: '/favicon.png' },
   ],
-  manifest: '/manifest.json',
+  // manifest: '/manifest.json',
   appleWebApp: {
     capable: true,
     statusBarStyle: 'default',
@@ -44,7 +44,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: '/icon-512x512.png',
+        url: '/favicon.png',
         width: 512,
         height: 512,
       }
@@ -97,7 +97,7 @@ export default function RootLayout({
         <meta name="msapplication-TileColor" content="#000000" />
         <meta name="msapplication-tap-highlight" content="no" />
         <link rel="apple-touch-icon" href="/favicon.png" />
-        <link rel="manifest" href="/manifest.json" />
+       
       </head>
       <body className={`text-zinc-50 ${poppins.variable} ${roboto.variable}`}>
         <div className="bg-zinc-950/20 backdrop-blur-sm">
@@ -107,7 +107,7 @@ export default function RootLayout({
         </div>
         {/* <LocalNotificationHandler /> */}
         <Toaster />
-        <ServiceWorkerInitializer />
+        {/* <ServiceWorkerInitializer /> */}
         <DownloadAppButton />
       </body>
     </html>
