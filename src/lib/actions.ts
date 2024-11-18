@@ -179,15 +179,16 @@ export const handleSubmit = async (e: FormData) => {
 // Função para buscar o link e a imagem da casa
 export const getLinkCasa = unstable_cache(async () => {
     try {
-        const newLink = await prisma.settings.findUnique({
+        const linkCasa = await prisma.settings.findUnique({
             where: { casa: 'bruno_fp' },
         });
-        return { data: newLink };
+
+        return { data: linkCasa };
     } catch (error) {
-        console.error('Error getLinkCasa:', error);
+        console.error('Error fetching link casa:', error);
         return { data: null };
     }
 }, ['link-casa'], {
-    revalidate: oneDayInSeconds,
+    revalidate: fiveMinutesInSeconds,
     tags: ['link-casa']
 });
