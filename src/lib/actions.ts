@@ -1,4 +1,5 @@
 'use server';
+
 import { revalidateTag, unstable_cache } from "next/cache";
 import { getPorcentagemAjustada, getRandomPorcentagem } from "./utils";
 import prisma from "./db";
@@ -49,15 +50,20 @@ async function createOrUpdateCard(i: number, gameData: any) {
 export async function updateCards() {
     console.log('Updating all cards...');
     try {
-        for (let i = 1; i <= 169; i++) {
-            const gameData = nameCards[i];
-            if (!gameData) continue;
-            await createOrUpdateCard(i, gameData);
-        }
+        // Gera um array de Promises para criar/atualizar todos os cartões
+        const promises = Array.from({ length: 169 }, (_, i) => {
+            const gameData = nameCards[i + 1]; // Acessa o jogo pelo índice (1-based)
+            if (!gameData) return Promise.resolve(null); // Retorna uma Promise resolvida se não houver dados
+            return createOrUpdateCard(i + 1, gameData); // Cria ou atualiza o cartão
+        });
 
+        // Aguarda a execução paralela de todas as Promises
+        await Promise.all(promises);
+
+        // Revalida as tags de cache
         revalidateTag('cards-pg');
         revalidateTag('cards-pp');
-        console.log('Cards updated and cache revalidated.');
+        console.log('All cards updated and cache revalidated.');
         return { success: true };
     } catch (error) {
         console.error('Error updating cards data:', error);
@@ -97,7 +103,7 @@ export const getCardsPG = unstable_cache(async () => {
         }
 
         console.log('No PG cards found. Creating default cards...');
-        await updateCards(); // Garante que os cartões sejam criados
+        await updateCards(); // Atualiza os cartões caso estejam ausentes
         const newCards = await prisma.card.findMany({
             where: { categoriaJogo: 'PG' },
             orderBy: { id: "asc" },
@@ -129,7 +135,7 @@ export const getCardsPP = unstable_cache(async () => {
         }
 
         console.log('No PP cards found. Creating default cards...');
-        await updateCards(); // Garante que os cartões sejam criados
+        await updateCards(); // Atualiza os cartões caso estejam ausentes
         const newCards = await prisma.card.findMany({
             where: { categoriaJogo: 'PP' },
             orderBy: { id: "asc" },
