@@ -39,13 +39,15 @@ export function SectionCardsPP({ cards, linkCasa }: SectionCardsPpProps) {
   const { toast } = useToast()
 
   const isHot = useCallback((card: CardData) =>
-    (card.minima > 90 || card.padrao > 90 || card.maxima > 90),
+    card.minima > 90 || card.padrao > 90 || card.maxima > 90,
     [])
 
   const sortedNewGames = useMemo(() => {
-    return (cards || []).filter(card =>
+    if (!cards) return []
+    const newGamesFiltered = cards.filter(card =>
       newGames.some(newGame => card.nomeJogo.toLowerCase().includes(newGame.toLowerCase()))
-    ).sort((a, b) => {
+    )
+    return newGamesFiltered.sort((a, b) => {
       const indexA = newGames.findIndex(game => a.nomeJogo.toLowerCase().includes(game.toLowerCase()))
       const indexB = newGames.findIndex(game => b.nomeJogo.toLowerCase().includes(game.toLowerCase()))
       return indexA - indexB
@@ -53,27 +55,27 @@ export function SectionCardsPP({ cards, linkCasa }: SectionCardsPpProps) {
   }, [cards])
 
   const applyFilters = useCallback(() => {
-    let result = cards || []
+    if (!cards) return setFilteredCards([])
 
-    // Apply tab filter
+    let result = [...cards] // Cria uma cópia para evitar mutações no estado original
+
     switch (activeTab) {
       case "hot":
-        result = result.filter(card => isHot(card))
+        result = result.filter(isHot)
         break
       case "new":
         result = sortedNewGames
         break
       case "all":
       default:
-        result = result.sort((a, b) => a.id - b.id)
+        result.sort((a, b) => a.id - b.id)
         break
     }
 
-    // Apply search filter
     if (searchTerm) {
       const lowerCaseSearch = searchTerm.toLowerCase()
-      result = result.filter(
-        ({ nomeJogo }) => nomeJogo.toLowerCase().includes(lowerCaseSearch)
+      result = result.filter(card =>
+        card.nomeJogo.toLowerCase().includes(lowerCaseSearch)
       )
     }
 
