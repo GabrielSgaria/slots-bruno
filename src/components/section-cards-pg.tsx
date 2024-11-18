@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState, useMemo, useCallback } from "react";
-import { motion } from "framer-motion"
+import { motion } from "framer-motion";
 import { DotFilledIcon } from "@radix-ui/react-icons";
 import { CardGames } from "./card-games";
 import { SearchFilter } from "./filter-cards";
@@ -50,36 +50,33 @@ export function SectionCards({ cards, linkCasa }: SectionCardsPgProps) {
   const [searchTerm, setSearchTerm] = useState("");
   const { toast } = useToast();
 
-  const isHot = useCallback((card: CardData) =>
-    card.nomeJogo.toLowerCase().startsWith('fortune') &&
-    (card.minima > 90 || card.padrao > 90 || card.maxima > 90) &&
-    card.categoriaJogo === "PG",
-    []);
+  // Função de filtro unificada para HOT e PlayGame
+  const isRelevantGame = useCallback((card: CardData) => {
+    const isFortuneGame = card.nomeJogo.toLowerCase().startsWith('fortune');
+    const isHighPercentage = card.minima > 90 || card.padrao > 90 || card.maxima > 90;
+    if (isFortuneGame && card.categoriaJogo === "PG" && isHighPercentage) return true;
+    if (!isFortuneGame && isHighPercentage && card.categoriaJogo === "PP") return true;
+    return false;
+  }, []);
 
-  const isPlayGame = useCallback((card: CardData) =>
-    (card.categoriaJogo === 'PP' ||
-      (!card.nomeJogo.toLowerCase().startsWith('fortune') &&
-        card.categoriaJogo === 'PG')) &&
-    (card.minima > 90 || card.padrao > 90 || card.maxima > 90),
-    []);
-
+  // Filtro para jogos novos
+  const newGamesSet = useMemo(() => new Set(newGames.map(game => game.toLowerCase())), []);
   const sortedNewGames = useMemo(() => {
     return (cards || [])
-      .filter(card => newGames.some(newGame => card.nomeJogo.toLowerCase().includes(newGame.toLowerCase())))
+      .filter(card => newGamesSet.has(card.nomeJogo.toLowerCase()))
       .sort((a, b) => {
-        const indexA = newGames.findIndex(game => a.nomeJogo.toLowerCase().includes(game.toLowerCase()));
-        const indexB = newGames.findIndex(game => b.nomeJogo.toLowerCase().includes(game.toLowerCase()));
+        const indexA = newGames.findIndex(game => game.toLowerCase() === a.nomeJogo.toLowerCase());
+        const indexB = newGames.findIndex(game => game.toLowerCase() === b.nomeJogo.toLowerCase());
         return indexA - indexB;
       });
-  }, [cards]);
+  }, [cards, newGamesSet]);
 
+  // Aplicar filtros e busca
   const applyFilters = useCallback(() => {
     let result = cards || [];
-
-    // Apply tab filter
     switch (activeTab) {
       case "hot":
-        result = result.filter(card => isHot(card) || isPlayGame(card));
+        result = result.filter(isRelevantGame);
         break;
       case "new":
         result = sortedNewGames;
@@ -89,21 +86,20 @@ export function SectionCards({ cards, linkCasa }: SectionCardsPgProps) {
         break;
     }
 
-    // Apply search filter
     if (searchTerm) {
       const lowerCaseSearch = searchTerm.toLowerCase();
-      result = result.filter(
-        ({ nomeJogo }) => nomeJogo.toLowerCase().includes(lowerCaseSearch)
-      );
+      result = result.filter(card => card.nomeJogo.toLowerCase().includes(lowerCaseSearch));
     }
 
     setFilteredCards(result);
-  }, [cards, activeTab, searchTerm, isHot, isPlayGame, sortedNewGames]);
+  }, [cards, activeTab, searchTerm, isRelevantGame, sortedNewGames]);
 
+  // Reaplicar filtros quando necessário
   useEffect(() => {
     applyFilters();
   }, [applyFilters]);
 
+  // Alterar a aba ativa
   const handleTabChange = (value: string) => {
     setActiveTab(value);
     toast({
@@ -123,7 +119,7 @@ export function SectionCards({ cards, linkCasa }: SectionCardsPgProps) {
             className="w-full mt-4 flex items-center justify-center pt-3"
           >
             <Tabs defaultValue="all" className="w-full max-w-md" onValueChange={handleTabChange}>
-              <TabsList className="flex w-full justify-between bg-transparent rounded-xl p-1 shadow-inner gap-1 ">
+              <TabsList className="flex w-full justify-between bg-transparent rounded-xl p-1 shadow-inner gap-1">
                 <TabsTrigger
                   value="hot"
                   className="w-1/3 px-4 py-2 text-sm font-semibold rounded-lg transition-all duration-300
@@ -159,19 +155,18 @@ export function SectionCards({ cards, linkCasa }: SectionCardsPgProps) {
 
           <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-8 2xl:grid-cols-9 gap-2 my-5">
             {filteredCards.map(({ id, nomeJogo, porcentagem, minima, padrao, maxima, categoriaJogo, colorBgGame }) => (
-              <div key={id}>
-                <CardGames
-                  id={id}
-                  porcentagem={porcentagem}
-                  linkCasa={linkCasa}
-                  minima={minima}
-                  padrao={padrao}
-                  maxima={maxima}
-                  nomeJogo={nomeJogo}
-                  categoriaJogo={categoriaJogo}
-                  colorBgGame={colorBgGame}
-                />
-              </div>
+              <CardGames
+                key={id}
+                id={id}
+                porcentagem={porcentagem}
+                linkCasa={linkCasa}
+                minima={minima}
+                padrao={padrao}
+                maxima={maxima}
+                nomeJogo={nomeJogo}
+                categoriaJogo={categoriaJogo}
+                colorBgGame={colorBgGame}
+              />
             ))}
           </div>
         </div>

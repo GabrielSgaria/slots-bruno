@@ -24,11 +24,13 @@ async function createOrUpdateCard(i: number, gameData: any) {
     const existingCard = await prisma.card.findUnique({ where: { id: i } });
 
     if (existingCard) {
+        console.log(`Updating card ID ${i} in the database.`);
         await prisma.card.update({
             where: { id: i },
             data: { porcentagem, minima, padrao, maxima },
         });
     } else {
+        console.log(`Creating card ID ${i} in the database.`);
         await prisma.card.create({
             data: {
                 id: i,
@@ -38,26 +40,24 @@ async function createOrUpdateCard(i: number, gameData: any) {
                 minima,
                 padrao,
                 maxima,
-                colorBgGame: colorBgGame
-            }
+                colorBgGame: colorBgGame,
+            },
         });
     }
 }
 
 export async function updateCards() {
+    console.log('Updating all cards...');
     try {
         for (let i = 1; i <= 169; i++) {
             const gameData = nameCards[i];
             if (!gameData) continue;
-            
             await createOrUpdateCard(i, gameData);
         }
 
-        // Revalida as tags para que as próximas requisições recarreguem o cache
-        revalidateTag('cards');
         revalidateTag('cards-pg');
         revalidateTag('cards-pp');
-
+        console.log('Cards updated and cache revalidated.');
         return { success: true };
     } catch (error) {
         console.error('Error updating cards data:', error);
@@ -84,75 +84,77 @@ export async function createCards() {
 
 // Função para buscar os cartões da categoria 'PG'
 export const getCardsPG = unstable_cache(async () => {
+    console.log('Fetching PG cards...');
     try {
         const cards = await prisma.card.findMany({
             where: { categoriaJogo: 'PG' },
-            orderBy: { id: "asc" }
+            orderBy: { id: "asc" },
         });
 
         if (cards.length) {
+            console.log('PG cards fetched from the database.');
             return { data: cards };
         }
 
-        // Se não houver dados, cria os cartões
-        const newCards = await createCards();
-        if (newCards.success) {
-            const cards = await prisma.card.findMany({
-                where: { categoriaJogo: 'PG' },
-                orderBy: { id: "asc" }
-            });
-            return { data: cards };
-        }
-        return { data: [] };
+        console.log('No PG cards found. Creating default cards...');
+        await updateCards(); // Garante que os cartões sejam criados
+        const newCards = await prisma.card.findMany({
+            where: { categoriaJogo: 'PG' },
+            orderBy: { id: "asc" },
+        });
+
+        console.log('New PG cards created and fetched.');
+        return { data: newCards };
     } catch (error) {
-        console.error('Error generating getCardsPG data:', error);
+        console.error('Error fetching PG cards:', error);
         return { data: [] };
     }
 }, ['cards-pg'], {
     revalidate: fiveMinutesInSeconds,
-    tags: ['cards-pg']
+    tags: ['cards-pg'],
 });
 
 // Função para buscar os cartões da categoria 'PP'
 export const getCardsPP = unstable_cache(async () => {
+    console.log('Fetching PP cards...');
     try {
         const cards = await prisma.card.findMany({
             where: { categoriaJogo: 'PP' },
-            orderBy: { id: "asc" }
+            orderBy: { id: "asc" },
         });
 
         if (cards.length) {
+            console.log('PP cards fetched from the database.');
             return { data: cards };
         }
 
-        // Se não houver dados, cria os cartões
-        const newCards = await createCards();
-        if (newCards.success) {
-            const cards = await prisma.card.findMany({
-                where: { categoriaJogo: 'PP' },
-                orderBy: { id: "asc" }
-            });
-            return { data: cards };
-        }
-        return { data: [] };
+        console.log('No PP cards found. Creating default cards...');
+        await updateCards(); // Garante que os cartões sejam criados
+        const newCards = await prisma.card.findMany({
+            where: { categoriaJogo: 'PP' },
+            orderBy: { id: "asc" },
+        });
+
+        console.log('New PP cards created and fetched.');
+        return { data: newCards };
     } catch (error) {
-        console.error('Error generating getCardsPP data:', error);
+        console.error('Error fetching PP cards:', error);
         return { data: [] };
     }
 }, ['cards-pp'], {
     revalidate: fiveMinutesInSeconds,
-    tags: ['cards-pp']
+    tags: ['cards-pp'],
 });
 
 // Variável única para comparação de hash
-const hashUnico = process.env.HASH_LINK as string;
 
+const hashUnico = process.env.HASH_LINK as string;
 // Função para manipular o envio de formulários (atualização de link e imagem)
 export const handleSubmit = async (e: FormData) => {
     const link = e.get('link') as string | null;
     const hash = e.get('hash') as string | null;
     const bannerImage = e.get('image') as File;
-
+    
     if (hash !== hashUnico || !link || bannerImage.size === 0 || bannerImage.name === 'undefined') {
         console.log('Erro de validação ou dados faltando');
         return { message: { error: 'Dados inválidos ou faltando' } };
@@ -161,13 +163,13 @@ export const handleSubmit = async (e: FormData) => {
     try {
         const buffer = Buffer.from(await bannerImage.arrayBuffer());
         const base64Image = buffer.toString('base64');
-
+        
         await prisma.settings.upsert({
             where: { casa: 'bruno_fp' },
             update: { link, bannerImage: base64Image },
             create: { link, casa: 'bruno_fp', bannerImage: base64Image },
         });
-
+        
         revalidateTag('link-casa');
         return { message: { success: 'Informações atualizadas' } };
     } catch (error) {
@@ -178,17 +180,24 @@ export const handleSubmit = async (e: FormData) => {
 
 // Função para buscar o link e a imagem da casa
 export const getLinkCasa = unstable_cache(async () => {
+    console.log('Fetching link casa...');
     try {
         const linkCasa = await prisma.settings.findUnique({
             where: { casa: 'bruno_fp' },
         });
 
-        return { data: linkCasa };
+        if (linkCasa) {
+            console.log('Link casa fetched from the database.');
+            return { data: linkCasa };
+        }
+
+        console.log('Link casa not found in the database.');
+        return { data: null };
     } catch (error) {
         console.error('Error fetching link casa:', error);
         return { data: null };
     }
 }, ['link-casa'], {
     revalidate: fiveMinutesInSeconds,
-    tags: ['link-casa']
+    tags: ['link-casa'],
 });
