@@ -50,7 +50,7 @@ async function createOrUpdateCard(i: number, gameData: any) {
 }
 
 export async function updateCards() {
-    console.log("Atualizando todos os cards e cache em memória...");
+    console.log("Atualizando todos os cards e o cache em memória...");
     try {
         const promises = Array.from({ length: 169 }, (_, i) => {
             const gameData = nameCards[i + 1];
@@ -65,9 +65,9 @@ export async function updateCards() {
             orderBy: { id: "asc" },
         });
 
-        // Atualizar o cache e horário
+        // Atualizar o cache in-memory
         cardsCache.pg = cardsPG;
-        console.log("Cache atualizado para os cards PG.");
+        console.log("Cache atualizado com novos dados dos cards PG.");
 
         return { success: true };
     } catch (error) {
@@ -75,6 +75,7 @@ export async function updateCards() {
         return { success: false };
     }
 }
+
 
 
 
@@ -107,6 +108,7 @@ export const getCardsPG = async () => {
         return { data: cardsCache.pg };
     }
 
+    // Se não estiver no cache, buscar do banco de dados
     console.log("Cache not found. Fetching PG cards from database...");
     try {
         const cards = await prisma.card.findMany({
@@ -114,6 +116,7 @@ export const getCardsPG = async () => {
             orderBy: { id: "asc" },
         });
 
+        // Atualizar o cache
         cardsCache.pg = cards || []; // Garantir array vazio se não houver dados
         console.log(`Fetched ${cardsCache.pg.length} PG cards from database and updated cache.`);
         return { data: cardsCache.pg };
@@ -122,6 +125,7 @@ export const getCardsPG = async () => {
         return { data: [] }; // Retornar um array vazio como fallback seguro
     }
 };
+
 
 
 // Função para buscar os cartões da categoria 'PP'
@@ -134,6 +138,7 @@ export const getCardsPP = async () => {
         return { data: cardsCache.pp };
     }
 
+    // Se não estiver no cache, buscar do banco de dados
     console.log("Cache not found. Fetching PP cards from database...");
     const cards = await prisma.card.findMany({
         where: { categoriaJogo: "PP" },
@@ -145,6 +150,7 @@ export const getCardsPP = async () => {
     console.log("Updated in-memory cache for PP cards.");
     return { data: cards };
 };
+
 
 
 // Variável única para comparação de hash
