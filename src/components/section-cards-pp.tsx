@@ -7,6 +7,7 @@ import { SearchFilter } from "./filter-cards"
 import { motion } from "framer-motion"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { useToast } from "@/hooks/use-toast"
+import Loading from "@/components/loading-cards"
 
 export interface CardData {
   id: number
@@ -32,7 +33,7 @@ const newGames = [
   'Mustang Gold Megaways',
 ]
 
-const CARDS_PER_PAGE = 14
+const CARDS_PER_PAGE = 5
 
 export function SectionCardsPP({ cards, linkCasa }: SectionCardsPpProps) {
   const [filteredCards, setFilteredCards] = useState<CardData[]>(cards || [])
@@ -40,6 +41,7 @@ export function SectionCardsPP({ cards, linkCasa }: SectionCardsPpProps) {
   const [activeTab, setActiveTab] = useState<string>("all")
   const [searchTerm, setSearchTerm] = useState("")
   const [page, setPage] = useState(1)
+  const [isLoading, setIsLoading] = useState(true)
   const { toast } = useToast()
   const loader = useRef(null)
 
@@ -60,13 +62,14 @@ export function SectionCardsPP({ cards, linkCasa }: SectionCardsPpProps) {
   }, [cards])
 
   const applyFilters = useCallback(() => {
+    setIsLoading(true)
     if (!cards) return setFilteredCards([])
 
-    let result = [...cards] // Cria uma cópia para evitar mutações no estado original
+    let result = [...cards]
 
     switch (activeTab) {
       case "hot":
-        result = result.filter(isHot)
+        result = result.filter(card => isHot(card) || card.porcentagem > 90)
         break
       case "new":
         result = sortedNewGames
@@ -87,6 +90,7 @@ export function SectionCardsPP({ cards, linkCasa }: SectionCardsPpProps) {
     setFilteredCards(result)
     setPage(1)
     setDisplayedCards(result.slice(0, CARDS_PER_PAGE))
+    setIsLoading(false)
   }, [cards, activeTab, searchTerm, isHot, sortedNewGames])
 
   useEffect(() => {
@@ -131,8 +135,8 @@ export function SectionCardsPP({ cards, linkCasa }: SectionCardsPpProps) {
   const handleTabChange = (value: string) => {
     setActiveTab(value)
     toast({
-      title: `Jogos ${value === 'hot' ? 'populares' : value === 'new' ? 'novos' : 'todos'} selecionados`,
-      description: `Mostrando os ${value === 'all' ? 'todos os jogos' : value === 'hot' ? 'jogos HOT e +90%' : '20 jogos mais recentes'}.`,
+      title: `Jogos ${value === 'hot' ? 'populares e +90%' : value === 'new' ? 'novos' : 'todos'} selecionados`,
+      description: `Mostrando ${value === 'all' ? 'todos os jogos' : value === 'hot' ? 'jogos HOT e +90%' : '20 jogos mais recentes'}.`,
       className: "bg-green-500 border-none text-white font-bold",
       duration: 2000
     })
@@ -173,7 +177,9 @@ export function SectionCardsPP({ cards, linkCasa }: SectionCardsPpProps) {
 
       <SearchFilter searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
 
-      {linkCasa ? (
+      {isLoading ? (
+        <Loading />
+      ) : linkCasa ? (
         <div className='grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-8 2xl:grid-cols-9 gap-2 my-5'>
           {displayedCards.map(({ id, nomeJogo, porcentagem, minima, padrao, maxima, categoriaJogo, colorBgGame }) => (
             <div key={id}>
@@ -199,7 +205,7 @@ export function SectionCardsPP({ cards, linkCasa }: SectionCardsPpProps) {
           <p className="text-zinc-500">atualize na página do administrador</p>
         </div>
       )}
-      {displayedCards.length < filteredCards.length && (
+      {!isLoading && displayedCards.length < filteredCards.length && (
         <div ref={loader} className="w-full h-10 flex items-center justify-center">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-green-500"></div>
         </div>

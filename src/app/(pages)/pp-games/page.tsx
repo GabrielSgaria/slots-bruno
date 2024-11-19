@@ -5,7 +5,7 @@ import { CardData } from "@/components/section-cards-pg";
 import { SectionCardsPP } from "@/components/section-cards-pp";
 import { getCardsPP, getLinkCasa } from "@/lib/actions";
 import { formatUpdateTime } from "@/lib/utils";
-import Loading from '@/app/loading';
+import Loading from '@/components/loading-page';
 import { NavBar } from '@/components/nav-bar';
 import { Footer } from '@/components/footer';
 
