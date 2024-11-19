@@ -1,5 +1,4 @@
 import { updateCards } from "@/lib/actions";
-import { revalidateTag } from "next/cache";
 import { NextResponse } from "next/server";
 
 export async function GET() {
@@ -10,23 +9,10 @@ export async function GET() {
         const updateResult = await updateCards();
 
         if (updateResult.success) {
-            try {
-                // Revalida as tags de cache relacionadas
-                console.log("Revalidating cache tags...");
-                revalidateTag("cards");
-                revalidateTag("cards-pg");
-                revalidateTag("cards-pp");
-                revalidateTag("link-casa");
-
-                console.log("Tags revalidated successfully.");
-            } catch (tagError) {
-                console.error("Error revalidating tags:", tagError);
-            }
-
+            console.log("Data updated successfully.");
             return NextResponse.json({
                 success: true,
                 message: "Dados atualizados e cache invalidado.",
-                updateResult,
             });
         } else {
             console.error("Error during data update:", updateResult);
