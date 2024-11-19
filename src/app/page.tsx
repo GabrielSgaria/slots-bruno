@@ -9,7 +9,6 @@ export default async function HomePage() {
     const cardsData = await getCardsPG();
     const linkCasaData = await getLinkCasa();
 
-    // Processa os dados
     const cards = cardsData?.data || [];
     const linkCasa = linkCasaData?.data?.link || "";
     const imageBanner = linkCasaData?.data?.bannerImage || "";
@@ -17,7 +16,6 @@ export default async function HomePage() {
         ? formatUpdateTime(cards[0].updatedAt)
         : "Horário indisponível";
 
-    // Renderiza a página
     if (!cards.length || !linkCasa || !imageBanner || !updateTime) {
         return <div>Carregando...</div>;
     }
@@ -33,3 +31,5 @@ export default async function HomePage() {
         </>
     );
 }
+
+export const revalidate = 300; // Revalida a cada 5 minutos
