@@ -101,7 +101,7 @@ export default function RootLayout({
         <link rel="manifest" href="/manifest.json" />
       </head>
       <body className={`text-zinc-50 relative ${poppins.variable} ${roboto.variable}`}>
-        <div className="w-full absolute z-50 pt-[40px] sm:pt-[55px] md:pt-[35px] lg:pt-[22px] 2xl:pt-[3px]">
+        <div className="w-full absolute z-50 pt-[40px] sm:pt-[55px] md:pt-[35px] lg:pt-[22px] 2xl:pt-[3px] pointer-events-none">
           <Image
             src="/image/natal/cima-site.png"
             alt="Banner de Natal"

@@ -25,7 +25,7 @@ export default async function HomePage() {
       <NavBar />
       <main>
         <ContentPg updateTime={updateTime} imageBanner={imageBanner} />
-        {/* <SectionCards cards={cards} linkCasa={linkCasa} /> */}
+        <SectionCards cards={cards} linkCasa={linkCasa} />
       </main>
       <Footer />
     </>

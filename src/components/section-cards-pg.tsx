@@ -7,6 +7,7 @@ import { CardGames } from "./card-games";
 import { SearchFilter } from "./filter-cards";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
+import Image from "next/image";
 
 export interface CardData {
   id: number;
@@ -153,7 +154,18 @@ export function SectionCards({ cards, linkCasa }: SectionCardsPgProps) {
 
           <SearchFilter searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
 
-          <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-8 2xl:grid-cols-9 gap-2 my-5">
+          <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-8 2xl:grid-cols-9 gap-2 my-5 relative">
+            <div className="w-full absolute z-50 pt-[40px] sm:pt-[55px] md:pt-[35px] lg:pt-[22px] 2xl:pt-[3px]">
+              <Image
+                src="/image/natal/cima-site.png"
+                alt="Banner de Natal"
+                width={1920}
+                height={280}
+                className="w-full h-auto object-contain object-bottom"
+                priority={true}
+                quality={100}
+              />
+            </div>
             {filteredCards.map(({ id, nomeJogo, porcentagem, minima, padrao, maxima, categoriaJogo, colorBgGame }) => (
               <CardGames
                 key={id}
