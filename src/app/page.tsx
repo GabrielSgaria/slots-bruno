@@ -8,8 +8,9 @@ import { formatUpdateTime } from "@/lib/utils";
 export default async function HomePage() {
     console.log("Rendering HomePage...");
 
-    // Buscar dados sincronizados de cartões e linkCasa
-    const [cardsData, linkCasaData] = await Promise.all([getCardsPG(), getLinkCasa()]);
+    // Separar as chamadas para garantir que ambas sejam executadas
+    const cardsData = await getCardsPG();
+    const linkCasaData = await getLinkCasa();
 
     const cards = cardsData?.data || [];
     const linkCasa = linkCasaData?.data?.link || "";
@@ -20,7 +21,7 @@ export default async function HomePage() {
 
     console.log("Update Time:", updateTime);
     console.log("Link Casa:", linkCasa);
-    console.log('cards data', cards)
+    console.log("Cards fetched:", cards.length);
 
     if (!cards.length || !linkCasa || !imageBanner || !updateTime) {
         return <div>Carregando...</div>;

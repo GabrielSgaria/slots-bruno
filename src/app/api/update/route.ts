@@ -3,19 +3,16 @@ import { NextResponse } from "next/server";
 
 export async function GET() {
     try {
-        console.log("Starting data update process...");
-
-        // Atualiza os dados no banco e no cache local
+        // Atualizar os dados no banco e no cache local
         const updateResult = await updateCards();
 
         if (updateResult.success) {
-            console.log("Data updated successfully.");
+            console.log("Cards updated successfully.");
             return NextResponse.json({
                 success: true,
                 message: "Dados atualizados e cache invalidado.",
             });
         } else {
-            console.error("Error during data update:", updateResult);
             return new NextResponse("Erro ao atualizar os dados.", { status: 400 });
         }
     } catch (error) {
