@@ -6,14 +6,10 @@ import { Footer } from "@/components/footer";
 import { formatUpdateTime } from "@/lib/utils";
 
 export default async function HomePage() {
-    console.log("Rendering HomePage...");
-
     const cardsData = await getCardsPG();
-    console.log("Cards Data:", cardsData);
-
     const linkCasaData = await getLinkCasa();
-    console.log("Link Casa Data:", linkCasaData);
 
+    // Processa os dados
     const cards = cardsData?.data || [];
     const linkCasa = linkCasaData?.data?.link || "";
     const imageBanner = linkCasaData?.data?.bannerImage || "";
@@ -21,12 +17,7 @@ export default async function HomePage() {
         ? formatUpdateTime(cards[0].updatedAt)
         : "Horário indisponível";
 
-    console.log("Final Data:");
-    console.log("Cards:", cards);
-    console.log("Link Casa:", linkCasa);
-    console.log("Image Banner:", imageBanner);
-    console.log("Update Time:", updateTime);
-
+    // Renderiza a página
     if (!cards.length || !linkCasa || !imageBanner || !updateTime) {
         return <div>Carregando...</div>;
     }
