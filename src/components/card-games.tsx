@@ -5,8 +5,8 @@ import { Fire } from "@phosphor-icons/react";
 import { allImageCards } from "@/lib/images-cards";
 import Link from "next/link";
 import { ImageCard } from "./card-components/image";
-import { GeradorSinal } from "@/components/gerador-sinal"; 
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog"; 
+import { GeradorSinal } from "@/components/gerador-sinal";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { motion } from "framer-motion";
 
 interface CardGamesProps {
@@ -67,6 +67,17 @@ export const CardGames = React.memo(function CardGames({
             className="game rounded-xl flex flex-col my-1 justify-between shadow-xl shadow-black max-w-[215px] sm:max-w-[175px] w-full sm:min-w-[157px] overflow-hidden relative"
             style={{ backgroundColor: colorBgGame }}
         >
+            <div className="w-[190px] min-h-[410px] absolute z-50  -left-2 -top-[9px] pointer-events-none hidden">
+                <Image
+                    src="/image/natal/card.png"
+                    alt="Banner de Natal"
+                    width={1920}
+                    height={410}
+                    className="w-full h-auto object-contain object-bottom"
+                    priority={true}
+                    quality={100}
+                />
+            </div>
             {isHot && (
                 <div className="absolute top-[2px] right-[2px] z-20 w-[60px] h-6 rounded-md flex items-center justify-center bg-green-600 animate-pulse">
                     <p className="text-zinc-50 text-base font-medium">HOT</p>
@@ -126,7 +137,7 @@ export const CardGames = React.memo(function CardGames({
 
                 {isHot ? (
                     <div className="w-[90%] h-full flex mx-auto pb-4 items-center justify-center">
-                    
+
                         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen} >
                             <DialogTrigger asChild>
                                 <button
@@ -141,7 +152,7 @@ export const CardGames = React.memo(function CardGames({
                                     animate={{ opacity: 1, y: 0 }}
                                     exit={{ opacity: 0, y: 50 }}
                                     transition={{ duration: 0.3 }}
-                                    
+
                                 >
                                     <GeradorSinal gameSlug={nomeJogo.toLowerCase().replace(/ /g, "-")} />
                                 </motion.div>
