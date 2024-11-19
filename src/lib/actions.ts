@@ -1,5 +1,6 @@
 'use server';
 
+import axios from "axios";
 import { revalidateTag, unstable_cache } from "next/cache";
 import { getPorcentagemAjustada, getRandomPorcentagem } from "./utils";
 import prisma from "./db";
@@ -49,7 +50,7 @@ async function createOrUpdateCard(i: number, gameData: any) {
 }
 
 export async function updateCards() {
-    console.log("Updating all cards and refreshing cache...");
+    console.log("Atualizando todos os cards e cache em memória...");
     try {
         const promises = Array.from({ length: 169 }, (_, i) => {
             const gameData = nameCards[i + 1];
@@ -66,13 +67,12 @@ export async function updateCards() {
 
         // Atualizar o cache e horário
         cardsCache.pg = cardsPG;
-        console.log("Updated in-memory cache for PG cards");
+        console.log("Cache atualizado para os cards PG.");
 
-        console.log("Cache refreshed for PG cards.");
         return { success: true };
     } catch (error) {
-        console.error("Error updating cards:", error);
-        return { success: false }; // Retorna false caso haja um erro
+        console.error("Erro ao atualizar os cards:", error);
+        return { success: false };
     }
 }
 
@@ -226,3 +226,30 @@ export const getLinkCasa = async () => {
         return { data: null };
     }
 };
+
+export async function purgeApiCache() {
+    const zoneId = "d1904632fbeb9a8db0ed41324a6188aa"; // Substitua pelo ID da sua zona no Cloudflare
+    const apiToken = "xEKv4DAXAKabgkJlWBqcslcpIJuZK4ibnF0FTLVl"; // Substitua pelo seu token de API do Cloudflare
+
+    try {
+        await axios.post(
+            `https://api.cloudflare.com/client/v4/zones/${zoneId}/purge_cache`,
+            {
+                files: [
+                    "https://grupofpsinais.com.br/api/update", // Limpa cache da API
+                ],
+            },
+            {
+                headers: {
+                    Authorization: `Bearer ${apiToken}`,
+                    "Content-Type": "application/json",
+                },
+            }
+        );
+
+        console.log("Cache dinâmico purgado com sucesso no Cloudflare.");
+    } catch (error) {
+        console.error("Erro ao purgar cache no Cloudflare:", error);
+        throw new Error("Não foi possível purgar o cache no Cloudflare.");
+    }
+}

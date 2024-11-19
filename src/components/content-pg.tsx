@@ -81,8 +81,6 @@ export function ContentPg({ updateTime, imageBanner }: ContentPgProps) {
 
       <div className="container mx-auto flex flex-col items-center px-2 sm:px-2 mb-2 pt-20">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
           className="relative w-full max-w-[1200px] shadow-xl shadow-black rounded-lg overflow-hidden">
           <Swiper
             spaceBetween={30}
@@ -120,8 +118,6 @@ export function ContentPg({ updateTime, imageBanner }: ContentPgProps) {
         </motion.div>
 
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
           className="relative mt-5 flex flex-col items-center justify-center max-w-[600px] w-[100%] h-[220px] py-5"
         >
           <Image
