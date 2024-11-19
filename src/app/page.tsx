@@ -4,7 +4,6 @@ import { SectionCards } from "@/components/section-cards-pg";
 import { NavBar } from "@/components/nav-bar";
 import { Footer } from "@/components/footer";
 import { formatUpdateTime } from "@/lib/utils";
-import LoadingProvider from "@/components/loading-provider";
 
 export default async function HomePage() {
   // Busca de dados diretamente no servidor
@@ -23,15 +22,12 @@ export default async function HomePage() {
 
   return (
     <>
-      <LoadingProvider>
-
         <NavBar />
         <main>
           <ContentPg updateTime={updateTime} imageBanner={imageBanner} />
           <SectionCards cards={cards} linkCasa={linkCasa} />
         </main>
         <Footer />
-      </LoadingProvider>
     </>
   );
 }
