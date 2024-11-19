@@ -50,7 +50,7 @@ async function createOrUpdateCard(i: number, gameData: any) {
 }
 
 export async function updateCards() {
-    console.log("Atualizando todos os cards e o cache em memória...");
+    console.log("Updating all cards and cache...");
     try {
         const promises = Array.from({ length: 169 }, (_, i) => {
             const gameData = nameCards[i + 1];
@@ -65,13 +65,13 @@ export async function updateCards() {
             orderBy: { id: "asc" },
         });
 
-        // Atualizar o cache in-memory
+        // Atualizar o cache
         cardsCache.pg = cardsPG;
-        console.log("Cache atualizado com novos dados dos cards PG.");
+        console.log("Cache updated for PG cards.");
 
         return { success: true };
     } catch (error) {
-        console.error("Erro ao atualizar os cards:", error);
+        console.error("Error updating cards:", error);
         return { success: false };
     }
 }
@@ -102,13 +102,12 @@ export async function createCards() {
 export const getCardsPG = async () => {
     console.log("Fetching PG cards...");
 
-    // Verificar se os dados estão no cache
+    // Retornar dados do cache se disponíveis
     if (cardsCache.pg) {
         console.log(`Returning ${cardsCache.pg.length} PG cards from in-memory cache.`);
         return { data: cardsCache.pg };
     }
 
-    // Se não estiver no cache, buscar do banco de dados
     console.log("Cache not found. Fetching PG cards from database...");
     try {
         const cards = await prisma.card.findMany({
@@ -117,12 +116,12 @@ export const getCardsPG = async () => {
         });
 
         // Atualizar o cache
-        cardsCache.pg = cards || []; // Garantir array vazio se não houver dados
-        console.log(`Fetched ${cardsCache.pg.length} PG cards from database and updated cache.`);
-        return { data: cardsCache.pg };
+        cardsCache.pg = cards;
+        console.log(`Fetched ${cards.length} PG cards from database and updated cache.`);
+        return { data: cards };
     } catch (error) {
         console.error("Error fetching PG cards from database:", error);
-        return { data: [] }; // Retornar um array vazio como fallback seguro
+        return { data: [] }; // Retorna um array vazio como fallback seguro
     }
 };
 
@@ -130,26 +129,28 @@ export const getCardsPG = async () => {
 
 // Função para buscar os cartões da categoria 'PP'
 export const getCardsPP = async () => {
-    console.log("Fetching PP cards...");
+    try {
+        console.log("Fetching PP cards...");
+        if (cardsCache.pp) {
+            console.log("Returning PP cards from in-memory cache.");
+            return { data: cardsCache.pp };
+        }
 
-    // Verificar se os dados estão no cache
-    if (cardsCache.pp) {
-        console.log("Returning PP cards from in-memory cache.");
-        return { data: cardsCache.pp };
+        console.log("Cache not found. Fetching PP cards from database...");
+        const cards = await prisma.card.findMany({
+            where: { categoriaJogo: "PP" },
+            orderBy: { id: "asc" },
+        });
+
+        cardsCache.pp = cards; // Atualizar o cache
+        console.log("Updated in-memory cache for PP cards.");
+        return { data: cards };
+    } catch (error) {
+        console.error("Error fetching PP cards:", error);
+        return { data: [] }; // Fallback seguro
     }
-
-    // Se não estiver no cache, buscar do banco de dados
-    console.log("Cache not found. Fetching PP cards from database...");
-    const cards = await prisma.card.findMany({
-        where: { categoriaJogo: "PP" },
-        orderBy: { id: "asc" },
-    });
-
-    // Atualizar o cache
-    cardsCache.pp = cards;
-    console.log("Updated in-memory cache for PP cards.");
-    return { data: cards };
 };
+
 
 
 
@@ -196,15 +197,10 @@ export const handleSubmit = async (e: FormData) => {
 export const getLinkCasa = async () => {
     console.log("Fetching link casa...");
 
-    // Verificar se o link e o banner já estão no cache
+    // Retornar dados do cache se disponíveis
     if (cardsCache.linkCasa) {
         console.log("Returning link casa and banner image from in-memory cache.");
-        if (typeof cardsCache.linkCasa.link !== 'string' || typeof cardsCache.linkCasa.bannerImage !== 'string') {
-            console.error("Invalid data in cache, fetching from database...");
-            cardsCache.linkCasa = null; // Resetar o cache inválido
-        } else {
-            return { data: cardsCache.linkCasa };
-        }
+        return { data: cardsCache.linkCasa };
     }
 
     console.log("Cache not found. Fetching link casa from database...");
@@ -214,7 +210,7 @@ export const getLinkCasa = async () => {
         });
 
         if (linkCasa) {
-            console.log("Link casa fetched from the database.");
+            console.log("Fetched link casa from the database.");
 
             // Atualizar o cache
             cardsCache.linkCasa = {
@@ -232,6 +228,7 @@ export const getLinkCasa = async () => {
         return { data: null };
     }
 };
+
 
 export async function purgeApiCache() {
     const zoneId = "d1904632fbeb9a8db0ed41324a6188aa"; // Substitua pelo ID da sua zona no Cloudflare

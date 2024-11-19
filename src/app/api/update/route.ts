@@ -1,35 +1,23 @@
 import { updateCards } from "@/lib/actions";
 import { NextResponse } from "next/server";
-import { revalidateTag } from "next/cache";
 
 export async function GET() {
+    console.log("API Update: Starting update process...");
+
     try {
-        // Chama a função que realiza a atualização dos dados
-        const updateCardResult = await updateCards();
-
-        // Verifica se a atualização foi bem-sucedida
-        if (updateCardResult.success) {
-            // Se a atualização foi bem-sucedida, realiza a invalidação de cache
-            revalidateTag('cards');
-            revalidateTag('cards-pg');
-            revalidateTag('cards-pp');
-            revalidateTag('link-casa');
-
-            // Retorna uma resposta positiva
-            return NextResponse.json({
-                success: true,
-                message: "Dados atualizados e cache invalidado",
-                updateCardResult,
-            });
+        const result = await updateCards();
+        if (result.success) {
+            console.log("API Update: Cards updated successfully.");
+            return NextResponse.json({ success: true, message: "Cards and cache updated successfully." });
         } else {
-            // Caso a atualização não tenha sido bem-sucedida
-            return new NextResponse("Erro ao atualizar os dados dos cartões", { status: 400 });
+            return new NextResponse("Failed to update cards.", { status: 500 });
         }
     } catch (error) {
-        console.error("Erro ao atualizar os dados dos cartões:", error);
-        return new NextResponse("Erro no servidor", { status: 500 });
+        console.error("API Update: Error during update process:", error);
+        return new NextResponse("Internal server error.", { status: 500 });
     }
 }
+
 
 
 
