@@ -6,6 +6,7 @@ import { GoogleAnalytics, GoogleTagManager } from "@next/third-parties/google"
 import { ServiceWorkerInitializer } from "@/components/page-download/sw-initializer"
 // import { LocalNotificationHandler } from "@/components/notification-local"
 import { DownloadAppButton } from "@/components/page-download/download-app-button"
+import Image from "next/image"
 
 const poppins = Poppins(
   {
@@ -99,7 +100,18 @@ export default function RootLayout({
         <link rel="apple-touch-icon" href="/favicon.png" />
         <link rel="manifest" href="/manifest.json" />
       </head>
-      <body className={`text-zinc-50 ${poppins.variable} ${roboto.variable}`}>
+      <body className={`text-zinc-50 relative ${poppins.variable} ${roboto.variable}`}>
+        <div className="w-full absolute z-50 pt-[40px] sm:pt-[55px] md:pt-[35px] lg:pt-[22px] 2xl:pt-[3px]">
+          <Image
+            src="/image/natal/cima-site.png"
+            alt="Banner de Natal"
+            width={1920}
+            height={280}
+            className="w-full h-auto object-contain object-bottom"
+            priority={true}
+            quality={100}
+          />
+        </div>
         <div className="bg-zinc-950/20 backdrop-blur-sm">
           <GoogleAnalytics gaId="G-9E7Z61LW2J" />
           <GoogleTagManager gtmId="G-9E7Z61LW2J" />

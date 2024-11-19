@@ -1,5 +1,9 @@
-// next.config.js
 import withPWA from 'next-pwa';
+import { fileURLToPath } from 'url';
+import path from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -55,16 +59,30 @@ const nextConfig = {
                 hostname: 'sa-east-1.graphassets.com',
                 pathname: '/**',
             },
+            {
+                protocol: 'https',
+                hostname: 'imagedelivery.net',
+                pathname: '/**'
+            },
+            {
+                protocol: 'https',
+                hostname: 'api.cloudflare.com',
+                pathname: '/**'
+            }
         ],
-        formats: ['image/webp'],
+        formats: ['image/webp', 'image/avif'],
         minimumCacheTTL: 60 * 60 * 24, // 1 dia
-        
     },
+    // Configuração do cache handler
+    cacheHandler: path.join(__dirname, 'cache-handler.js'),
+    cacheMaxMemorySize: 0, // desativa o cache em memória padrão
 };
 
-export default withPWA({
+const withPWAConfig = withPWA({
     dest: 'public',
     disable: process.env.NODE_ENV === 'development',
     register: true,
     skipWaiting: true,
-})(nextConfig);
+});
+
+export default withPWAConfig(nextConfig);
