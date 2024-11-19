@@ -8,6 +8,7 @@ import { formatUpdateTime } from "@/lib/utils";
 export default async function HomePage() {
     console.log("Rendering HomePage...");
 
+    // Buscar dados sincronizados de cartões e linkCasa
     const [cardsData, linkCasaData] = await Promise.all([getCardsPG(), getLinkCasa()]);
 
     const cards = cardsData?.data || [];
@@ -19,7 +20,7 @@ export default async function HomePage() {
 
     console.log("Update Time:", updateTime);
     console.log("Link Casa:", linkCasa);
-    console.log("Banner Image:", imageBanner);
+    console.log('cards data', cards)
 
     if (!cards.length || !linkCasa || !imageBanner || !updateTime) {
         return <div>Carregando...</div>;

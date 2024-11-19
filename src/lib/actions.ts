@@ -60,22 +60,29 @@ export async function updateCards() {
 
         await Promise.all(promises);
 
+        // Buscar os dados atualizados e atualizar o cache local
         const cardsPG = await prisma.card.findMany({
             where: { categoriaJogo: "PG" },
             orderBy: { id: "asc" },
         });
 
-        // Atualizar o cache
-        cardsCache.pg = cardsPG;
-        console.log("Cache updated for PG cards.");
+        cardsCache.pg = cardsPG; // Atualizar cache local
+        console.log("Cache updated for PG cards:", cardsCache.pg.length);
 
-        return { success: true };
+        // Revalidar tag (se necessário)
+        try {
+            revalidateTag("cards");
+            console.log("Tags revalidated successfully.");
+        } catch (error) {
+            console.error("Error revalidating tags:", error);
+        }
+
+        return { success: true, updatedAt: new Date().toISOString() };
     } catch (error) {
         console.error("Error updating cards:", error);
         return { success: false };
     }
 }
-
 
 
 
@@ -102,24 +109,30 @@ export async function createCards() {
 export const getCardsPG = async () => {
     console.log("Fetching PG cards...");
 
-    // Usar cache local
-    if (cardsCache.pg) {
+    // Verificar o cache local
+    if (cardsCache.pg && cardsCache.pg.length > 0) {
         console.log(`Returning ${cardsCache.pg.length} PG cards from in-memory cache.`);
         return { data: cardsCache.pg };
     }
 
     console.log("Cache not found. Fetching PG cards from database...");
-    const cards = await prisma.card.findMany({
-        where: { categoriaJogo: "PG" },
-        orderBy: { id: "asc" },
-    });
+    try {
+        const cards = await prisma.card.findMany({
+            where: { categoriaJogo: "PG" },
+            orderBy: { id: "asc" },
+        });
 
-    // Atualizar cache local
-    cardsCache.pg = cards;
-    console.log(`Fetched ${cards.length} PG cards from database and updated cache.`);
-
-    return { data: cards };
+        // Atualizar cache local
+        cardsCache.pg = cards;
+        console.log(`Fetched ${cards.length} PG cards from database and updated cache.`);
+        return { data: cards };
+    } catch (error) {
+        console.error("Error fetching PG cards from database:", error);
+        return { data: [] }; // Retorna um array vazio como fallback
+    }
 };
+
+
 
 
 

@@ -1,26 +1,35 @@
-import { purgeApiCache, updateCards } from "@/lib/actions";
+import { updateCards } from "@/lib/actions";
 import { revalidateTag } from "next/cache";
 import { NextResponse } from "next/server";
 
 export async function GET() {
     try {
+        console.log("Starting data update process...");
+
         // Atualiza os dados no banco e no cache local
         const updateResult = await updateCards();
 
         if (updateResult.success) {
-            // Purga o cache dinâmico
-            revalidateTag("cards");
-            revalidateTag("cards-pg");
-            revalidateTag("cards-pp");
-            revalidateTag("link-casa");
+            try {
+                // Revalida as tags de cache relacionadas
+                console.log("Revalidating cache tags...");
+                revalidateTag("cards");
+                revalidateTag("cards-pg");
+                revalidateTag("cards-pp");
+                revalidateTag("link-casa");
 
-            console.log("Tags revalidated successfully.");
+                console.log("Tags revalidated successfully.");
+            } catch (tagError) {
+                console.error("Error revalidating tags:", tagError);
+            }
+
             return NextResponse.json({
                 success: true,
                 message: "Dados atualizados e cache invalidado.",
                 updateResult,
             });
         } else {
+            console.error("Error during data update:", updateResult);
             return new NextResponse("Erro ao atualizar os dados.", { status: 400 });
         }
     } catch (error) {
