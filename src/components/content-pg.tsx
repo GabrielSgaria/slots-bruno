@@ -47,7 +47,7 @@ export function ContentPg({ updateTime, imageBanner }: ContentPgProps) {
       <Dialog open={showModal} onOpenChange={setShowModal}>
         <DialogContent className="p-0 w-[90vw] max-w-[414px] h-auto max-h-[90vh] border-none bg-transparent rounded-sm">
           <div className="relative w-full" style={{ aspectRatio: '414 / 577' }}>
-            <div className="absolute -top-7 -left-7  w-[460px] md:w-[465px] z-50 pointer-events-none">
+            {/* <div className="absolute -top-7 -left-7  w-[460px] md:w-[465px] z-50 pointer-events-none">
               <Image
                 src="/image/natal/card.png"
                 alt="Banner de Natal"
@@ -57,7 +57,7 @@ export function ContentPg({ updateTime, imageBanner }: ContentPgProps) {
                 priority={true}
                 quality={100}
               />
-            </div>
+            </div> */}
             {imageBanner && (
               <Image
                 src={`data:image/png;base64,${imageBanner}`}

@@ -199,7 +199,7 @@ export function SectionCards({ cards, linkCasa }: SectionCardsPgProps) {
           <SearchFilter searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
 
           <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-8 2xl:grid-cols-9 gap-2 my-5 relative">
-            <div className="w-[72px] absolute z-50 -left-6 -top-[27px] pointer-events-none">
+            {/* <div className="w-[72px] absolute z-50 -left-6 -top-[27px] pointer-events-none">
               <Image
                 src="/image/natal/gorro.png"
                 alt="Banner de Natal"
@@ -209,8 +209,8 @@ export function SectionCards({ cards, linkCasa }: SectionCardsPgProps) {
                 priority={true}
                 quality={100}
               />
-            </div>
-            <div className="w-[72px] absolute z-50 -right-[28px] -top-[47px] pointer-events-none">
+            </div> */}
+            {/* <div className="w-[72px] absolute z-50 -right-[28px] -top-[47px] pointer-events-none">
               <Image
                 src="/image/natal/elemento-direita.png"
                 alt="Banner de Natal"
@@ -220,7 +220,7 @@ export function SectionCards({ cards, linkCasa }: SectionCardsPgProps) {
                 priority={true}
                 quality={100}
               />
-            </div>
+            </div> */}
             {displayedCards.map(({ id, nomeJogo, porcentagem, minima, padrao, maxima, categoriaJogo, colorBgGame }) => (
               <CardGames
                 key={id}

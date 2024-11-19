@@ -101,7 +101,7 @@ export default function RootLayout({
         <link rel="manifest" href="/manifest.json" />
       </head>
       <body className={`text-zinc-50 relative ${poppins.variable} ${roboto.variable}`}>
-        <div className="w-full absolute z-50 pt-[40px] sm:pt-[55px] md:pt-[35px] lg:pt-[22px] 2xl:pt-[3px] pointer-events-none">
+        {/* <div className="w-full absolute z-50 pt-[40px] sm:pt-[55px] md:pt-[35px] lg:pt-[22px] 2xl:pt-[3px] pointer-events-none">
           <Image
             src="/image/natal/cima-site.png"
             alt="Banner de Natal"
@@ -111,9 +111,9 @@ export default function RootLayout({
             priority={true}
             quality={100}
           />
-        </div>
+        </div> */}
         <div className="bg-zinc-950/20 backdrop-blur-sm relative">
-          <div className="w-full h-full absolute z-50 pointer-events-none">
+          {/* <div className="w-full h-full absolute z-50 pointer-events-none">
             <Image
               src="/image/natal/cantos.png"
               alt="Banner de Natal"
@@ -123,7 +123,7 @@ export default function RootLayout({
               priority={true}
               quality={100}
             />
-          </div>
+          </div> */}
           <GoogleAnalytics gaId="G-9E7Z61LW2J" />
           <GoogleTagManager gtmId="G-9E7Z61LW2J" />
           {children}
