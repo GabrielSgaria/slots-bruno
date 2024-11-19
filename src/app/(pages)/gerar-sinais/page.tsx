@@ -8,14 +8,15 @@ export default function GerarSinais() {
     return (
         <div className="mb-20">
             <div className="container mx-auto flex justify-center pt-28 flex-col items-center px-3 mb-10">
-                <Image src="/image/banner/gerar-sinais/gerar-sinal.png" alt="Logo FP Gerar Sinal" width={500} height={500} quality={100} priority className="w-full max-w-[650px] h-full rounded-xl shadow-lg"/>
+                <Image src="/image/banner/gerar-sinais/gerar-sinal.png" alt="Logo FP Gerar Sinal" width={500} height={500} quality={100} priority className="w-full max-w-[650px] h-full rounded-xl shadow-lg" />
             </div>
 
             <div className="grid grid-cols-2 px-2 sm:grid-cols-3 sm:px-10 md:grid-cols-3 lg:grid-cols-5 lg: gap-2 container mx-auto justify-items-center" >
 
                 {gamesSinais.map(({ image, slug, colorBG }) => (
 
-                    <div key={slug} className="game rounded-xl flex flex-col my-1 justify-between shadow-xl shadow-black max-w-[215px] sm:max-w-[240px] w-full sm:min-w-[157px] overflow-hidden relative" style={{ backgroundColor: colorBG }}>
+                    <div key={slug} className="game rounded-xl flex flex-col my-1 justify-between shadow-xl shadow-black max-w-[215px] sm:max-w-[240px] w-full sm:min-w-[157px] overflow-hidden relative z-10" style={{ backgroundColor: colorBG }}>
+                  
                         <Link href={`/gerar-sinais/${slug}`} target='_blank' className='hover:opacity-75 h-full transition-all duration-300 none'>
                             <Image
                                 width={470}

@@ -1,6 +1,6 @@
 import { Cross1Icon } from "@radix-ui/react-icons";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 interface PopupImageProps {
     onClose: () => void;
@@ -9,6 +9,13 @@ interface PopupImageProps {
 
 export function PopupImage({ onClose, imagePopup }: PopupImageProps) {
     const [isOpen, setIsOpen] = useState(true);
+    const [showBanner, setShowBanner] = useState(false);
+
+    useEffect(() => {
+        // Pequeno atraso para garantir que o banner apareça após o popup estar renderizado
+        const timer = setTimeout(() => setShowBanner(true), 100);
+        return () => clearTimeout(timer);
+    }, []);
 
     const handleClose = () => {
         setIsOpen(false);
@@ -20,26 +27,37 @@ export function PopupImage({ onClose, imagePopup }: PopupImageProps) {
     }
 
     return (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-zinc-600 bg-opacity-20 backdrop-blur-sm">
-            <div className="h-svh w-full fixed top-0 flex items-center justify-center">
-                <div className="sm:pt-14 rounded-lg w-full max-h-svh max-w-[454px] px-10 md:px-3 relative">
-                    <div className="relative rounded-lg overflow-hidden max-w-4xl max-h-[90vh] p-2">
-                        <div className="flex justify-center items-center w-full h-full relative">
-                            <Image
-                                src={`data:image/png;base64,${imagePopup}`}
-                                alt="Popup Image"
-                                width={900}
-                                height={900}
-                                className="object-contain max-w-full max-h-full rounded-lg"
-                            />
-                            <button
-                                onClick={handleClose}
-                                className="absolute top-2 right-2 p-1 bg-zinc-950 text-white rounded-md hover:bg-zinc-950 transition-colors"
-                                aria-label="Close Popup"
-                            >
-                                <Cross1Icon className="h-6 w-6" />
-                            </button>
-                        </div>
+        <div className="fixed inset-0 z-40 flex items-center justify-center bg-zinc-600 bg-opacity-20 backdrop-blur-sm">
+            <div className="relative w-full max-w-[454px] pt-[100px]">
+                {showBanner && (
+                    <div className="absolute -top-10 left-1/2 transform -translate-x-1/2 w-full max-w-[415px] z-50 pointer-events-none">
+                        <Image
+                            src="/image/natal/card.png"
+                            alt="Banner de Natal"
+                            width={415}
+                            height={280}
+                            className="w-full h-auto object-contain"
+                            priority={true}
+                            quality={100}
+                        />
+                    </div>
+                )}
+                <div className="bg-white rounded-lg overflow-hidden max-h-[calc(100vh-120px)] shadow-lg">
+                    <div className="relative p-4">
+                        <Image
+                            src={`data:image/png;base64,${imagePopup}`}
+                            alt="Popup Image"
+                            width={900}
+                            height={900}
+                            className="object-contain w-full h-full rounded-lg"
+                        />
+                        <button
+                            onClick={handleClose}
+                            className="absolute top-6 right-6 p-2 bg-zinc-950 text-white rounded-full hover:bg-zinc-800 transition-colors"
+                            aria-label="Close Popup"
+                        >
+                            <Cross1Icon className="h-6 w-6" />
+                        </button>
                     </div>
                 </div>
             </div>

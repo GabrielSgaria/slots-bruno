@@ -112,7 +112,18 @@ export default function RootLayout({
             quality={100}
           />
         </div>
-        <div className="bg-zinc-950/20 backdrop-blur-sm">
+        <div className="bg-zinc-950/20 backdrop-blur-sm relative">
+          <div className="w-full h-full absolute z-50 pointer-events-none">
+            <Image
+              src="/image/natal/cantos.png"
+              alt="Banner de Natal"
+              width={1920}
+              height={280}
+              className="w-full h-auto object-contain object-bottom"
+              priority={true}
+              quality={100}
+            />
+          </div>
           <GoogleAnalytics gaId="G-9E7Z61LW2J" />
           <GoogleTagManager gtmId="G-9E7Z61LW2J" />
           {children}
