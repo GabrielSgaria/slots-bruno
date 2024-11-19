@@ -51,7 +51,6 @@ async function createOrUpdateCard(i: number, gameData: any) {
 export async function updateCards() {
     console.log("Updating all cards and refreshing cache...");
     try {
-        // Atualizar todos os cartões
         const promises = Array.from({ length: 169 }, (_, i) => {
             const gameData = nameCards[i + 1];
             if (!gameData) return Promise.resolve(null);
@@ -60,22 +59,23 @@ export async function updateCards() {
 
         await Promise.all(promises);
 
-        // Atualizar cache para PG
         const cardsPG = await prisma.card.findMany({
             where: { categoriaJogo: "PG" },
             orderBy: { id: "asc" },
         });
 
-        cardsCache.pg = cardsPG; // Atualizar cache em memória
-        console.log("Updated in-memory cache for PG cards.");
+        // Atualizar o cache e horário
+        cardsCache.pg = cardsPG;
+        console.log("Updated in-memory cache for PG cards");
 
         console.log("Cache refreshed for PG cards.");
         return { success: true };
     } catch (error) {
         console.error("Error updating cards:", error);
-        return { success: false };
+        return { success: false }; // Retorna false caso haja um erro
     }
 }
+
 
 
 export async function createCards() {
@@ -103,20 +103,24 @@ export const getCardsPG = async () => {
 
     // Verificar se os dados estão no cache
     if (cardsCache.pg) {
-        console.log("Returning PG cards from in-memory cache.");
+        console.log(`Returning ${cardsCache.pg.length} PG cards from in-memory cache.`);
         return { data: cardsCache.pg };
     }
 
     console.log("Cache not found. Fetching PG cards from database...");
-    const cards = await prisma.card.findMany({
-        where: { categoriaJogo: "PG" },
-        orderBy: { id: "asc" },
-    });
+    try {
+        const cards = await prisma.card.findMany({
+            where: { categoriaJogo: "PG" },
+            orderBy: { id: "asc" },
+        });
 
-    // Atualizar o cache
-    cardsCache.pg = cards;
-    console.log("Updated in-memory cache for PG cards.");
-    return { data: cards };
+        cardsCache.pg = cards || []; // Garantir array vazio se não houver dados
+        console.log(`Fetched ${cardsCache.pg.length} PG cards from database and updated cache.`);
+        return { data: cardsCache.pg };
+    } catch (error) {
+        console.error("Error fetching PG cards from database:", error);
+        return { data: [] }; // Retornar um array vazio como fallback seguro
+    }
 };
 
 
@@ -148,12 +152,13 @@ export const getCardsPP = async () => {
 const hashUnico = process.env.HASH_LINK as string;
 // Função para manipular o envio de formulários (atualização de link e imagem)
 export const handleSubmit = async (e: FormData) => {
+    console.log("Handling form submission...");
     const link = e.get('link') as string | null;
     const hash = e.get('hash') as string | null;
     const bannerImage = e.get('image') as File;
 
     if (hash !== hashUnico || !link || bannerImage.size === 0 || bannerImage.name === 'undefined') {
-        console.log('Erro de validação ou dados faltando');
+        console.error("Validation failed or missing data.");
         return { message: { error: 'Dados inválidos ou faltando' } };
     }
 
@@ -161,23 +166,42 @@ export const handleSubmit = async (e: FormData) => {
         const buffer = Buffer.from(await bannerImage.arrayBuffer());
         const base64Image = buffer.toString('base64');
 
-        await prisma.settings.upsert({
+        const updatedLinkCasa = await prisma.settings.upsert({
             where: { casa: 'bruno_fp' },
             update: { link, bannerImage: base64Image },
             create: { link, casa: 'bruno_fp', bannerImage: base64Image },
         });
 
-        revalidateTag('link-casa');
+        // Atualizar o cache com link e banner
+        cardsCache.linkCasa = {
+            link: updatedLinkCasa.link,
+            bannerImage: updatedLinkCasa.bannerImage ?? '',
+        };
+        console.log("Link and banner image updated in cache:", cardsCache.linkCasa);
+
         return { message: { success: 'Informações atualizadas' } };
     } catch (error) {
-        console.error('Erro ao atualizar o link:', error);
+        console.error("Error updating link:", error);
         return { message: { error: 'Erro ao atualizar o link' } };
     }
 };
 
 // Função para buscar o link e a imagem da casa
-export const getLinkCasa = unstable_cache(async () => {
+export const getLinkCasa = async () => {
     console.log("Fetching link casa...");
+
+    // Verificar se o link e o banner já estão no cache
+    if (cardsCache.linkCasa) {
+        console.log("Returning link casa and banner image from in-memory cache.");
+        if (typeof cardsCache.linkCasa.link !== 'string' || typeof cardsCache.linkCasa.bannerImage !== 'string') {
+            console.error("Invalid data in cache, fetching from database...");
+            cardsCache.linkCasa = null; // Resetar o cache inválido
+        } else {
+            return { data: cardsCache.linkCasa };
+        }
+    }
+
+    console.log("Cache not found. Fetching link casa from database...");
     try {
         const linkCasa = await prisma.settings.findUnique({
             where: { casa: 'bruno_fp' },
@@ -185,7 +209,14 @@ export const getLinkCasa = unstable_cache(async () => {
 
         if (linkCasa) {
             console.log("Link casa fetched from the database.");
-            return { data: linkCasa };
+
+            // Atualizar o cache
+            cardsCache.linkCasa = {
+                link: linkCasa.link ?? '',
+                bannerImage: linkCasa.bannerImage ?? '',
+            };
+
+            return { data: cardsCache.linkCasa };
         }
 
         console.log("Link casa not found in the database.");
@@ -194,7 +225,4 @@ export const getLinkCasa = unstable_cache(async () => {
         console.error("Error fetching link casa:", error);
         return { data: null };
     }
-}, ['link-casa'], {
-    revalidate: fiveMinutesInSeconds,
-    tags: ['link-casa'],
-});
+};
