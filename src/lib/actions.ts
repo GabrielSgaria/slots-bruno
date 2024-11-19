@@ -102,27 +102,23 @@ export async function createCards() {
 export const getCardsPG = async () => {
     console.log("Fetching PG cards...");
 
-    // Retornar dados do cache se disponíveis
+    // Usar cache local
     if (cardsCache.pg) {
         console.log(`Returning ${cardsCache.pg.length} PG cards from in-memory cache.`);
         return { data: cardsCache.pg };
     }
 
     console.log("Cache not found. Fetching PG cards from database...");
-    try {
-        const cards = await prisma.card.findMany({
-            where: { categoriaJogo: "PG" },
-            orderBy: { id: "asc" },
-        });
+    const cards = await prisma.card.findMany({
+        where: { categoriaJogo: "PG" },
+        orderBy: { id: "asc" },
+    });
 
-        // Atualizar o cache
-        cardsCache.pg = cards;
-        console.log(`Fetched ${cards.length} PG cards from database and updated cache.`);
-        return { data: cards };
-    } catch (error) {
-        console.error("Error fetching PG cards from database:", error);
-        return { data: [] }; // Retorna um array vazio como fallback seguro
-    }
+    // Atualizar cache local
+    cardsCache.pg = cards;
+    console.log(`Fetched ${cards.length} PG cards from database and updated cache.`);
+
+    return { data: cards };
 };
 
 
@@ -197,36 +193,30 @@ export const handleSubmit = async (e: FormData) => {
 export const getLinkCasa = async () => {
     console.log("Fetching link casa...");
 
-    // Retornar dados do cache se disponíveis
+    // Usar cache local
     if (cardsCache.linkCasa) {
         console.log("Returning link casa and banner image from in-memory cache.");
         return { data: cardsCache.linkCasa };
     }
 
     console.log("Cache not found. Fetching link casa from database...");
-    try {
-        const linkCasa = await prisma.settings.findUnique({
-            where: { casa: 'bruno_fp' },
-        });
+    const linkCasa = await prisma.settings.findUnique({
+        where: { casa: "bruno_fp" },
+    });
 
-        if (linkCasa) {
-            console.log("Fetched link casa from the database.");
+    if (linkCasa) {
+        // Atualizar cache local
+        cardsCache.linkCasa = {
+            link: linkCasa.link ?? "",
+            bannerImage: linkCasa.bannerImage ?? "",
+        };
 
-            // Atualizar o cache
-            cardsCache.linkCasa = {
-                link: linkCasa.link ?? '',
-                bannerImage: linkCasa.bannerImage ?? '',
-            };
-
-            return { data: cardsCache.linkCasa };
-        }
-
-        console.log("Link casa not found in the database.");
-        return { data: null };
-    } catch (error) {
-        console.error("Error fetching link casa:", error);
-        return { data: null };
+        console.log("Fetched link casa from database and updated cache.");
+        return { data: cardsCache.linkCasa };
     }
+
+    console.log("Link casa not found in database.");
+    return { data: null };
 };
 
 

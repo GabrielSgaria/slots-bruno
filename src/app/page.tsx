@@ -11,19 +11,17 @@ export default async function HomePage() {
     const [cardsData, linkCasaData] = await Promise.all([getCardsPG(), getLinkCasa()]);
 
     const cards = cardsData?.data || [];
-    const linkCasa = linkCasaData?.data?.link || '';
-    const imageBanner = linkCasaData?.data?.bannerImage || '';
+    const linkCasa = linkCasaData?.data?.link || "";
+    const imageBanner = linkCasaData?.data?.bannerImage || "";
     const updateTime = cards.length > 0
-        ? formatUpdateTime(cards[0]?.updatedAt)
-        : 'Horário indisponível';
+        ? formatUpdateTime(cards[0].updatedAt)
+        : "Horário indisponível";
 
-    console.log(`Fetched ${cards.length} cards from cache or database.`);
-    console.log(`First card updated at: ${cards[0]?.updatedAt}`);
-    console.log(`Update Time: ${updateTime}`);
-    console.log(`Link Casa: ${linkCasa}`);
-    console.log(`Banner Image: ${imageBanner ? "Available" : "Not Available"}`);
+    console.log("Update Time:", updateTime);
+    console.log("Link Casa:", linkCasa);
+    console.log("Banner Image:", imageBanner);
 
-    if (!cards.length || !linkCasa || !imageBanner) {
+    if (!cards.length || !linkCasa || !imageBanner || !updateTime) {
         return <div>Carregando...</div>;
     }
 
