@@ -6,8 +6,13 @@ import { Footer } from "@/components/footer";
 import { formatUpdateTime } from "@/lib/utils";
 
 export default async function HomePage() {
+  console.log("Rendering HomePage...");
+
   // Busca de dados diretamente no servidor
   const [cardsData, linkCasaData] = await Promise.all([getCardsPG(), getLinkCasa()]);
+
+  // console.log("Fetched cardsData:", cardsData);
+  // console.log("Fetched linkCasaData:", linkCasaData);
 
   // Dados processados
   const cards = cardsData?.data || [];
@@ -17,6 +22,7 @@ export default async function HomePage() {
 
   // Verificação de dados
   if (!cards.length || !linkCasa || !imageBanner || !updateTime) {
+    console.log("Some data is missing. Returning loading message...");
     return <div>Carregando...</div>;
   }
 
