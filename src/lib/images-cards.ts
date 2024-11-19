@@ -127,7 +127,7 @@ export const allImageCards: AllImageCards = {
     117: { image: `https://imagedelivery.net/6tAoXewsW-UbrMK1VkE8GQ/b65062bb-aab9-4353-5be3-bb74c04cbc00/public`, icon: `https://imagedelivery.net/6tAoXewsW-UbrMK1VkE8GQ/<id>/public` },
     118: { image: `https://imagedelivery.net/6tAoXewsW-UbrMK1VkE8GQ/5afb669f-4c4e-4ee1-3f99-ab641333bf00/public`, icon: `https://imagedelivery.net/6tAoXewsW-UbrMK1VkE8GQ/<id>/public` },
     119: { image: `https://imagedelivery.net/6tAoXewsW-UbrMK1VkE8GQ/7fe71ead-c5d7-4140-27e0-e5e973691400/public`, icon: `https://imagedelivery.net/6tAoXewsW-UbrMK1VkE8GQ/<id>/public` },
-    120: { image: `https://imagedelivery.net/6tAoXewsW-UbrMK1VkE8GQ/843e7151-465f-4894-4e7b-0bead8cd6200public`, icon: `https://imagedelivery.net/6tAoXewsW-UbrMK1VkE8GQ/<id>/public` },
+    120: { image: `https://imagedelivery.net/6tAoXewsW-UbrMK1VkE8GQ/843e7151-465f-4894-4e7b-0bead8cd6200/public`, icon: `https://imagedelivery.net/6tAoXewsW-UbrMK1VkE8GQ/<id>/public` },
     121: { image: `https://imagedelivery.net/6tAoXewsW-UbrMK1VkE8GQ/9a1d45a6-fcb4-44c0-278f-e244accd9400/public`, icon: `https://imagedelivery.net/6tAoXewsW-UbrMK1VkE8GQ/<id>/public` },
     122: { image: `https://imagedelivery.net/6tAoXewsW-UbrMK1VkE8GQ/e5686758-8992-411e-7b2a-628b26573000/public`, icon: `https://imagedelivery.net/6tAoXewsW-UbrMK1VkE8GQ/<id>/public` },
     123: { image: `https://imagedelivery.net/6tAoXewsW-UbrMK1VkE8GQ/5e000aa7-e02c-493b-17e2-4da64466f400/public`, icon: `https://imagedelivery.net/6tAoXewsW-UbrMK1VkE8GQ/<id>/public` },
