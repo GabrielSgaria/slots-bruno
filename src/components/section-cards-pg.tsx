@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, useMemo, useCallback } from "react";
+import { useEffect, useState, useMemo, useCallback, useRef } from "react";
 import { motion } from "framer-motion";
 import { DotFilledIcon } from "@radix-ui/react-icons";
 import { CardGames } from "./card-games";
@@ -47,9 +47,14 @@ const newGames = [
 
 export function SectionCards({ cards, linkCasa }: SectionCardsPgProps) {
   const [filteredCards, setFilteredCards] = useState<CardData[]>(cards || []);
+  const [displayedCards, setDisplayedCards] = useState<CardData[]>([]);
   const [activeTab, setActiveTab] = useState<string>("all");
   const [searchTerm, setSearchTerm] = useState("");
+  const [page, setPage] = useState(1);
   const { toast } = useToast();
+  const loader = useRef(null);
+
+  const CARDS_PER_PAGE = 14;
 
   // Função de filtro unificada para HOT e PlayGame
   const isRelevantGame = useCallback((card: CardData) => {
@@ -93,12 +98,51 @@ export function SectionCards({ cards, linkCasa }: SectionCardsPgProps) {
     }
 
     setFilteredCards(result);
+    setPage(1);
+    setDisplayedCards(result.slice(0, CARDS_PER_PAGE));
   }, [cards, activeTab, searchTerm, isRelevantGame, sortedNewGames]);
 
   // Reaplicar filtros quando necessário
   useEffect(() => {
     applyFilters();
   }, [applyFilters]);
+
+  // Carregar mais cards
+  const loadMoreCards = useCallback(() => {
+    const nextPage = page + 1;
+    const start = (nextPage - 1) * CARDS_PER_PAGE;
+    const end = nextPage * CARDS_PER_PAGE;
+    const newCards = filteredCards.slice(start, end);
+    setDisplayedCards(prev => [...prev, ...newCards]);
+    setPage(nextPage);
+  }, [page, filteredCards]);
+
+  // Configurar o observador de interseção
+  useEffect(() => {
+    const options = {
+      root: null,
+      rootMargin: "20px",
+      threshold: 1.0
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      const target = entries[0];
+      if (target.isIntersecting && displayedCards.length < filteredCards.length) {
+        loadMoreCards();
+      }
+    }, options);
+
+    if (loader.current) {
+      observer.observe(loader.current);
+    }
+
+    return () => {
+      if (loader.current) {
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        observer.unobserve(loader.current);
+      }
+    };
+  }, [displayedCards.length, filteredCards.length, loadMoreCards]);
 
   // Alterar a aba ativa
   const handleTabChange = (value: string) => {
@@ -177,7 +221,7 @@ export function SectionCards({ cards, linkCasa }: SectionCardsPgProps) {
                 quality={100}
               />
             </div>
-            {filteredCards.map(({ id, nomeJogo, porcentagem, minima, padrao, maxima, categoriaJogo, colorBgGame }) => (
+            {displayedCards.map(({ id, nomeJogo, porcentagem, minima, padrao, maxima, categoriaJogo, colorBgGame }) => (
               <CardGames
                 key={id}
                 id={id}
@@ -192,6 +236,11 @@ export function SectionCards({ cards, linkCasa }: SectionCardsPgProps) {
               />
             ))}
           </div>
+          {displayedCards.length < filteredCards.length && (
+            <div ref={loader} className="w-full h-10 flex items-center justify-center">
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-green-500"></div>
+            </div>
+          )}
         </div>
       ) : (
         <div className="flex justify-center items-center flex-col">

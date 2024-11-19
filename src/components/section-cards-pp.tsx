@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState, useMemo, useCallback } from "react"
+import { useEffect, useState, useMemo, useCallback, useRef } from "react"
 import { DotFilledIcon } from "@radix-ui/react-icons"
 import { CardGames } from "./card-games"
 import { SearchFilter } from "./filter-cards"
@@ -32,11 +32,16 @@ const newGames = [
   'Mustang Gold Megaways',
 ]
 
+const CARDS_PER_PAGE = 14
+
 export function SectionCardsPP({ cards, linkCasa }: SectionCardsPpProps) {
   const [filteredCards, setFilteredCards] = useState<CardData[]>(cards || [])
+  const [displayedCards, setDisplayedCards] = useState<CardData[]>([])
   const [activeTab, setActiveTab] = useState<string>("all")
   const [searchTerm, setSearchTerm] = useState("")
+  const [page, setPage] = useState(1)
   const { toast } = useToast()
+  const loader = useRef(null)
 
   const isHot = useCallback((card: CardData) =>
     card.minima > 90 || card.padrao > 90 || card.maxima > 90,
@@ -80,11 +85,48 @@ export function SectionCardsPP({ cards, linkCasa }: SectionCardsPpProps) {
     }
 
     setFilteredCards(result)
+    setPage(1)
+    setDisplayedCards(result.slice(0, CARDS_PER_PAGE))
   }, [cards, activeTab, searchTerm, isHot, sortedNewGames])
 
   useEffect(() => {
     applyFilters()
   }, [applyFilters])
+
+  const loadMoreCards = useCallback(() => {
+    const nextPage = page + 1
+    const start = (nextPage - 1) * CARDS_PER_PAGE
+    const end = nextPage * CARDS_PER_PAGE
+    const newCards = filteredCards.slice(start, end)
+    setDisplayedCards(prev => [...prev, ...newCards])
+    setPage(nextPage)
+  }, [page, filteredCards])
+
+  useEffect(() => {
+    const options = {
+      root: null,
+      rootMargin: "20px",
+      threshold: 1.0
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      const target = entries[0]
+      if (target.isIntersecting && displayedCards.length < filteredCards.length) {
+        loadMoreCards()
+      }
+    }, options)
+
+    const currentLoader = loader.current
+    if (currentLoader) {
+      observer.observe(currentLoader)
+    }
+
+    return () => {
+      if (currentLoader) {
+        observer.unobserve(currentLoader)
+      }
+    }
+  }, [displayedCards.length, filteredCards.length, loadMoreCards])
 
   const handleTabChange = (value: string) => {
     setActiveTab(value)
@@ -133,7 +175,7 @@ export function SectionCardsPP({ cards, linkCasa }: SectionCardsPpProps) {
 
       {linkCasa ? (
         <div className='grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-8 2xl:grid-cols-9 gap-2 my-5'>
-          {filteredCards.map(({ id, nomeJogo, porcentagem, minima, padrao, maxima, categoriaJogo, colorBgGame }) => (
+          {displayedCards.map(({ id, nomeJogo, porcentagem, minima, padrao, maxima, categoriaJogo, colorBgGame }) => (
             <div key={id}>
               <CardGames
                 id={id}
@@ -155,6 +197,11 @@ export function SectionCardsPP({ cards, linkCasa }: SectionCardsPpProps) {
             Link não encontrado <DotFilledIcon className="size-8 text-red-600 animate-ping text-center" />
           </p>
           <p className="text-zinc-500">atualize na página do administrador</p>
+        </div>
+      )}
+      {displayedCards.length < filteredCards.length && (
+        <div ref={loader} className="w-full h-10 flex items-center justify-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-green-500"></div>
         </div>
       )}
     </section>
