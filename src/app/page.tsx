@@ -6,7 +6,7 @@ import Loading from './loading';
 import { NavBar } from "@/components/nav-bar";
 import { Footer } from "@/components/footer";
 
-const CACHE_EXPIRATION_TIME = 300000; // 5 minutos em milissegundos
+const CACHE_EXPIRATION_TIME = 200000; 
 let cachedData: { cards: CardData[]; linkCasa: string; imageBanner: string; updateTime: string } | null = null;
 let cacheTimestamp: number = 0;
 
