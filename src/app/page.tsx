@@ -8,9 +8,11 @@ import { formatUpdateTime } from "@/lib/utils";
 export default async function HomePage() {
     console.log("Rendering HomePage...");
 
-    // Separar as chamadas para garantir que ambas sejam executadas
     const cardsData = await getCardsPG();
+    console.log("Cards Data:", cardsData);
+
     const linkCasaData = await getLinkCasa();
+    console.log("Link Casa Data:", linkCasaData);
 
     const cards = cardsData?.data || [];
     const linkCasa = linkCasaData?.data?.link || "";
@@ -19,9 +21,11 @@ export default async function HomePage() {
         ? formatUpdateTime(cards[0].updatedAt)
         : "Horário indisponível";
 
-    console.log("Update Time:", updateTime);
+    console.log("Final Data:");
+    console.log("Cards:", cards);
     console.log("Link Casa:", linkCasa);
-    console.log("Cards fetched:", cards.length);
+    console.log("Image Banner:", imageBanner);
+    console.log("Update Time:", updateTime);
 
     if (!cards.length || !linkCasa || !imageBanner || !updateTime) {
         return <div>Carregando...</div>;
