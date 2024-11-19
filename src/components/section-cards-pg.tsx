@@ -57,49 +57,53 @@ export function SectionCards({ cards, linkCasa }: SectionCardsPgProps) {
   const { toast } = useToast();
   const loader = useRef(null);
 
-  const isRelevantGame = useCallback((card: CardData) => {
-    const isFortuneGame = card.nomeJogo.toLowerCase().startsWith('fortune');
-    const isHighPercentage = card.minima > 90 || card.padrao > 90 || card.maxima > 90;
-    return (isFortuneGame && card.categoriaJogo === "PG" && isHighPercentage) ||
-           (!isFortuneGame && isHighPercentage && card.categoriaJogo === "PP");
-  }, []);
+  const isHot = useCallback((card: CardData) =>
+    card.minima > 90 || card.padrao > 90 || card.maxima > 90 || card.porcentagem > 90,
+    []);
 
-  const newGamesSet = useMemo(() => new Set(newGames.map(game => game.toLowerCase())), []);
   const sortedNewGames = useMemo(() => {
-    return (cards || [])
-      .filter(card => newGamesSet.has(card.nomeJogo.toLowerCase()))
-      .sort((a, b) => {
-        const indexA = newGames.findIndex(game => game.toLowerCase() === a.nomeJogo.toLowerCase());
-        const indexB = newGames.findIndex(game => game.toLowerCase() === b.nomeJogo.toLowerCase());
-        return indexA - indexB;
-      });
-  }, [cards, newGamesSet]);
+    if (!cards) return [];
+    const newGamesFiltered = cards.filter(card =>
+      newGames.some(newGame => card.nomeJogo.toLowerCase().includes(newGame.toLowerCase()))
+    );
+    return newGamesFiltered.sort((a, b) => {
+      const indexA = newGames.findIndex(game => a.nomeJogo.toLowerCase().includes(game.toLowerCase()));
+      const indexB = newGames.findIndex(game => b.nomeJogo.toLowerCase().includes(game.toLowerCase()));
+      return indexA - indexB;
+    });
+  }, [cards]);
 
   const applyFilters = useCallback(() => {
     setIsLoading(true);
-    let result = cards || [];
+    if (!cards) return setFilteredCards([]);
+
+    let result = [...cards];
+
     switch (activeTab) {
       case "hot":
-        result = result.filter(isRelevantGame);
+        result = result.filter(isHot);
         break;
       case "new":
         result = sortedNewGames;
         break;
       case "all":
       default:
+        result.sort((a, b) => a.id - b.id);
         break;
     }
 
     if (searchTerm) {
       const lowerCaseSearch = searchTerm.toLowerCase();
-      result = result.filter(card => card.nomeJogo.toLowerCase().includes(lowerCaseSearch));
+      result = result.filter(card =>
+        card.nomeJogo.toLowerCase().includes(lowerCaseSearch)
+      );
     }
 
     setFilteredCards(result);
     setPage(1);
     setDisplayedCards(result.slice(0, CARDS_PER_PAGE));
     setIsLoading(false);
-  }, [cards, activeTab, searchTerm, isRelevantGame, sortedNewGames]);
+  }, [cards, activeTab, searchTerm, isHot, sortedNewGames]);
 
   useEffect(() => {
     applyFilters();
@@ -128,14 +132,14 @@ export function SectionCards({ cards, linkCasa }: SectionCardsPgProps) {
       }
     }, options);
 
-    if (loader.current) {
-      observer.observe(loader.current);
+    const currentLoader = loader.current;
+    if (currentLoader) {
+      observer.observe(currentLoader);
     }
 
     return () => {
-      if (loader.current) {
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-        observer.unobserve(loader.current);
+      if (currentLoader) {
+        observer.unobserve(currentLoader);
       }
     };
   }, [displayedCards.length, filteredCards.length, loadMoreCards]);
@@ -146,6 +150,7 @@ export function SectionCards({ cards, linkCasa }: SectionCardsPgProps) {
       title: `Jogos ${value === 'hot' ? 'populares e +90%' : value === 'new' ? 'novos' : 'todos'} selecionados`,
       description: `Mostrando ${value === 'all' ? 'todos os jogos' : value === 'hot' ? 'jogos HOT e +90%' : 'jogos novos selecionados'}.`,
       className: "bg-green-500 border-none text-white font-bold",
+      duration: 2000
     });
   };
 
@@ -228,5 +233,4 @@ export function SectionCards({ cards, linkCasa }: SectionCardsPgProps) {
         </div>
       )}
     </section>
-  );
-}
+  )}
