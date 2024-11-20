@@ -21,60 +21,61 @@ async function createOrUpdateCard(i: number, gameData: any) {
         porcentagem = maiorValor + 1 <= 98 ? maiorValor + 1 : 98;
     }
 
-    const existingCard = await prisma.card.findUnique({ where: { id: i } });
-
-    if (existingCard) {
-        await prisma.card.update({
-            where: { id: i },
-            data: { porcentagem, minima, padrao, maxima },
-        });
-    } else {
-        await prisma.card.create({
-            data: {
-                id: i,
-                nomeJogo: nome,
-                categoriaJogo: categoria,
-                porcentagem,
-                minima,
-                padrao,
-                maxima,
-                colorBgGame: colorBgGame
-            }
-        });
-    }
+    return prisma.card.upsert({
+        where: { id: i },
+        update: { porcentagem, minima, padrao, maxima },
+        create: {
+            id: i,
+            nomeJogo: nome,
+            categoriaJogo: categoria,
+            porcentagem,
+            minima,
+            padrao,
+            maxima,
+            colorBgGame: colorBgGame,
+        },
+    });
 }
 
 export async function updateCards() {
     try {
-        for (let i = 1; i <= 169; i++) {
-            const gameData = nameCards[i];
-            if (!gameData) continue;
-            
-            await createOrUpdateCard(i, gameData);
-        }
+        // Cria uma lista de promessas para atualizar ou criar os cartões
+        const updatePromises = Object.entries(nameCards).map(([key, gameData]) => {
+            const i = parseInt(key, 10);
+            if (!gameData) return null;
+            return createOrUpdateCard(i, gameData);
+        }).filter(Boolean); // Remove valores nulos ou inválidos
 
-        // Revalida as tags para que as próximas requisições recarreguem o cache
-        revalidateTag('cards');
-        revalidateTag('cards-pg');
-        revalidateTag('cards-pp');
+        // Executa todas as promessas em paralelo
+        await Promise.all(updatePromises);
+
+        // Revalida as tags para atualizar o cache
+        await Promise.all([
+            revalidateTag('cards'),
+            revalidateTag('cards-pg'),
+            revalidateTag('cards-pp'),
+        ]);
 
         return { success: true };
     } catch (error) {
         console.error('Error updating cards data:', error);
-        return { success: false };
+        return { success: false};
     }
 }
 
 export async function createCards() {
     try {
-        for (let i = 1; i <= 169; i++) {
-            const gameData = nameCards[i];
-            if (!gameData) continue;
+        const createPromises = Object.entries(nameCards).map(([key, gameData]) => {
+            const i = parseInt(key, 10);
+            if (!gameData) return null;
+            return createOrUpdateCard(i, gameData);
+        }).filter(Boolean);
 
-            await createOrUpdateCard(i, gameData);
-        }
+        // Executa todas as promessas em paralelo
+        await Promise.all(createPromises);
 
-        revalidateTag('cards');
+        await revalidateTag('cards');
+
         return { success: true };
     } catch (error) {
         console.error('Error generating cards data:', error);
@@ -87,7 +88,7 @@ export const getCardsPG = unstable_cache(async () => {
     try {
         const cards = await prisma.card.findMany({
             where: { categoriaJogo: 'PG' },
-            orderBy: { id: "asc" }
+            orderBy: { id: "asc" },
         });
 
         if (cards.length) {
@@ -99,7 +100,7 @@ export const getCardsPG = unstable_cache(async () => {
         if (newCards.success) {
             const cards = await prisma.card.findMany({
                 where: { categoriaJogo: 'PG' },
-                orderBy: { id: "asc" }
+                orderBy: { id: "asc" },
             });
             return { data: cards };
         }
@@ -110,7 +111,7 @@ export const getCardsPG = unstable_cache(async () => {
     }
 }, ['cards-pg'], {
     revalidate: fiveMinutesInSeconds,
-    tags: ['cards-pg']
+    tags: ['cards-pg'],
 });
 
 // Função para buscar os cartões da categoria 'PP'
@@ -118,7 +119,7 @@ export const getCardsPP = unstable_cache(async () => {
     try {
         const cards = await prisma.card.findMany({
             where: { categoriaJogo: 'PP' },
-            orderBy: { id: "asc" }
+            orderBy: { id: "asc" },
         });
 
         if (cards.length) {
@@ -130,7 +131,7 @@ export const getCardsPP = unstable_cache(async () => {
         if (newCards.success) {
             const cards = await prisma.card.findMany({
                 where: { categoriaJogo: 'PP' },
-                orderBy: { id: "asc" }
+                orderBy: { id: "asc" },
             });
             return { data: cards };
         }
@@ -141,7 +142,7 @@ export const getCardsPP = unstable_cache(async () => {
     }
 }, ['cards-pp'], {
     revalidate: fiveMinutesInSeconds,
-    tags: ['cards-pp']
+    tags: ['cards-pp'],
 });
 
 // Variável única para comparação de hash
