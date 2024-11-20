@@ -1,9 +1,12 @@
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
 import { format, toZonedTime } from "date-fns-tz";
+import { getCacheData, isCacheEmpty, updateCardsCache, updateSettingsCache } from "./cache";
+import { getCardsPG, getCardsPP, getLinkCasa } from "./actions";
+
 
 export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs))
+    return twMerge(clsx(inputs))
 }
 
 export const getRandomPorcentagem = () => {
@@ -73,3 +76,40 @@ export function calculateEndTime(): string {
     const minutes = currentTime.getMinutes().toString().padStart(2, '0');
     return `${hours}:${minutes}`;
 }
+
+export async function loadData(category: "pg" | "pp") {
+    // Verifica se o cache está vazio
+    if (isCacheEmpty()) {
+      console.log("Cache vazio. Buscando dados do banco de dados...");
+  
+      // Busca os dados do banco de dados
+      const cardsData = category === "pg" ? await getCardsPG() : await getCardsPP();
+      const settings = await getLinkCasa();
+  
+      // Atualiza o cache
+      updateCardsCache(cardsData.data);
+      updateSettingsCache(settings.data?.link || "", settings.data?.bannerImage || "");
+  
+      console.log("Cache atualizado com dados do banco.");
+    } else {
+      console.log("Dados carregados do cache.");
+    }
+  
+    // Retorna os dados do cache
+    const cache = getCacheData();
+    const formattedUpdateTime = formatUpdateTime(cache.updateTime, 0); // Formata o horário
+  
+    return {
+      cards: cache.cards.filter((card) => card.categoriaJogo === category.toUpperCase()), // Filtra por categoria
+      linkCasa: cache.linkCasa,
+      imageBanner: cache.imageBanner,
+      updateTime: formattedUpdateTime, // Horário formatado
+    };
+  }
+
+
+
+
+
+
+
