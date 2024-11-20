@@ -1,34 +1,56 @@
+import { getCardsPG, getLinkCasa } from "@/lib/actions";
+import { ContentPg } from "@/components/content-pg";
+import { CardData, SectionCards } from "@/components/section-cards-pg";
+import { formatUpdateTime } from "@/lib/utils";
+import Loading from '@/components/loading';
+import { NavBar } from "@/components/nav-bar";
+import { Footer } from "@/components/footer";
 
-import { ButtonScrollTop } from "@/components/button-scroll-top";
-import { ContentPp } from "@/components/content-pp";
-import { CardData } from "@/components/section-cards-pg";
-import { SectionCardsPP } from "@/components/section-cards-pp";
-import { getCardsPP, getLinkCasa } from "@/lib/actions";
-import { formatUpdateTime, loadData } from "@/lib/utils";
-import Loading from '@/app/loading';
-import { NavBar } from '@/components/nav-bar';
-import { Footer } from '@/components/footer';
+const CACHE_EXPIRATION_TIME = 300000; // 5 minutos em milissegundos
+let cachedData: { cards: CardData[]; linkCasa: string; imageBanner: string; updateTime: string } | null = null;
+let cacheTimestamp: number = 0;
 
+async function loadData() {
+  const now = Date.now();
 
-export default async function PpGamesPage() {
-    const data = await loadData('pp');
+  // Verifica se o cache existe e não está expirado
+  if (cachedData && (now - cacheTimestamp) < CACHE_EXPIRATION_TIME) {
+    return cachedData;
+  }
 
-    if (!data || !data.cards || !data.linkCasa || !data.imageBanner || !data.updateTime) {
-        return <Loading />;
-    }
+  // Se o cache estiver expirado, recarrega os dados
+  const cardsData = await getCardsPG();
+  const propsSettings = await getLinkCasa();
 
-    const { cards, linkCasa, imageBanner, updateTime } = data;
+  const cards = cardsData?.data as CardData[];
+  const linkCasa = propsSettings.data?.link || '';
+  const imageBanner = propsSettings.data?.bannerImage || '';
+  const updateTime = cardsData?.data[0]?.updatedAt ? formatUpdateTime(cardsData.data[0].updatedAt) : '';
 
+  // Atualiza o cache e o timestamp
+  cachedData = { cards, linkCasa, imageBanner, updateTime };
+  cacheTimestamp = now;
 
-    return (
-        <>
-            <NavBar />
-            <main>
-                <ButtonScrollTop />
-                <ContentPp />
-                <SectionCardsPP cards={cards} linkCasa={linkCasa} />
-            </main>
-            <Footer />
-        </>
-    );
+  return cachedData;
+}
+
+export default async function HomePage() {
+  const data = await loadData();
+
+  if (!data || !data.cards || !data.linkCasa || !data.imageBanner || !data.updateTime) {
+    return <Loading />;
+  }
+
+  const { cards, linkCasa, imageBanner, updateTime } = data;
+
+  return (
+    <>
+    <NavBar />
+      <main>
+        <ContentPg updateTime={updateTime} imageBanner={imageBanner} />
+        <SectionCards cards={cards} linkCasa={linkCasa} />
+      </main>
+      <Footer />
+    </>
+  );
 }
