@@ -52,7 +52,7 @@ export async function populateCacheFromDB() {
 
     return { success: true };
   } catch (error) {
-    console.error("Erro ao preencher o cache a partir do banco:", error.message);
+    console.error("Erro ao preencher o cache a partir do banco:");
     return { success: false };
   }
 }

@@ -21,11 +21,10 @@ export async function GET() {
       message: "Dados atualizados e cache renovado",
     });
   } catch (error) {
-    console.error("Erro ao atualizar os dados dos cartões:", error.message);
+    console.error("Erro ao atualizar os dados dos cartões:");
     return NextResponse.json({
       success: false,
       message: "Erro ao atualizar os dados",
-      error: error.message,
     });
   }
 }
