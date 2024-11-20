@@ -56,9 +56,7 @@ export default async function PpGamesPage() {
                 <ButtonScrollTop />
                 <ContentPp />
                 <SectionCardsPP cards={cards} linkCasa={linkCasa} />
-                <p className="text-center mt-4 text-sm text-gray-500">
-                    Última atualização: {updateTime}
-                </p>
+             
             </main>
             <Footer />
         </>
