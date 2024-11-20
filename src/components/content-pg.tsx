@@ -51,8 +51,8 @@ export function ContentPg({ updateTime, imageBanner }: ContentPgProps) {
               <Image
                 src="/image/natal/card.png"
                 alt="Banner de Natal"
-                width={915}
-                height={980}
+                width={1015}
+                height={1080}
                 className="w-full h-auto object-contain"
                 priority={true}
                 quality={100}
