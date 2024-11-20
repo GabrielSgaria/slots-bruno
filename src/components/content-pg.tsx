@@ -19,7 +19,7 @@ export interface ContentPgProps {
 }
 
 export function ContentPg({ updateTime, imageBanner }: ContentPgProps) {
-  const [showModal, setShowModal] = useState<boolean>(false);
+  const [showModal, setShowModal] = useState<boolean>(true);
 
   useEffect(() => {
     const storedPopupShown = localStorage.getItem('popupShown');
@@ -45,19 +45,11 @@ export function ContentPg({ updateTime, imageBanner }: ContentPgProps) {
   return (
     <div>
       <Dialog open={showModal} onOpenChange={setShowModal}>
-        <DialogContent className="p-0 w-[90vw] max-w-[414px] h-auto max-h-[90vh] border-none bg-transparent rounded-sm">
+        <DialogContent
+          className="p-0 w-[90vw] max-w-[414px] h-auto max-h-[90vh] border-none bg-transparent rounded-sm"
+          onClose={handleCloseModal}
+        >
           <div className="relative w-full" style={{ aspectRatio: '414 / 577' }}>
-            <div className="absolute -top-7 -left-7  w-[460px] md:w-[465px] z-50 pointer-events-none">
-              <Image
-                src="/image/natal/card.png"
-                alt="Banner de Natal"
-                width={1015}
-                height={1080}
-                className="w-full h-auto object-contain"
-                priority={true}
-                quality={100}
-              />
-            </div>
             {imageBanner && (
               <Image
                 src={`data:image/png;base64,${imageBanner}`}
@@ -69,13 +61,6 @@ export function ContentPg({ updateTime, imageBanner }: ContentPgProps) {
               />
             )}
           </div>
-          <Button
-            className="absolute right-2 top-2 h-8 w-8 p-0 rounded-full bg-black bg-opacity-50 hover:bg-opacity-75 transition-all z-[100]"
-            onClick={handleCloseModal}
-          >
-            <X className="h-4 w-4 text-white" />
-            <span className="sr-only">Close</span>
-          </Button>
         </DialogContent>
       </Dialog>
 

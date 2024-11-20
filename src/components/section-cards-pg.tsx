@@ -204,7 +204,7 @@ export function SectionCards({ cards, linkCasa }: SectionCardsPgProps) {
                 quality={100}
               />
             </div>
-            <div className="w-[72px] absolute z-50 -right-[28px] -top-[47px] pointer-events-none">
+            <div className="w-[72px] absolute z-50 -right-[26px] -top-[47px] pointer-events-none">
               <Image
                 src="/image/natal/elemento-direita.png"
                 alt="Banner de Natal"

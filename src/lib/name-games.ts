@@ -128,7 +128,7 @@ export const nameCards: { [key: number]: { nome: string; categoria: string, colo
     125: { nome: 'Safari Wilds', categoria: 'PG', colorBgGame: 'rgba(252,159,19,255)' },
     126: { nome: `Gladiator's Glory`, categoria: 'PG', colorBgGame: 'rgba(169,55,39,255)' },
     127: { nome: 'Ultimate Striker', categoria: 'PG', colorBgGame: 'rgba(56,87,7,255)' },
-    128: { nome: 'Hawaiian Tiki', categoria: 'PG', colorBgGame: 'rgba(93,84,80,255)' },
+    128: { nome: 'Wild Heist Cashout', categoria: 'PG', colorBgGame: 'rgba(93,84,80,255)' },
 
 
     // JOGOS PP

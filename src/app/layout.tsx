@@ -7,6 +7,8 @@ import { ServiceWorkerInitializer } from "@/components/page-download/sw-initiali
 // import { LocalNotificationHandler } from "@/components/notification-local"
 import { DownloadAppButton } from "@/components/page-download/download-app-button"
 import Image from "next/image"
+import { ChristmasDecorations } from "@/components/decoration"
+import { ChristmasDecorationsManager } from "@/components/verification-page-natal"
 
 const poppins = Poppins(
   {
@@ -85,6 +87,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
+
   return (
     <html lang="pt" suppressHydrationWarning>
       <head>
@@ -101,56 +104,12 @@ export default function RootLayout({
         <link rel="manifest" href="/manifest.json" />
       </head>
       <body className={`text-zinc-50 relative ${poppins.variable} ${roboto.variable}`}>
-        <div className="w-full absolute z-50 pt-[40px] sm:pt-[55px] md:pt-[35px] lg:pt-[22px] 2xl:pt-[3px] pointer-events-none">
-          <Image
-            src="/image/natal/cima-site.png"
-            alt="Banner de Natal"
-            width={1920}
-            height={1080}
-            className="w-full h-auto object-contain object-bottom"
-            priority={true}
-            quality={100}
-          />
-        </div>
+        <ChristmasDecorationsManager />
         <div className="bg-zinc-950/20 backdrop-blur-sm relative">
-          <div className="hidden md:w-full md:h-full md:block md:absolute z-50 pointer-events-none">
-            <Image
-              src="/image/natal/cantos.png"
-              alt="Banner de Natal"
-              width={1920}
-              height={1080}
-              className="w-full h-auto object-contain object-bottom"
-              priority={true}
-              quality={100}
-            />
-          </div>
-          <div className="md:hidden w-[100px] top-40 left-0 block absolute z-50 pointer-events-none">
-            <Image
-              src="/image/natal/canto-left.png"
-              alt="Banner de Natal"
-              width={1920}
-              height={1080}
-              className="w-full h-auto object-contain object-bottom"
-              priority={true}
-              quality={100}
-            />
-          </div>
-          <div className="md:hidden w-[100px] top-40 right-0 block absolute z-50 pointer-events-none">
-            <Image
-              src="/image/natal/canto-right.png"
-              alt="Banner de Natal"
-              width={1920}
-              height={1080}
-              className="w-full h-auto object-contain object-bottom"
-              priority={true}
-              quality={100}
-            />
-          </div>
           <GoogleAnalytics gaId="G-9E7Z61LW2J" />
           <GoogleTagManager gtmId="G-9E7Z61LW2J" />
           {children}
         </div>
-        {/* <LocalNotificationHandler /> */}
         <Toaster />
         <ServiceWorkerInitializer />
         <DownloadAppButton />

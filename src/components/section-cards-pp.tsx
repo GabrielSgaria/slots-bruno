@@ -8,6 +8,7 @@ import { motion } from "framer-motion"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { useToast } from "@/hooks/use-toast"
 import Loading from "@/components/loading-cards"
+import Image from "next/image"
 
 export interface CardData {
   id: number
@@ -180,7 +181,30 @@ export function SectionCardsPP({ cards, linkCasa }: SectionCardsPpProps) {
       {isLoading ? (
         <Loading />
       ) : linkCasa ? (
-        <div className='grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-8 2xl:grid-cols-9 gap-2 my-5'>
+        <div className='relative grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-8 2xl:grid-cols-9 gap-2 my-5'>
+          <div className="w-[72px] absolute z-50 -left-6 -top-[27px] pointer-events-none">
+            <Image
+              src="/image/natal/gorro.png"
+              alt="Banner de Natal"
+              width={1920}
+              height={1080}
+              className="w-full h-auto object-cover object-bottom"
+              priority={true}
+              quality={100}
+            />
+          </div>
+          <div className="w-[72px] absolute z-50 -right-[26px] -top-[47px] pointer-events-none">
+            <Image
+              src="/image/natal/elemento-direita.png"
+              alt="Banner de Natal"
+              width={1920}
+              height={1080}
+              className="w-full h-auto object-cover object-bottom"
+              priority={true}
+              quality={100}
+            />
+          </div>
+
           {displayedCards.map(({ id, nomeJogo, porcentagem, minima, padrao, maxima, categoriaJogo, colorBgGame }) => (
             <div key={id}>
               <CardGames
