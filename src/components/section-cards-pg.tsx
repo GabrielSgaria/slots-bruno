@@ -7,7 +7,7 @@ import { CardGames } from "./card-games";
 import { SearchFilter } from "./filter-cards";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
-import Loading from "@/components/loading-cards";
+import Image from "next/image";
 
 export interface CardData {
   id: number;
@@ -45,70 +45,65 @@ const newGames = [
   'Wild Heist Cashout',
 ];
 
-const CARDS_PER_PAGE = 5;
-
 export function SectionCards({ cards, linkCasa }: SectionCardsPgProps) {
   const [filteredCards, setFilteredCards] = useState<CardData[]>(cards || []);
   const [displayedCards, setDisplayedCards] = useState<CardData[]>([]);
   const [activeTab, setActiveTab] = useState<string>("all");
   const [searchTerm, setSearchTerm] = useState("");
   const [page, setPage] = useState(1);
-  const [isLoading, setIsLoading] = useState(true);
   const { toast } = useToast();
   const loader = useRef(null);
 
+  const CARDS_PER_PAGE = 9;
+
+
   const isHot = useCallback((card: CardData) =>
-    card.minima > 90 || card.padrao > 90 || card.maxima > 90 || card.porcentagem > 90,
-    []);
+    card.minima > 90 || card.padrao > 90 || card.maxima > 90,
+    [])
 
+  // Filtro para jogos novos
+  const newGamesSet = useMemo(() => new Set(newGames.map(game => game.toLowerCase())), []);
   const sortedNewGames = useMemo(() => {
-    if (!cards) return [];
-    const newGamesFiltered = cards.filter(card =>
-      newGames.some(newGame => card.nomeJogo.toLowerCase().includes(newGame.toLowerCase()))
-    );
-    return newGamesFiltered.sort((a, b) => {
-      const indexA = newGames.findIndex(game => a.nomeJogo.toLowerCase().includes(game.toLowerCase()));
-      const indexB = newGames.findIndex(game => b.nomeJogo.toLowerCase().includes(game.toLowerCase()));
-      return indexA - indexB;
-    });
-  }, [cards]);
+    return (cards || [])
+      .filter(card => newGamesSet.has(card.nomeJogo.toLowerCase()))
+      .sort((a, b) => {
+        const indexA = newGames.findIndex(game => game.toLowerCase() === a.nomeJogo.toLowerCase());
+        const indexB = newGames.findIndex(game => game.toLowerCase() === b.nomeJogo.toLowerCase());
+        return indexA - indexB;
+      });
+  }, [cards, newGamesSet]);
 
+  // Aplicar filtros e busca
   const applyFilters = useCallback(() => {
-    setIsLoading(true);
-    if (!cards) return setFilteredCards([]);
-
-    let result = [...cards];
-
+    let result = cards || [];
     switch (activeTab) {
       case "hot":
-        result = result.filter(isHot);
+        result = result.filter(card => isHot(card) || card.porcentagem > 90)
         break;
       case "new":
         result = sortedNewGames;
         break;
       case "all":
       default:
-        result.sort((a, b) => a.id - b.id);
         break;
     }
 
     if (searchTerm) {
       const lowerCaseSearch = searchTerm.toLowerCase();
-      result = result.filter(card =>
-        card.nomeJogo.toLowerCase().includes(lowerCaseSearch)
-      );
+      result = result.filter(card => card.nomeJogo.toLowerCase().includes(lowerCaseSearch));
     }
 
     setFilteredCards(result);
     setPage(1);
     setDisplayedCards(result.slice(0, CARDS_PER_PAGE));
-    setIsLoading(false);
   }, [cards, activeTab, searchTerm, isHot, sortedNewGames]);
 
+  // Reaplicar filtros quando necessário
   useEffect(() => {
     applyFilters();
   }, [applyFilters]);
 
+  // Carregar mais cards
   const loadMoreCards = useCallback(() => {
     const nextPage = page + 1;
     const start = (nextPage - 1) * CARDS_PER_PAGE;
@@ -118,6 +113,7 @@ export function SectionCards({ cards, linkCasa }: SectionCardsPgProps) {
     setPage(nextPage);
   }, [page, filteredCards]);
 
+  // Configurar o observador de interseção
   useEffect(() => {
     const options = {
       root: null,
@@ -132,25 +128,25 @@ export function SectionCards({ cards, linkCasa }: SectionCardsPgProps) {
       }
     }, options);
 
-    const currentLoader = loader.current;
-    if (currentLoader) {
-      observer.observe(currentLoader);
+    if (loader.current) {
+      observer.observe(loader.current);
     }
 
     return () => {
-      if (currentLoader) {
-        observer.unobserve(currentLoader);
+      if (loader.current) {
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        observer.unobserve(loader.current);
       }
     };
   }, [displayedCards.length, filteredCards.length, loadMoreCards]);
 
+  // Alterar a aba ativa
   const handleTabChange = (value: string) => {
     setActiveTab(value);
     toast({
-      title: `Jogos ${value === 'hot' ? 'populares e +90%' : value === 'new' ? 'novos' : 'todos'} selecionados`,
+      title: `Jogos ${value === 'hot' ? 'populares' : value === 'new' ? 'novos' : 'todos'} selecionados`,
       description: `Mostrando ${value === 'all' ? 'todos os jogos' : value === 'hot' ? 'jogos HOT e +90%' : 'jogos novos selecionados'}.`,
       className: "bg-green-500 border-none text-white font-bold",
-      duration: 2000
     });
   };
 
@@ -158,9 +154,7 @@ export function SectionCards({ cards, linkCasa }: SectionCardsPgProps) {
     <section className="flex flex-col mx-auto items-center justify-center px-2 -mt-6">
       {linkCasa ? (
         <div className="flex flex-col justify-center items-center md:px-16 rounded-2xl w-full">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
+          <div
             className="w-full mt-4 flex items-center justify-center pt-3"
           >
             <Tabs defaultValue="all" className="w-full max-w-md" onValueChange={handleTabChange}>
@@ -194,31 +188,49 @@ export function SectionCards({ cards, linkCasa }: SectionCardsPgProps) {
                 </TabsTrigger>
               </TabsList>
             </Tabs>
-          </motion.div>
+          </div>
 
           <SearchFilter searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
 
-          {isLoading ? (
-            <Loading />
-          ) : (
-            <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-8 2xl:grid-cols-9 gap-2 my-5 relative">
-              {displayedCards.map(({ id, nomeJogo, porcentagem, minima, padrao, maxima, categoriaJogo, colorBgGame }) => (
-                <CardGames
-                  key={id}
-                  id={id}
-                  porcentagem={porcentagem}
-                  linkCasa={linkCasa}
-                  minima={minima}
-                  padrao={padrao}
-                  maxima={maxima}
-                  nomeJogo={nomeJogo}
-                  categoriaJogo={categoriaJogo}
-                  colorBgGame={colorBgGame}
-                />
-              ))}
+          <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-8 2xl:grid-cols-9 gap-2 my-5 relative">
+            <div className="w-[72px] absolute z-50 -left-6 -top-[27px] pointer-events-none">
+              <Image
+                src="/image/natal/gorro.png"
+                alt="Banner de Natal"
+                width={1920}
+                height={1080}
+                className="w-full h-auto object-cover object-bottom"
+                priority={true}
+                quality={100}
+              />
             </div>
-          )}
-          {!isLoading && displayedCards.length < filteredCards.length && (
+            <div className="w-[72px] absolute z-50 -right-[28px] -top-[47px] pointer-events-none">
+              <Image
+                src="/image/natal/elemento-direita.png"
+                alt="Banner de Natal"
+                width={1920}
+                height={1080}
+                className="w-full h-auto object-cover object-bottom"
+                priority={true}
+                quality={100}
+              />
+            </div>
+            {displayedCards.map(({ id, nomeJogo, porcentagem, minima, padrao, maxima, categoriaJogo, colorBgGame }) => (
+              <CardGames
+                key={id}
+                id={id}
+                porcentagem={porcentagem}
+                linkCasa={linkCasa}
+                minima={minima}
+                padrao={padrao}
+                maxima={maxima}
+                nomeJogo={nomeJogo}
+                categoriaJogo={categoriaJogo}
+                colorBgGame={colorBgGame}
+              />
+            ))}
+          </div>
+          {displayedCards.length < filteredCards.length && (
             <div ref={loader} className="w-full h-10 flex items-center justify-center">
               <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-green-500"></div>
             </div>
@@ -233,4 +245,5 @@ export function SectionCards({ cards, linkCasa }: SectionCardsPgProps) {
         </div>
       )}
     </section>
-  )}
+  );
+}

@@ -15,9 +15,7 @@ export function SearchFilter({ searchTerm, setSearchTerm }: SearchFilterProps) {
   };
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
+    <div
       className="w-full flex items-center justify-center pt-5 max-w-[570px]"
     >
       <div className="relative w-full">
@@ -30,6 +28,6 @@ export function SearchFilter({ searchTerm, setSearchTerm }: SearchFilterProps) {
           className="border-none rounded-lg text-zinc-950 placeholder:text-zinc-950/60 placeholder:italic bg-yellow-400 w-full py-2 pl-10 pr-4 text-sm focus-visible:ring-2 focus-visible:ring-green-600 focus-visible:ring-offset-2 focus-visible:ring-offset-yellow-400 outline-none shadow-lg"
         />
       </div>
-    </motion.div>
+    </div>
   )
 }

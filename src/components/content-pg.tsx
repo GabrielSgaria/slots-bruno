@@ -47,7 +47,7 @@ export function ContentPg({ updateTime, imageBanner }: ContentPgProps) {
       <Dialog open={showModal} onOpenChange={setShowModal}>
         <DialogContent className="p-0 w-[90vw] max-w-[414px] h-auto max-h-[90vh] border-none bg-transparent rounded-sm">
           <div className="relative w-full" style={{ aspectRatio: '414 / 577' }}>
-            {/* <div className="absolute -top-7 -left-7  w-[460px] md:w-[465px] z-50 pointer-events-none">
+            <div className="absolute -top-7 -left-7  w-[460px] md:w-[465px] z-50 pointer-events-none">
               <Image
                 src="/image/natal/card.png"
                 alt="Banner de Natal"
@@ -57,7 +57,7 @@ export function ContentPg({ updateTime, imageBanner }: ContentPgProps) {
                 priority={true}
                 quality={100}
               />
-            </div> */}
+            </div>
             {imageBanner && (
               <Image
                 src={`data:image/png;base64,${imageBanner}`}
@@ -80,7 +80,7 @@ export function ContentPg({ updateTime, imageBanner }: ContentPgProps) {
       </Dialog>
 
       <div className="container mx-auto flex flex-col items-center px-2 sm:px-2 mb-2 pt-20">
-        <motion.div
+        <div
           className="relative w-full max-w-[1200px] shadow-xl shadow-black rounded-lg overflow-hidden">
           <Swiper
             spaceBetween={30}
@@ -115,9 +115,9 @@ export function ContentPg({ updateTime, imageBanner }: ContentPgProps) {
               </SwiperSlide>
             ))}
           </Swiper>
-        </motion.div>
+        </div>
 
-        <motion.div
+        <div
           className="relative mt-5 flex flex-col items-center justify-center max-w-[600px] w-[100%] h-[220px] py-5"
         >
           <Image
@@ -134,7 +134,7 @@ export function ContentPg({ updateTime, imageBanner }: ContentPgProps) {
               Última atualização às {updateTime}
             </h1>
           )}
-        </motion.div>
+        </div>
       </div>
     </div>
   );

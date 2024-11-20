@@ -1,19 +1,19 @@
 export const bannerImages = [
     {
-        mobile: 'https://imagedelivery.net/6tAoXewsW-UbrMK1VkE8GQ/a483062b-e3bc-48a9-9798-ed7c183b3700/public',
-        desktop: 'https://imagedelivery.net/6tAoXewsW-UbrMK1VkE8GQ/5342baa9-7097-4dad-cc9a-180f992f5200/public'
+        mobile: 'https://imagedelivery.net/6tAoXewsW-UbrMK1VkE8GQ/a7b3b11c-4a08-4983-d196-52319ad67900/public',
+        desktop: 'https://imagedelivery.net/6tAoXewsW-UbrMK1VkE8GQ/fb2ff233-2ea0-42e9-6efa-a52296036c00/public'
     },
     {
-        mobile: 'https://imagedelivery.net/6tAoXewsW-UbrMK1VkE8GQ/2d6b4740-22cd-4985-7284-7e5abccd5800/public',
-        desktop: 'https://imagedelivery.net/6tAoXewsW-UbrMK1VkE8GQ/3fb1d4a6-04f3-4156-a257-a1e2a4a95700/public',
+        mobile: 'https://imagedelivery.net/6tAoXewsW-UbrMK1VkE8GQ/dfa55f92-d25e-4691-2320-620da0cad500/public',
+        desktop: 'https://imagedelivery.net/6tAoXewsW-UbrMK1VkE8GQ/b19a16d1-6071-472e-d5d4-bd42faca5500/public',
     },
     {
-        mobile: 'https://imagedelivery.net/6tAoXewsW-UbrMK1VkE8GQ/85f4c8c8-348a-42e7-aed6-36041b844f00/public',
-        desktop: 'https://imagedelivery.net/6tAoXewsW-UbrMK1VkE8GQ/21466c13-5016-41b9-9665-dfdb93c56300/public',
+        mobile: 'https://imagedelivery.net/6tAoXewsW-UbrMK1VkE8GQ/7665c229-a56a-49e2-aa90-e722f79cad00/public',
+        desktop: 'https://imagedelivery.net/6tAoXewsW-UbrMK1VkE8GQ/680281ac-5a5f-40bb-aa7c-a33767755700/public',
     },
-    // {
-    //     mobile: '/image/banner/mobile/mobile2.png',
-    //     desktop: '/image/banner/desktop/3.png',
-    // }
+    {
+        mobile: 'https://imagedelivery.net/6tAoXewsW-UbrMK1VkE8GQ/44f9eb63-7238-441f-ca22-cf8f35804700/public',
+        desktop: 'https://imagedelivery.net/6tAoXewsW-UbrMK1VkE8GQ/dc14f8f2-b9fa-4ca1-712b-a228befe1c00/public',
+    }
 ];
 ;
