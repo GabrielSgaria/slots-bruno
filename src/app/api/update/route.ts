@@ -1,30 +1,20 @@
-import { populateCacheFromDB } from "@/lib/cache";
 import { updateCards } from "@/lib/actions";
 import { NextResponse } from "next/server";
+import { revalidateTag } from "next/cache";
 
 export async function GET() {
-  try {
-    // Atualiza os cartões no banco de dados
-    const updatedCards = await updateCards();
-    if (!updatedCards.success) {
-      throw new Error("Erro ao atualizar os cartões");
-    }
+    try {
 
-    // Preenche o cache com os dados atualizados do banco
-    const cacheUpdated = await populateCacheFromDB();
-    if (!cacheUpdated.success) {
-      throw new Error("Erro ao preencher o cache com dados do banco");
-    }
+        const updateCard = await updateCards();
 
-    return NextResponse.json({
-      success: true,
-      message: "Dados atualizados e cache renovado",
-    });
-  } catch (error) {
-    console.error("Erro ao atualizar os dados dos cartões:");
-    return NextResponse.json({
-      success: false,
-      message: "Erro ao atualizar os dados",
-    });
-  }
+        revalidateTag('cards');
+        revalidateTag('cards-pg');
+        revalidateTag('cards-pp');
+        revalidateTag('link-casa');
+
+        return NextResponse.json({ updateCard, success: true, message: "Dados atualizados e cache invalidado" });
+    } catch (error) {
+        console.error("Erro ao atualizar os dados dos cartões:", error);
+        return new NextResponse("Erro no servidor", { status: 500 });
+    }
 }
