@@ -42,10 +42,19 @@ export const CardGames = React.memo(function CardGames({
 
     const isHot = useMemo(
         () =>
+            nomeJogo.toLowerCase() != 'fortune dogs' &&
             nomeJogo.toLowerCase().startsWith('fortune') &&
             (minima > 90 || padrao > 90 || maxima > 90) &&
             categoriaJogo === "PG",
         [nomeJogo, minima, padrao, maxima, categoriaJogo]
+    );
+
+    const isDemoGame = useMemo(
+        () =>
+            nomeJogo.toLowerCase() != 'fortune dogs' &&
+            nomeJogo.toLowerCase().startsWith('fortune') &&
+            categoriaJogo === "PG",
+        [nomeJogo, categoriaJogo]
     );
 
     const isPlayGame = useMemo(
@@ -67,8 +76,13 @@ export const CardGames = React.memo(function CardGames({
             className="game rounded-xl flex flex-col my-1 justify-between shadow-xl shadow-black max-w-[215px] sm:max-w-[175px] w-full sm:min-w-[157px] overflow-hidden relative"
             style={{ backgroundColor: colorBgGame }}
         >
-
-
+            {/* 
+            {isDemoGame && (
+                <div className="absolute top-[2px] left-[2px] z-20 w-[60px] h-6 rounded-md flex items-center justify-center bg-green-600 ">
+                    <p className="text-zinc-50 text-xs text-nowrap font-medium">Teste Grátis</p>
+                    <Fire weight="fill" className="text-red-50 text-xl animate-pulse" />
+                </div>
+            )} */}
             {isHot && (
                 <div className="absolute top-[2px] right-[2px] z-20 w-[60px] h-6 rounded-md flex items-center justify-center bg-green-600 animate-pulse">
                     <p className="text-zinc-50 text-base font-medium">HOT</p>
@@ -82,7 +96,7 @@ export const CardGames = React.memo(function CardGames({
                 </div>
             )}
             <ImageCard id={id} linkCasa={linkCasa} />
-            <div className="gameContent relative z-20 -top-1 pt-[10px] flex flex-col min-h-[260px] justify-between">
+            <div className="gameContent relative z-20 -top-1 pt-[10px] flex flex-col min-h-[267px] h-[267px] justify-between">
                 <div className="flex px-3 items-center justify-center gap-3">
                     <Image
                         width={150}
@@ -127,11 +141,11 @@ export const CardGames = React.memo(function CardGames({
                 <span className="distribution">Distribuição: {porcentagem}%</span>
 
                 {isHot ? (
-                    <div className="w-[90%] h-full flex mx-auto pb-4 items-center justify-center">
+                    <div className="w-[90%] min-h-[80px] flex mx-auto mt-3 mb-3 items-center justify-center">
 
                         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen} >
                             <DialogTrigger asChild>
-                                <button
+                                <button                                                          
                                     className="rounded-xl bg-green-600 text-zinc-50 font-bold py-3 px-1 hover:bg-green-500 w-full text-center text-nowrap text-sm sm:text-sm"
                                 >
                                     GERAR SINAL
@@ -151,7 +165,7 @@ export const CardGames = React.memo(function CardGames({
                         </Dialog>
                     </div>
                 ) : isPlayGame ? (
-                    <div className="w-[90%] h-full flex mx-auto pb-4 items-center justify-center">
+                    <div className="w-[90%] min-h-[80px] flex mx-auto mt-3 mb-3 items-center justify-center">
                         <Link
                             href={linkCasa}
                             target="_blank"
@@ -163,13 +177,24 @@ export const CardGames = React.memo(function CardGames({
                 ) : (
                     <div className="w-full h-full px-1 py-3">
                         <div className="font-medium w-full h-full bg-black/20 px-2 py-2 text-xs flex flex-col justify-center items-center gap-2 rounded-xl">
-                            <span>Mínima R$0,50 a R$2,40</span>
+                            <span>Mínima R$0, 50 a R$2,40</span>
                             <span>Padrão R$2,50 a R$8,00</span>
                             <span>Máxima acima de R$10,00</span>
                         </div>
+                    </div >
+                )}
+                {isDemoGame && (
+
+                    <div className="w-full px-3 h-full flex items-center justify-center mx-auto -mt-2">
+                        <Link
+                            href={`/demo/${nomeJogo.toLowerCase().replace(/ /g, "-")}`}
+                            className="rounded-xl bg-green-600 text-zinc-50 font-bold py- px-1 hover:bg-green-500 w-full text-center text-nowrap text-xs sm:text-xs animate-pulse"
+                        >
+                            <p className="text-zinc-50">TESTE GRÁTIS</p>
+                        </Link>
                     </div>
                 )}
-            </div>
-        </div>
+            </div >
+        </div >
     );
 });
