@@ -47,7 +47,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: '/icon-512x512.png',
+        url: '/favicon.png',
         width: 512,
         height: 512,
       }

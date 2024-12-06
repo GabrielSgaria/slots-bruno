@@ -5,7 +5,7 @@ import { ChristmasDecorations } from './decoration'
 
 export function ChristmasDecorationsManager() {
   const pathname = usePathname()
-  const isDownloadApp = pathname === '/download-app'
+  const isDownloadApp = pathname === '/download-app' || '/demo'
 
   if (isDownloadApp) {
     return null
