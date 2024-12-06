@@ -35,17 +35,20 @@ export default function GamePage() {
   }
 
   return (
-    <div className="container mx-auto p-4 relative">
-      <h1 className="text-3xl font-bold mb-6">{currentGame.name} Demo</h1>
-      <div className={`relative ${isFullScreen ? 'fixed inset-0 z-50 bg-black h-screen' : ''}`}>
+    <div className={`container mx-auto relative ${isFullScreen ? 'p-0' : 'p-4'}`} >
+      {!isFullScreen && (<Link href="/" className="inline-block mb-4 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600">
+        Voltar para o início
+      </Link>)}
+      {!isFullScreen && (<h1 className="text-3xl font-bold mb-6">{currentGame.name} Demo</h1>)}
+      <div className={`relative shadow-xl ${isFullScreen ? 'fixed inset-0 z-50 bg-transparent h-screen top-0' : ''}`}>
         <iframe
           src={`https://m.pgsoft-games.com/${currentGame.id}/index.html?l=pt&ot=ca7094186b309ee149c55c8822e7ecf2&btt=2&from=https://pgdemo.asia/&language=pt-BR&__refer=m.pg-redirect.net&or=static.pgsoft-games.com`}
-          className={`w-full ${isFullScreen ? 'h-full' : 'h-[600px]'} border-0`}
+          className={`w-full ${isFullScreen ? 'h-full' : 'h-[600px] rounded-xl'} border-0 shadow-2xl`}
           allow="autoplay; fullscreen"
         />
         <button
           onClick={toggleFullScreen}
-          className={`absolute ${isFullScreen ? 'top-4 right-4' : 'top-2 right-2'} bg-green-500 text-white px-4 py-2 rounded z-10`}
+          className={`absolute ${isFullScreen ? 'top-4 right-4' : 'top-2 right-2'} bg-green-500 text-white px-2 py-1 rounded z-10 text-xs`}
         >
           {isFullScreen ? 'Fechar Tela Cheia' : 'Tela Cheia'}
         </button>
@@ -55,7 +58,7 @@ export default function GamePage() {
           <h2 className="text-2xl font-bold mt-8 mb-4">Outros Jogos</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {otherGames.map((game) => (
-              <Card key={game.slug} className="cursor-pointer overflow-hidden border-none backdrop-blur-md bg-white/20 text-white" onClick={() => handleGameClick(game.slug)}> 
+              <Card key={game.slug} className="cursor-pointer overflow-hidden border-none backdrop-blur-md bg-white/20 text-white" onClick={() => handleGameClick(game.slug)}>
                 <CardContent className="p-0">
                   <div className="relative h-40">
                     <Image
