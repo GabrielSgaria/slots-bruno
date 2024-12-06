@@ -27,7 +27,7 @@ export default function GamePage() {
   }
 
   const handleGameClick = (slug: string) => {
-    router.push(`/game/${slug}`)
+    router.push(`/demo/${slug}`)
   }
 
   if (!currentGame) {
