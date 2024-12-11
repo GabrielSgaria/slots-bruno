@@ -4,6 +4,8 @@ import { getPorcentagemAjustada, getRandomPorcentagem } from "./utils";
 import prisma from "./db";
 import { nameCards } from "./name-games";
 import { Buffer } from 'buffer';
+import { setCache, CachedData, getCache } from './cache';
+import { CardData } from "@/components/section-cards-pg";
 
 const fiveMinutesInSeconds = 300;
 const oneDayInSeconds = 86400;
@@ -56,34 +58,31 @@ export async function updateCards() {
             revalidateTag('cards-pp'),
         ]);
 
+        // Fetch updated data for cache
+        const [cardsPG, cardsPP, linkCasa] = await Promise.all([
+            getCardsPG(),
+            getCardsPP(),
+            getLinkCasa()
+        ]);
+
+        // Prepare data for cache
+        const cacheData: Omit<CachedData, 'timestamp'> = {
+            cards: [...cardsPG.data, ...cardsPP.data],
+            linkCasa: linkCasa.data?.link || '',
+            imageBanner: linkCasa.data?.bannerImage || '',
+            updateTime: new Date().toISOString(),
+        };
+
+        // Update the cache
+        await setCache(cacheData);
+
         return { success: true };
     } catch (error) {
         console.error('Error updating cards data:', error);
-        return { success: false};
-    }
-}
-
-export async function createCards() {
-    try {
-        const createPromises = Object.entries(nameCards).map(([key, gameData]) => {
-            const i = parseInt(key, 10);
-            if (!gameData) return null;
-            return createOrUpdateCard(i, gameData);
-        }).filter(Boolean);
-
-        // Executa todas as promessas em paralelo
-        await Promise.all(createPromises);
-
-        await revalidateTag('cards');
-
-        return { success: true };
-    } catch (error) {
-        console.error('Error generating cards data:', error);
         return { success: false };
     }
 }
 
-// Função para buscar os cartões da categoria 'PG'
 export const getCardsPG = unstable_cache(async () => {
     try {
         const cards = await prisma.card.findMany({
@@ -114,7 +113,6 @@ export const getCardsPG = unstable_cache(async () => {
     tags: ['cards-pg'],
 });
 
-// Função para buscar os cartões da categoria 'PP'
 export const getCardsPP = unstable_cache(async () => {
     try {
         const cards = await prisma.card.findMany({
@@ -144,6 +142,26 @@ export const getCardsPP = unstable_cache(async () => {
     revalidate: fiveMinutesInSeconds,
     tags: ['cards-pp'],
 });
+
+export async function createCards() {
+    try {
+        const createPromises = Object.entries(nameCards).map(([key, gameData]) => {
+            const i = parseInt(key, 10);
+            if (!gameData) return null;
+            return createOrUpdateCard(i, gameData);
+        }).filter(Boolean);
+
+        // Executa todas as promessas em paralelo
+        await Promise.all(createPromises);
+
+        await revalidateTag('cards');
+
+        return { success: true };
+    } catch (error) {
+        console.error('Error generating cards data:', error);
+        return { success: false };
+    }
+}
 
 // Variável única para comparação de hash
 const hashUnico = process.env.HASH_LINK as string;

@@ -1,27 +1,43 @@
 import { CardData } from "@/components/section-cards-pg";
 
-export let cachedData: { 
-    cards: CardData[]; 
-    linkCasa: string; 
-    imageBanner: string; 
-    updateTime: string; 
-    timestamp: number; // Adicionado o timestamp
-} | null = null;
-
-export let lastUpdatedAt: string | null = null;
-
-export function setCache(data: { cards: CardData[]; linkCasa: string; imageBanner: string; updateTime: string }, updatedAt: string) {
-    // Atualiza o cache apenas se o `updatedAt` mudou
-    if (lastUpdatedAt !== updatedAt) {
-        cachedData = { ...data, timestamp: Date.now() }; // Inclui o timestamp
-        lastUpdatedAt = updatedAt;
-        console.log("Cache atualizado com novos dados.");
-    } else {
-        console.log("Cache não foi atualizado, pois o `updatedAt` não mudou.");
-    }
+export interface CachedData {
+  cards: CardData[];
+  linkCasa: string;
+  imageBanner: string;
+  updateTime: string;
+  timestamp: number;
 }
 
+let cache: CachedData | null = null;
 
-export function getCache() {
-    return cachedData;
+export async function initializeCache(): Promise<void> {
+  if (!cache) {
+    // Initialize with empty data
+    cache = {
+      cards: [],
+      linkCasa: '',
+      imageBanner: '',
+      updateTime: new Date().toISOString(),
+      timestamp: Date.now(),
+    };
+  }
 }
+
+export async function getCache(): Promise<CachedData | null> {
+  await initializeCache();
+  return cache;
+}
+
+export async function setCache(data: Omit<CachedData, 'timestamp'>): Promise<void> {
+  cache = { ...data, timestamp: Date.now() };
+}
+
+export async function isCacheValid(): Promise<boolean> {
+  const currentCache = await getCache();
+  if (!currentCache) return false;
+  
+  const cacheAge = Date.now() - currentCache.timestamp;
+  const maxAge = 5 * 60 * 1000; // 5 minutes
+  return cacheAge < maxAge;
+}
+
