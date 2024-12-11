@@ -1,41 +1,45 @@
 import { NextResponse } from 'next/server';
 import { getCache, initializeCache } from '@/lib/cache';
+import { format, toZonedTime } from 'date-fns-tz';
 
-function formatDateTime(dateTimeString: string): string {
+const BRASILIA_TIMEZONE = process.env.TZ || 'America/Sao_Paulo';
+
+function formatDateTimeBrasilia(dateTimeString: string): string {
   const date = new Date(dateTimeString);
-  return date.toLocaleTimeString('pt-BR', {
-    hour: '2-digit',
-    minute: '2-digit',
-    second: '2-digit',
-    hour12: false
-  });
+  const brasiliaDate = toZonedTime(date, BRASILIA_TIMEZONE);
+  return format(brasiliaDate, 'HH:mm:ss', { timeZone: BRASILIA_TIMEZONE });
 }
 
 export async function GET() {
+  console.log('Iniciando requisição GET para /api/get-latest-data');
   try {
     await initializeCache();
     const cachedData = await getCache();
+    console.log('Dados do cache:', cachedData);
+    
     if (cachedData && cachedData.updateTime) {
-      const formattedUpdateTime = formatDateTime(cachedData.updateTime);
+      const formattedUpdateTime = formatDateTimeBrasilia(cachedData.updateTime);
+      console.log('Horário formatado:', formattedUpdateTime);
       return NextResponse.json({
         success: true,
         updateTime: formattedUpdateTime,
         serverTimestamp: Date.now(),
       });
     } else {
-      // If cache is still not available, return a temporary response
+      console.log('Cache não disponível, usando horário atual');
+      const currentBrasiliaTime = formatDateTimeBrasilia(new Date().toISOString());
       return NextResponse.json({
         success: true,
-        updateTime: formatDateTime(new Date().toISOString()),
+        updateTime: currentBrasiliaTime,
         serverTimestamp: Date.now(),
-        message: 'Cache not yet available, using current time',
+        message: 'Cache não disponível, usando horário atual de Brasília',
       });
     }
   } catch (error) {
-    console.error('Error fetching latest data:', error);
+    console.error('Erro ao buscar dados mais recentes:', error);
     return NextResponse.json({
       success: false,
-      message: 'Internal server error',
+      message: 'Erro interno do servidor',
       serverTimestamp: Date.now(),
     }, { status: 500 });
   }
