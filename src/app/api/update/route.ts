@@ -1,12 +1,19 @@
 import { NextResponse } from 'next/server';
 import { updateCards } from '@/lib/actions';
 import { getCache, setCache } from '@/lib/cache';
+import { format, toZonedTime } from 'date-fns-tz';
 
 const RATE_LIMIT_WINDOW = 60000; // 1 minute in milliseconds
 const MAX_REQUESTS_PER_WINDOW = 10;
+const BRASILIA_TIMEZONE = 'America/Sao_Paulo';
 
 let requestCount = 0;
 let windowStart = Date.now();
+
+function formatDateTimeBrasilia(date: Date): string {
+  const brasiliaDate = toZonedTime(date, BRASILIA_TIMEZONE);
+  return format(brasiliaDate, 'HH:mm:ss', { timeZone: BRASILIA_TIMEZONE });
+}
 
 export async function GET() {
   // Rate limiting
@@ -34,12 +41,21 @@ export async function GET() {
 
     const cachedData = await getCache();
     if (cachedData) {
-      console.log('Dados atualizados:', cachedData);
+      const currentTime = new Date();
+      const formattedUpdateTime = formatDateTimeBrasilia(currentTime);
+      
+      // Atualiza o cache com o novo horário
+      await setCache({
+        ...cachedData,
+        updateTime: currentTime.toISOString(),
+      });
+
+      console.log('Dados atualizados:', { ...cachedData, updateTime: formattedUpdateTime });
       return NextResponse.json({
         success: true,
         message: 'Data updated successfully',
         serverTimestamp: now,
-        updateTime: cachedData.updateTime,
+        updateTime: formattedUpdateTime,
       }, {
         headers: {
           'Cache-Control': 'no-store, max-age=0',

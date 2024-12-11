@@ -78,9 +78,14 @@ export function ContentPg({ updateTime: initialUpdateTime, imageBanner }: Conten
         nextUpdateTimestampRef.current = newNextUpdateTimestamp;
         localStorage.setItem('nextUpdateTimestamp', newNextUpdateTimestamp.toString());
         setTimeUntilNextUpdate(newNextUpdateTimestamp - serverTimestamp);
-
-        // Fetch the latest data immediately after successful update
-        await fetchLatestData();
+        
+        // Atualiza o horário imediatamente com o valor retornado pela API
+        if (data.updateTime) {
+          setUpdateTime(data.updateTime);
+        } else {
+          // Se a API não retornar o horário, busca os dados mais recentes
+          await fetchLatestData();
+        }
       } else {
         throw new Error(data.message || 'Unknown error occurred');
       }
@@ -238,7 +243,7 @@ export function ContentPg({ updateTime: initialUpdateTime, imageBanner }: Conten
               </div>
             ) : (
               <>
-                Última atualização às {updateTime}<br />
+                Última atualização às {updateTime} (Horário de Brasília)<br />
                 <span className="flex items-center justify-center">
                   Próxima atualização em: {isMounted ? formatCountdown(timeUntilNextUpdate) : <Loader className="animate-spin size-3" />}
                 </span>
