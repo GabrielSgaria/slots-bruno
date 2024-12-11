@@ -1,43 +1,71 @@
 import { NextResponse } from 'next/server';
-import { getCache, initializeCache } from '@/lib/cache';
-import { format, toZonedTime } from 'date-fns-tz';
+import { updateCards } from '@/lib/actions';
+import { getCache, isCacheValid } from '@/lib/cache';
 
-const BRASILIA_TIMEZONE = 'America/Sao_Paulo';
+const RATE_LIMIT_WINDOW = 60000; // 1 minute in milliseconds
+const MAX_REQUESTS_PER_WINDOW = 10;
 
-function formatDateTimeBrasilia(dateTimeString: string): string {
-  const date = new Date(dateTimeString);
-  const brasiliaDate = toZonedTime(date, BRASILIA_TIMEZONE);
-  return format(brasiliaDate, 'HH:mm:ss', { timeZone: BRASILIA_TIMEZONE });
-}
+let requestCount = 0;
+let windowStart = Date.now();
 
 export async function GET() {
+  // Rate limiting
+  const now = Date.now();
+  if (now - windowStart > RATE_LIMIT_WINDOW) {
+    requestCount = 0;
+    windowStart = now;
+  }
+  requestCount++;
+
+  if (requestCount > MAX_REQUESTS_PER_WINDOW) {
+    return NextResponse.json({
+      success: false,
+      message: 'Rate limit exceeded. Please try again later.',
+      serverTimestamp: now,
+    }, { status: 429 });
+  }
+
   try {
-    await initializeCache();
-    const cachedData = await getCache();
-    if (cachedData && cachedData.updateTime) {
-      const formattedUpdateTime = formatDateTimeBrasilia(cachedData.updateTime);
+    console.log('Iniciando atualização...');
+    let cachedData = await getCache();
+    if (!cachedData || !(await isCacheValid())) {
+      console.log('Cache não encontrado ou inválido. Atualizando cards...');
+      const updateResult = await updateCards();
+      if (!updateResult.success) {
+        throw new Error('Failed to update cards');
+      }
+      cachedData = await getCache(); // Get the updated cache
+      console.log('Cards atualizados com sucesso.');
+    }
+
+    if (cachedData) {
+      console.log('Dados atualizados:', cachedData);
       return NextResponse.json({
         success: true,
-        updateTime: formattedUpdateTime,
-        serverTimestamp: Date.now(),
+        message: 'Data is up to date',
+        serverTimestamp: now,
+      }, {
+        headers: {
+          'Cache-Control': 'no-store, max-age=0',
+          'Pragma': 'no-cache'
+        }
       });
     } else {
-      // If cache is still not available, return a temporary response
-      const currentBrasiliaTime = formatDateTimeBrasilia(new Date().toISOString());
-      return NextResponse.json({
-        success: true,
-        updateTime: currentBrasiliaTime,
-        serverTimestamp: Date.now(),
-        message: 'Cache not yet available, using current Brasília time',
-      });
+      throw new Error('Failed to retrieve cache after update');
     }
   } catch (error) {
-    console.error('Error fetching latest data:', error);
+    console.error('Erro ao atualizar cards:', error);
     return NextResponse.json({
       success: false,
       message: 'Internal server error',
       serverTimestamp: Date.now(),
-    }, { status: 500 });
+    }, { 
+      status: 500,
+      headers: {
+        'Cache-Control': 'no-store, max-age=0',
+        'Pragma': 'no-cache'
+      }
+    });
   }
 }
 

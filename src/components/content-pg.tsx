@@ -19,6 +19,8 @@ export interface ContentPgProps {
 }
 
 const UPDATE_INTERVAL = 300000; // 5 minutes in milliseconds
+const MAX_RETRIES = 3;
+const RETRY_DELAY = 5000; // 5 seconds
 
 export function ContentPg({ updateTime: initialUpdateTime, imageBanner }: ContentPgProps) {
   const [showModal, setShowModal] = useState<boolean>(true);
@@ -28,20 +30,29 @@ export function ContentPg({ updateTime: initialUpdateTime, imageBanner }: Conten
   const [error, setError] = useState<string | null>(null);
   const [updateTime, setUpdateTime] = useState<string>(initialUpdateTime);
   const nextUpdateTimestampRef = useRef<number>(0);
+  const retryCountRef = useRef<number>(0);
 
   const fetchLatestData = useCallback(async () => {
     try {
-      const response = await fetch('/api/get-latest-data');
+      const response = await fetch('/api/get-latest-data', {
+        cache: 'no-store',
+        headers: {
+          'Cache-Control': 'no-cache',
+          'Pragma': 'no-cache'
+        }
+      });
       if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
       const data = await response.json();
+      console.log('Dados recebidos:', data);
       if (data.success) {
         setUpdateTime(data.updateTime);
+        retryCountRef.current = 0;
         return true;
       } else {
         throw new Error(data.message || 'Failed to fetch latest data');
       }
     } catch (error) {
-      console.error('Error fetching latest data:', error);
+      console.error('Erro ao buscar dados mais recentes:', error);
       return false;
     }
   }, []);
@@ -51,9 +62,16 @@ export function ContentPg({ updateTime: initialUpdateTime, imageBanner }: Conten
     setIsUpdating(true);
     setError(null);
     try {
-      const response = await fetch('/api/update');
+      const response = await fetch('/api/update', {
+        cache: 'no-store',
+        headers: {
+          'Cache-Control': 'no-cache',
+          'Pragma': 'no-cache'
+        }
+      });
       if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
       const data = await response.json();
+      console.log('Resposta da atualização:', data);
       if (data.success) {
         const serverTimestamp = data.serverTimestamp || Date.now();
         const newNextUpdateTimestamp = Math.ceil(serverTimestamp / UPDATE_INTERVAL) * UPDATE_INTERVAL;
@@ -62,15 +80,21 @@ export function ContentPg({ updateTime: initialUpdateTime, imageBanner }: Conten
         setTimeUntilNextUpdate(newNextUpdateTimestamp - serverTimestamp);
 
         // Fetch the latest data
-        await fetchLatestData();
+        const fetchSuccess = await fetchLatestData();
+        if (!fetchSuccess && retryCountRef.current < MAX_RETRIES) {
+          retryCountRef.current++;
+          setTimeout(() => syncWithServer(true), RETRY_DELAY);
+        }
       } else {
         throw new Error(data.message || 'Unknown error occurred');
       }
     } catch (error) {
       console.error('Erro ao sincronizar com o servidor:', error);
       setError('Falha ao atualizar. Tentando novamente em breve.');
-      // Tenta novamente em 30 segundos
-      setTimeout(() => syncWithServer(true), 30000);
+      if (retryCountRef.current < MAX_RETRIES) {
+        retryCountRef.current++;
+        setTimeout(() => syncWithServer(true), RETRY_DELAY);
+      }
     } finally {
       setIsUpdating(false);
     }
@@ -211,7 +235,7 @@ export function ContentPg({ updateTime: initialUpdateTime, imageBanner }: Conten
             sizes="100vw"
             className="object-contain"
           />
-          <div className="text-base uppercase font-bold bottom-16 sm:bottom-11 absolute font-poppins">
+          <div className="text-base uppercase font-bold bottom-16 sm:bottom-14 absolute font-poppins">
             {error ? (
               <div className="text-red-500">{error}</div>
             ) : isUpdating ? (
@@ -221,7 +245,7 @@ export function ContentPg({ updateTime: initialUpdateTime, imageBanner }: Conten
               </div>
             ) : (
               <>
-                Última atualização às {updateTime}<br />
+                Última atualização às {updateTime} (Horário de Brasília)<br />
                 <span className="flex items-center justify-center">
                   Próxima atualização em: {isMounted ? formatCountdown(timeUntilNextUpdate) : <Loader className="animate-spin size-3" />}
                 </span>
