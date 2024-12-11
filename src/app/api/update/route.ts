@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { updateCards } from '@/lib/actions';
-import { getCache, isCacheValid } from '@/lib/cache';
+import { getCache, setCache } from '@/lib/cache';
 
 const RATE_LIMIT_WINDOW = 60000; // 1 minute in milliseconds
 const MAX_REQUESTS_PER_WINDOW = 10;
@@ -27,23 +27,19 @@ export async function GET() {
 
   try {
     console.log('Iniciando atualização...');
-    let cachedData = await getCache();
-    if (!cachedData || !(await isCacheValid())) {
-      console.log('Cache não encontrado ou inválido. Atualizando cards...');
-      const updateResult = await updateCards();
-      if (!updateResult.success) {
-        throw new Error('Failed to update cards');
-      }
-      cachedData = await getCache(); // Get the updated cache
-      console.log('Cards atualizados com sucesso.');
+    const updateResult = await updateCards();
+    if (!updateResult.success) {
+      throw new Error('Failed to update cards');
     }
 
+    const cachedData = await getCache();
     if (cachedData) {
       console.log('Dados atualizados:', cachedData);
       return NextResponse.json({
         success: true,
-        message: 'Data is up to date',
+        message: 'Data updated successfully',
         serverTimestamp: now,
+        updateTime: cachedData.updateTime,
       }, {
         headers: {
           'Cache-Control': 'no-store, max-age=0',

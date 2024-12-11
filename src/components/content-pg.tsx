@@ -79,12 +79,8 @@ export function ContentPg({ updateTime: initialUpdateTime, imageBanner }: Conten
         localStorage.setItem('nextUpdateTimestamp', newNextUpdateTimestamp.toString());
         setTimeUntilNextUpdate(newNextUpdateTimestamp - serverTimestamp);
 
-        // Fetch the latest data
-        const fetchSuccess = await fetchLatestData();
-        if (!fetchSuccess && retryCountRef.current < MAX_RETRIES) {
-          retryCountRef.current++;
-          setTimeout(() => syncWithServer(true), RETRY_DELAY);
-        }
+        // Fetch the latest data immediately after successful update
+        await fetchLatestData();
       } else {
         throw new Error(data.message || 'Unknown error occurred');
       }
@@ -116,9 +112,6 @@ export function ContentPg({ updateTime: initialUpdateTime, imageBanner }: Conten
       } else {
         await syncWithServer(true);
       }
-
-      // Fetch latest data to ensure we have the most up-to-date information
-      await fetchLatestData();
     };
 
     initializeTimer();
@@ -129,14 +122,14 @@ export function ContentPg({ updateTime: initialUpdateTime, imageBanner }: Conten
       const timeLeft = Math.max(0, nextUpdateTimestampRef.current - now);
       setTimeUntilNextUpdate(timeLeft);
 
-      if (timeLeft <= 1000 && !isUpdating) {
+      if (timeLeft <= 0 && !isUpdating) {
         syncWithServer(true);
       }
     };
 
     const timerInterval = setInterval(updateTimer, 1000);
     return () => clearInterval(timerInterval);
-  }, [isUpdating, syncWithServer, fetchLatestData]);
+  }, [isUpdating, syncWithServer]);
 
   useEffect(() => {
     const storedPopupShown = localStorage.getItem('popupShown');
@@ -245,7 +238,7 @@ export function ContentPg({ updateTime: initialUpdateTime, imageBanner }: Conten
               </div>
             ) : (
               <>
-                Última atualização às {updateTime}<br />
+                Última atualização às {updateTime} (Horário de Brasília)<br />
                 <span className="flex items-center justify-center">
                   Próxima atualização em: {isMounted ? formatCountdown(timeUntilNextUpdate) : <Loader className="animate-spin size-3" />}
                 </span>
