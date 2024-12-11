@@ -50,7 +50,7 @@ export async function GET() {
         updateTime: currentTime.toISOString(),
       });
 
-      console.log('Dados atualizados:', { ...cachedData, updateTime: formattedUpdateTime });
+      console.log('Dados atualizados:', { updateTime: formattedUpdateTime });
       return NextResponse.json({
         success: true,
         message: 'Data updated successfully',
