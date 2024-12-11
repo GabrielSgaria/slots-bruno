@@ -233,11 +233,11 @@ export function ContentPg({ updateTime: initialUpdateTime, imageBanner }: Conten
             sizes="100vw"
             className="object-contain"
           />
-          <div className="text-base uppercase font-bold bottom-16 sm:bottom-14 absolute font-poppins">
+          <div className="text-xs sm:text-base uppercase font-bold bottom-[65px] sm:bottom-11 absolute font-poppins">
             {error ? (
               <div className="text-red-500">{error}</div>
             ) : isUpdating ? (
-              <div className="flex items-center justify-center gap-2">
+              <div className="flex items-center justify-center gap-1">
                 Atualizando...
                 <Loader className="animate-spin size-4" />
               </div>
