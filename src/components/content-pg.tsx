@@ -238,7 +238,7 @@ export function ContentPg({ updateTime: initialUpdateTime, imageBanner }: Conten
               </div>
             ) : (
               <>
-                Última atualização às {updateTime} (Horário de Brasília)<br />
+                Última atualização às {updateTime}<br />
                 <span className="flex items-center justify-center">
                   Próxima atualização em: {isMounted ? formatCountdown(timeUntilNextUpdate) : <Loader className="animate-spin size-3" />}
                 </span>
